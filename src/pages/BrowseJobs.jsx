@@ -1,5 +1,23 @@
-import ComingSoon from "./ComingSoon";
+import React from 'react'
+import BrowserHero from '../components/browserJob/BrowserHero'
+import BrowseJobsSection from '../components/browserJob/BrowserJobSection'
+import FilterJobsSection from '../components/browserJob/FilterJobSection'
+import PopularCategories from '../components/browserJob/PopularCategories'
+import CTASection from '../components/browserJob/CTAButton'
 
-export default function BrowseJobs() {
-  return <ComingSoon title="Browse Jobs" />;
+const BrowseJobs = () => {
+  return (
+    <>
+
+
+      <BrowserHero />
+      <BrowseJobsSection />
+      <FilterJobsSection />
+      <PopularCategories />
+      <CTASection />
+
+
+    </>)
 }
+
+export default BrowseJobs
