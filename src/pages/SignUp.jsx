@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import {
   FaEnvelope,
   FaLock,
+  FaUser,
   FaEye,
   FaEyeSlash,
   FaBriefcase,
@@ -12,19 +13,27 @@ import {
   FaRegHeart,
   FaPlus,
   FaConciergeBell,
-  FaArrowRight
+  FaArrowRight,
+  FaCheckCircle
 } from 'react-icons/fa';
 
-const SignIn = () => {
+const perks = [
+  'Verified employers & candidates',
+  'Free job posting to start',
+  'Nationwide reach across Canada'
+];
+
+const Signup = () => {
   const [role, setRole] = useState('seeker'); // 'seeker' | 'employer'
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   return (
     <section className="min-h-screen bg-slate-900 flex">
       <div className="flex flex-col lg:flex-row w-full max-w-7xl mx-auto">
         {/* Left brand panel — hidden on mobile */}
         <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center p-12 bg-slate-800/40 border-r border-slate-700/50">
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-amber-500/5" />
+          <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-cyan-500/10" />
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -43,27 +52,20 @@ const SignIn = () => {
             </div>
 
             <h2 className="text-3xl xl:text-4xl font-bold text-white leading-tight mb-4">
-              Welcome back to <span className="text-cyan-400">Canada&apos;s</span>{' '}
-              <span className="text-amber-400">care & service</span> hiring platform.
+              Join <span className="text-amber-400">Hospitality</span> &amp;{' '}
+              <span className="text-cyan-400">Healthcare</span> employers and job seekers across Canada.
             </h2>
-            <p className="text-gray-400 leading-relaxed mb-10">
-              Log in to manage your applications, saved jobs, or job postings — all in one place.
+            <p className="text-gray-400 leading-relaxed mb-8">
+              Create your free account in a couple of minutes and start connecting today.
             </p>
 
-            <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700/60 rounded-2xl p-6">
-              <div className="flex gap-1 mb-3">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <span key={i} className="text-amber-400 text-sm">
-                    ★
-                  </span>
-                ))}
-              </div>
-              <p className="text-sm text-gray-200 leading-relaxed mb-4">
-                &ldquo;I found my dream job in healthcare through ServiceCare Jobline. The process was simple,
-                fast, and stress-free!&rdquo;
-              </p>
-              <p className="text-cyan-400 font-semibold text-sm">Priya S.</p>
-              <p className="text-gray-400 text-xs">Registered Nurse, Toronto, ON</p>
+            <div className="flex flex-col gap-3">
+              {perks.map((perk, i) => (
+                <div key={i} className="flex items-center gap-3 text-sm text-gray-200">
+                  <FaCheckCircle className="text-cyan-400 shrink-0" />
+                  {perk}
+                </div>
+              ))}
             </div>
           </motion.div>
 
@@ -89,8 +91,8 @@ const SignIn = () => {
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Welcome back</h1>
-            <p className="text-sm text-gray-400 mb-8">Log in to manage your jobs and applications.</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Create your account</h1>
+            <p className="text-sm text-gray-400 mb-8">Join ServiceCare Jobline in a couple of minutes.</p>
 
             {/* Role selector */}
             <div className="grid grid-cols-2 gap-3 mb-6">
@@ -119,6 +121,18 @@ const SignIn = () => {
             </div>
 
             <form className="flex flex-col gap-4">
+              <div>
+                <label className="block text-xs font-medium text-gray-400 mb-1.5">Full name</label>
+                <div className="relative">
+                  <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm" />
+                  <input
+                    type="text"
+                    placeholder="Jane Doe"
+                    className="w-full bg-slate-800/60 border border-slate-700/60 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/70 focus:ring-1 focus:ring-cyan-400/50 transition-colors"
+                  />
+                </div>
+              </div>
+
               <div>
                 <label className="block text-xs font-medium text-gray-400 mb-1.5">Email address</label>
                 <div className="relative">
@@ -150,32 +164,45 @@ const SignIn = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between text-xs">
-                <label className="flex items-center gap-2 text-gray-400">
-                  <input type="checkbox" className="rounded border-slate-600 bg-slate-800 accent-cyan-400" />
-                  Remember me
-                </label>
-                <a href="#" className="text-cyan-400 hover:text-cyan-300 font-medium">
-                  Forgot password?
-                </a>
+              <div>
+                <label className="block text-xs font-medium text-gray-400 mb-1.5">Confirm password</label>
+                <div className="relative">
+                  <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm" />
+                  <input
+                    type={showConfirm ? 'text' : 'password'}
+                    placeholder="••••••••"
+                    className="w-full bg-slate-800/60 border border-slate-700/60 rounded-xl pl-11 pr-11 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/70 focus:ring-1 focus:ring-cyan-400/50 transition-colors"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirm((v) => !v)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300"
+                  >
+                    {showConfirm ? <FaEyeSlash className="text-sm" /> : <FaEye className="text-sm" />}
+                  </button>
+                </div>
               </div>
+
+              <label className="flex items-start gap-2 text-xs text-gray-400">
+                <input type="checkbox" className="mt-0.5 rounded border-slate-600 bg-slate-800 accent-cyan-400" />
+                I agree to the Terms of Service and Privacy Policy.
+              </label>
 
               <button
                 type="submit"
                 className="w-full flex items-center justify-center gap-2 bg-cyan-400 hover:bg-cyan-300 text-slate-900 font-semibold py-3 rounded-xl transition-colors mt-2"
               >
-                Log In
+                Create Account
                 <FaArrowRight className="text-sm" />
               </button>
             </form>
 
          
-       
 
             <p className="text-center text-sm text-gray-400 mt-8">
-              Don&apos;t have an account?{' '}
-              <a href="/signup" className="text-cyan-400 font-medium hover:text-cyan-300">
-                Sign up
+              Already have an account?{' '}
+              <a href="/login" className="text-cyan-400 font-medium hover:text-cyan-300">
+                Log in
               </a>
             </p>
           </motion.div>
@@ -185,4 +212,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default Signup;

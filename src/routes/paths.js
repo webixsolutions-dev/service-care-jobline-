@@ -11,5 +11,6 @@ export const paths = {
   postAJob: "/post-a-job",
   signIn: "/sign-in",
   dashboard: "/dashboard", // job seeker (shared contract, not /seeker/dashboard)
-  recruiter: "/recruiter", // recruiter (shared contract, not /recruiter/dashboard)
+  recruiter: "/recruiter",
+  signUp:"/signup" // recruiter (shared contract, not /recruiter/dashboard)
 };

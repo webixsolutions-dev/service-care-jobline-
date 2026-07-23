@@ -11,6 +11,7 @@ import NotFound from "../pages/NotFound";
 import DashboardHome from "../pages/dashboard/DashboardHome";
 import RecruiterHome from "../pages/recruiter/RecruiterHome";
 import { paths } from "./paths";
+import Signup from "../pages/SignUp";
 
 export default function AppRoutes() {
   return (
@@ -23,6 +24,8 @@ export default function AppRoutes() {
         <Route path={paths.contactUs} element={<ContactUs />} />
         <Route path={paths.postAJob} element={<PostAJob />} />
         <Route path={paths.signIn} element={<SignIn />} />
+        <Route path={paths.signUp} element={<Signup />} />
+
         <Route path={paths.dashboard} element={<DashboardHome />} />
         <Route path={paths.recruiter} element={<RecruiterHome />} />
         <Route path="*" element={<NotFound />} />
