@@ -4,8 +4,11 @@
 }
 
 .belowHero {
-  background: #0a1b33;
+  position: relative;
+  z-index: 5;
+  background: transparent;
   padding: 0 0 64px;
+  margin-top: -120px;
 }
 
 .support {
@@ -15,13 +18,22 @@
 }
 
 @media (max-width: 960px) {
+  .belowHero {
+    margin-top: -72px;
+  }
+
   .support {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 @media (max-width: 640px) {
+  .belowHero {
+    margin-top: -40px;
+  }
+
   .support {
     grid-template-columns: 1fr;
   }
 }
+
