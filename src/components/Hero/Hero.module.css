@@ -146,6 +146,44 @@
   );
 }
 
+/* Post a Job hero — img14 locked to right 50%, bottom-anchored, faded into navy */
+.heroPostJob {
+  min-height: 560px;
+  max-height: 640px;
+}
+
+.heroPostJob .bgRightHalf {
+  left: 50%;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  z-index: 2;
+  background-size: auto 100%;
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 10%, #000 100%),
+    linear-gradient(to top, transparent 0%, #000 6%, #000 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0%, #000 10%, #000 100%),
+    linear-gradient(to top, transparent 0%, #000 6%, #000 100%);
+  mask-composite: intersect;
+}
+
+.heroPostJob .overlay {
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    #0a1b33 0%,
+    #0a1b33 44%,
+    rgba(10, 27, 51, 0.55) 50%,
+    rgba(10, 27, 51, 0.18) 54%,
+    transparent 58%
+  );
+}
+
 .mapleLeaf {
   position: absolute;
   right: -6%;
@@ -471,6 +509,20 @@
   }
 
   .heroIntegrated .overlay {
+    background:
+      linear-gradient(180deg, #0a1b33 0%, rgba(10, 27, 51, 0.88) 48%, rgba(10, 27, 51, 0.55) 100%),
+      linear-gradient(90deg, #0a1b33 0%, #0a1b33 28%, transparent 70%);
+  }
+
+  .heroPostJob .bgRightHalf {
+    left: 0;
+    width: 100%;
+    background-size: auto 78%;
+    background-position: center bottom;
+    opacity: 0.55;
+  }
+
+  .heroPostJob .overlay {
     background:
       linear-gradient(180deg, #0a1b33 0%, rgba(10, 27, 51, 0.88) 48%, rgba(10, 27, 51, 0.55) 100%),
       linear-gradient(90deg, #0a1b33 0%, #0a1b33 28%, transparent 70%);

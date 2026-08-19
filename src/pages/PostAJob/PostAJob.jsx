@@ -37,6 +37,8 @@ export default function PostAJob() {
         }}
         backgroundImage={hero.image}
         imageAlt={hero.imageAlt}
+        backgroundFit="rightHalf"
+        decor="postJob"
       />
       <section className={styles.belowHero}>
         <div className="container">

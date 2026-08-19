@@ -78,7 +78,7 @@ export default function Hero({
         decor === "goldRings" ? styles.heroGoldRings : ""
       } ${decor === "maple" ? styles.heroMaple : ""} ${
         decor === "integrated" ? styles.heroIntegrated : ""
-      }`}
+      } ${decor === "postJob" ? styles.heroPostJob : ""}`}
       aria-labelledby="page-hero-heading"
     >
       <div
