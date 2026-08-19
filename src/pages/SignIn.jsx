@@ -28,7 +28,60 @@ const SignIn = () => {
   return (
     <section className="flex-1 bg-slate-900 flex">
       <div className="container flex flex-col lg:flex-row w-full">
-        {/* Form panel */}
+        {/* Visual panel — left on desktop */}
+        <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center p-12 border-r border-slate-700/50">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: "url('/img6.webp')" }}
+            aria-hidden
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-950/85 via-slate-900/75 to-cyan-950/70" />
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="relative z-10 max-w-md"
+          >
+            <div className="flex items-center gap-3 mb-10">
+              <div className="relative w-12 h-12 shrink-0">
+                <FaRegHeart className="absolute inset-0 w-full h-full text-cyan-400" />
+                <FaPlus className="absolute top-[26%] left-1/2 -translate-x-1/2 text-cyan-400 text-sm" />
+              </div>
+              <span className="text-xl font-bold text-white">
+                ServiceCare <span className="text-cyan-400">Jobline</span>
+              </span>
+            </div>
+
+            <h2 className="text-3xl xl:text-4xl font-bold text-white leading-tight mb-4">
+              Welcome back to <span className="text-cyan-400">Canada&apos;s</span>{' '}
+              <span className="text-amber-400">care & service</span> hiring platform.
+            </h2>
+            <p className="text-gray-300 leading-relaxed mb-10">
+              Log in to manage your applications, saved jobs, or job postings — all in one place.
+            </p>
+
+            <div className="bg-slate-900/70 backdrop-blur-sm border border-slate-700/60 rounded-2xl p-6">
+              <div className="flex gap-1 mb-3">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <span key={i} className="text-amber-400 text-sm">
+                    ★
+                  </span>
+                ))}
+              </div>
+              <p className="text-sm text-gray-200 leading-relaxed mb-4">
+                &ldquo;I found my dream job in healthcare through ServiceCare Jobline. The process was simple,
+                fast, and stress-free!&rdquo;
+              </p>
+              <p className="text-cyan-400 font-semibold text-sm">Priya S.</p>
+              <p className="text-gray-400 text-xs">Registered Nurse, Toronto, ON</p>
+            </div>
+          </motion.div>
+
+          <FaConciergeBell className="absolute bottom-10 right-10 text-amber-400/10 text-[140px]" />
+        </div>
+
+        {/* Form panel — right on desktop */}
         <div className="w-full lg:w-1/2 flex items-center justify-center px-4 sm:px-8 py-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -127,9 +180,6 @@ const SignIn = () => {
               </button>
             </form>
 
-         
-       
-
             <p className="text-center text-sm text-gray-400 mt-8">
               Don&apos;t have an account?{' '}
               <Link to={paths.signUp} className="text-cyan-400 font-medium hover:text-cyan-300">
@@ -137,59 +187,6 @@ const SignIn = () => {
               </Link>
             </p>
           </motion.div>
-        </div>
-
-        {/* Right visual panel */}
-        <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center p-12 border-l border-slate-700/50">
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: "url('/img6.webp')" }}
-            aria-hidden
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-950/85 via-slate-900/75 to-cyan-950/70" />
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="relative z-10 max-w-md"
-          >
-            <div className="flex items-center gap-3 mb-10">
-              <div className="relative w-12 h-12 shrink-0">
-                <FaRegHeart className="absolute inset-0 w-full h-full text-cyan-400" />
-                <FaPlus className="absolute top-[26%] left-1/2 -translate-x-1/2 text-cyan-400 text-sm" />
-              </div>
-              <span className="text-xl font-bold text-white">
-                ServiceCare <span className="text-cyan-400">Jobline</span>
-              </span>
-            </div>
-
-            <h2 className="text-3xl xl:text-4xl font-bold text-white leading-tight mb-4">
-              Welcome back to <span className="text-cyan-400">Canada&apos;s</span>{' '}
-              <span className="text-amber-400">care & service</span> hiring platform.
-            </h2>
-            <p className="text-gray-300 leading-relaxed mb-10">
-              Log in to manage your applications, saved jobs, or job postings — all in one place.
-            </p>
-
-            <div className="bg-slate-900/70 backdrop-blur-sm border border-slate-700/60 rounded-2xl p-6">
-              <div className="flex gap-1 mb-3">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <span key={i} className="text-amber-400 text-sm">
-                    ★
-                  </span>
-                ))}
-              </div>
-              <p className="text-sm text-gray-200 leading-relaxed mb-4">
-                &ldquo;I found my dream job in healthcare through ServiceCare Jobline. The process was simple,
-                fast, and stress-free!&rdquo;
-              </p>
-              <p className="text-cyan-400 font-semibold text-sm">Priya S.</p>
-              <p className="text-gray-400 text-xs">Registered Nurse, Toronto, ON</p>
-            </div>
-          </motion.div>
-
-          <FaConciergeBell className="absolute bottom-10 right-10 text-amber-400/10 text-[140px]" />
         </div>
       </div>
     </section>
