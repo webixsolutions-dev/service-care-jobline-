@@ -1,5 +1,7 @@
 import { MapPin, Phone, Mail, Globe } from "lucide-react";
+import { Link } from "react-router-dom";
 import { contactPageContent } from "../../../data/contactPageContent";
+import { paths } from "../../../data/navLinks";
 import InfoCard from "../../../components/InfoCard/InfoCard";
 import MapPreview from "../../../components/MapPreview/MapPreview";
 import IconBadge from "../../../components/IconBadge/IconBadge";
@@ -7,6 +9,9 @@ import styles from "./HelpSupportSection.module.css";
 
 export default function HelpSupportSection() {
   const { kicker, heading, description, cards, office } = contactPageContent.helpSupport;
+  const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    office.addressLines.join(", ")
+  )}`;
 
   return (
     <section className={styles.section} aria-labelledby="help-support-heading">
@@ -27,18 +32,26 @@ export default function HelpSupportSection() {
         </div>
 
         <div className={styles.officePanel}>
-          <div className={styles.mapCol}>
+          <a
+            className={styles.mapCol}
+            href={mapsHref}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open Toronto office location in Google Maps"
+          >
             <MapPreview />
-          </div>
+          </a>
           <div className={styles.office}>
             <div className={styles.officeHead}>
               <IconBadge icon={MapPin} color="teal" />
               <h3>{office.title}</h3>
             </div>
             <p className={styles.address}>
-              {office.addressLines.map((line) => (
-                <span key={line}>{line}</span>
-              ))}
+              <a href={mapsHref} target="_blank" rel="noreferrer">
+                {office.addressLines.map((line) => (
+                  <span key={line}>{line}</span>
+                ))}
+              </a>
             </p>
             <ul className={styles.meta}>
               <li>
@@ -51,9 +64,7 @@ export default function HelpSupportSection() {
               </li>
               <li>
                 <Globe size={18} />
-                <a href={office.websiteHref} target="_blank" rel="noreferrer">
-                  {office.website}
-                </a>
+                <Link to={paths.home}>{office.website}</Link>
               </li>
             </ul>
           </div>

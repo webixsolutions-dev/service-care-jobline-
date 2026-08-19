@@ -228,4 +228,34 @@ export function jobHref(job) {
   return jobDetailsPath(job.id);
 }
 
+const categorySlugMatchers = {
+  nursing: (job) => /nurse|nursing|healthcare/i.test(`${job.title} ${job.category}`),
+  caregiver: (job) => /caregiver|psw|support/i.test(`${job.title} ${job.category}`),
+  hotel: (job) => /hotel|front desk|housekeep|hospitality/i.test(`${job.title} ${job.company} ${job.category}`),
+  restaurant: (job) => /restaurant|server|cook|bistro|hospitality/i.test(`${job.title} ${job.company} ${job.category}`),
+  "support-worker": (job) => /support|psw|caregiver/i.test(`${job.title} ${job.category}`),
+  "front-desk": (job) => /front desk|hospitality/i.test(`${job.title} ${job.category}`),
+  healthcare: (job) => /healthcare|caregiver/i.test(job.category),
+  hospitality: (job) => /hospitality/i.test(job.category),
+};
+
+/** Match a listing against keyword / location / category query params. */
+export function jobMatchesSearch(job, search = {}) {
+  const keyword = (search.keyword || "").trim().toLowerCase();
+  const location = (search.location || "").trim().toLowerCase();
+  const category = (search.category || "").trim().toLowerCase();
+
+  if (keyword) {
+    const haystack = `${job.title} ${job.company} ${job.description} ${job.category}`.toLowerCase();
+    if (!haystack.includes(keyword)) return false;
+  }
+  if (location && !job.location.toLowerCase().includes(location)) return false;
+  if (category) {
+    const match = categorySlugMatchers[category];
+    if (match) return match(job);
+    if (job.category.toLowerCase() !== category) return false;
+  }
+  return true;
+}
+
 export const featuredJobs = jobsData.filter((job) => job.featured);

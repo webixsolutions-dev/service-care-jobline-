@@ -1,8 +1,9 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { FaFacebookF, FaLinkedinIn, FaInstagram } from "react-icons/fa6";
 import { GiMapleLeaf } from "react-icons/gi";
 import { footerConfig } from "../../data/footerConfigs";
+import { paths } from "../../data/navLinks";
 import logoSrc from "../../assets/logo.png";
 import BackToTopButton from "../BackToTopButton/BackToTopButton";
 import styles from "./Footer.module.css";
@@ -19,10 +20,21 @@ export default function Footer() {
 
   const phoneHref = `tel:${(contactInfo.phone || "").replace(/[^\d+]/g, "")}`;
   const emailHref = `mailto:${contactInfo.email || ""}`;
+  const mapsHref = contactInfo.address
+    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contactInfo.address)}`
+    : "";
 
   const contactItems = [
     contactInfo.address
-      ? { key: "address", icon: MapPin, node: <span>{contactInfo.address}</span> }
+      ? {
+          key: "address",
+          icon: MapPin,
+          node: (
+            <a href={mapsHref} target="_blank" rel="noreferrer">
+              {contactInfo.address}
+            </a>
+          ),
+        }
       : null,
     contactInfo.email
       ? { key: "email", icon: Mail, node: <a href={emailHref}>{contactInfo.email}</a> }
@@ -39,7 +51,9 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.inner}>
         <div className={styles.brand}>
-          <img src={logoSrc} alt="ServiceCare Jobline" className={styles.logo} />
+          <Link to={paths.home} className={styles.logoLink} aria-label="ServiceCare Jobline home">
+            <img src={logoSrc} alt="ServiceCare Jobline" className={styles.logo} />
+          </Link>
           <p>{tagline}</p>
           {supportingLine ? (
             <p className={styles.support}>

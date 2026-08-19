@@ -8,7 +8,7 @@ export default function WhyChooseUs() {
   const { badge, heading, brand, subtext } = employersPageContent.whyChoose;
 
   return (
-    <section className={styles.section} aria-labelledby="why-choose-heading">
+    <section className={styles.section} id="why-choose" aria-labelledby="why-choose-heading">
       <div className="container">
         <span className={styles.badge}>
           <Users size={15} strokeWidth={2.2} aria-hidden />

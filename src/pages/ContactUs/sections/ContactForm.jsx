@@ -1,6 +1,8 @@
 import { forwardRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { Send, Lock } from "lucide-react";
 import { contactPageContent } from "../../../data/contactPageContent";
+import { paths } from "../../../data/navLinks";
 import Button from "../../../components/Button/Button";
 import InputField from "../../../components/FormFields/InputField";
 import SelectField from "../../../components/FormFields/SelectField";
@@ -136,7 +138,8 @@ const ContactForm = forwardRef(function ContactForm(_, ref) {
 
       <p className={styles.privacy}>
         <Lock size={14} aria-hidden />
-        {privacy}
+        {privacy}{" "}
+        <Link to={paths.privacy}>Privacy Policy</Link>
       </p>
     </div>
   );

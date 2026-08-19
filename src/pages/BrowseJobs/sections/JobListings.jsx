@@ -1,6 +1,6 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { List, LayoutGrid, ChevronDown, SlidersHorizontal, X } from "lucide-react";
-import { jobsData } from "../../../data/jobsData";
+import { jobsData, jobMatchesSearch } from "../../../data/jobsData";
 import { browseJobsContent, filterGroups } from "../../../data/browseJobsContent";
 import JobFilters from "./JobFilters";
 import JobList from "./JobList";
@@ -18,7 +18,7 @@ const defaultFilters = {
   showSalary: true,
 };
 
-export default function JobListings() {
+export default function JobListings({ search = {} }) {
   const [filters, setFilters] = useState(defaultFilters);
   const [sort, setSort] = useState("recent");
   const [layout, setLayout] = useState("list");
@@ -33,9 +33,13 @@ export default function JobListings() {
         filters.jobType.includes("all-types") || filters.jobType.includes(job.jobType);
       const locOk = !filters.location.length || filters.location.includes(job.location);
       const shiftOk = filters.shift.includes("all-shifts") || filters.shift.includes(job.shift);
-      return catOk && typeOk && locOk && shiftOk;
+      return catOk && typeOk && locOk && shiftOk && jobMatchesSearch(job, search);
     });
-  }, [filters]);
+  }, [filters, search]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [search.keyword, search.location, search.category]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);

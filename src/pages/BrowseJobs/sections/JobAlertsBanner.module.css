@@ -2,6 +2,7 @@
   background: var(--color-navy);
   padding: 8px 0 20px;
   margin: 0;
+  scroll-margin-top: 96px;
 }
 
 .banner {
@@ -91,10 +92,27 @@
 .privacy {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
   margin-top: 10px;
   font-size: 0.78rem;
   color: #94a3b8;
+}
+
+.privacy a {
+  color: var(--color-teal);
+  font-weight: 600;
+}
+
+.privacy a:hover {
+  color: #5eead4;
+}
+
+.success {
+  color: var(--color-teal);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.5;
 }
 
 .privacy svg {

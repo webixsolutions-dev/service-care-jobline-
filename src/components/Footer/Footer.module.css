@@ -21,6 +21,14 @@
   margin-bottom: 18px;
 }
 
+.logoLink {
+  display: inline-block;
+}
+
+.logoLink:hover .logo {
+  opacity: 0.9;
+}
+
 .brand p {
   max-width: 280px;
   font-size: 0.92rem;

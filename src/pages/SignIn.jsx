@@ -43,7 +43,7 @@ const SignIn = () => {
             transition={{ duration: 0.6 }}
             className="relative z-10 max-w-md"
           >
-            <div className="flex items-center gap-3 mb-10">
+            <Link to={paths.home} className="flex items-center gap-3 mb-10">
               <div className="relative w-12 h-12 shrink-0">
                 <FaRegHeart className="absolute inset-0 w-full h-full text-cyan-400" />
                 <FaPlus className="absolute top-[26%] left-1/2 -translate-x-1/2 text-cyan-400 text-sm" />
@@ -51,7 +51,7 @@ const SignIn = () => {
               <span className="text-xl font-bold text-white">
                 ServiceCare <span className="text-cyan-400">Jobline</span>
               </span>
-            </div>
+            </Link>
 
             <h2 className="text-3xl xl:text-4xl font-bold text-white leading-tight mb-4">
               Welcome back to <span className="text-cyan-400">Canada&apos;s</span>{' '}
@@ -90,7 +90,7 @@ const SignIn = () => {
             className="w-full max-w-md"
           >
             {/* Mobile logo */}
-            <div className="flex lg:hidden items-center gap-3 mb-8 justify-center">
+            <Link to={paths.home} className="flex lg:hidden items-center gap-3 mb-8 justify-center">
               <div className="relative w-10 h-10 shrink-0">
                 <FaRegHeart className="absolute inset-0 w-full h-full text-cyan-400" />
                 <FaPlus className="absolute top-[26%] left-1/2 -translate-x-1/2 text-cyan-400 text-xs" />
@@ -98,7 +98,7 @@ const SignIn = () => {
               <span className="text-lg font-bold text-white">
                 ServiceCare <span className="text-cyan-400">Jobline</span>
               </span>
-            </div>
+            </Link>
 
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Welcome back</h1>
             <p className="text-sm text-gray-400 mb-8">Log in to manage your jobs and applications.</p>

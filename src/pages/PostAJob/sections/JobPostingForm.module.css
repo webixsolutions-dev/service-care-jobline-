@@ -62,6 +62,11 @@
   color: var(--color-text-muted);
 }
 
+.privacy a {
+  color: var(--color-teal);
+  font-weight: var(--fw-semibold);
+}
+
 @media (max-width: 720px) {
   .card {
     padding: 28px 20px 24px;

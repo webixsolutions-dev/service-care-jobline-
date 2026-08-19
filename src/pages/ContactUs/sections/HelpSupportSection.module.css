@@ -60,6 +60,19 @@
 
 .mapCol {
   min-height: 320px;
+  display: block;
+  color: inherit;
+}
+
+.address a {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: inherit;
+}
+
+.address a:hover {
+  color: var(--color-teal);
 }
 
 .office {

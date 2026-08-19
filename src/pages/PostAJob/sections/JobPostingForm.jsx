@@ -1,6 +1,8 @@
 import { forwardRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { ArrowRight, Lock } from "lucide-react";
 import { postJobPageContent } from "../../../data/postJobPageContent";
+import { paths } from "../../../data/navLinks";
 import Button from "../../../components/Button/Button";
 import InputField from "../../../components/FormFields/InputField";
 import SelectField from "../../../components/FormFields/SelectField";
@@ -178,7 +180,8 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
 
       <p className={styles.privacy}>
         <Lock size={14} aria-hidden />
-        {privacy}
+        {privacy}{" "}
+        <Link to={paths.privacy}>Privacy Policy</Link>
       </p>
     </div>
   );

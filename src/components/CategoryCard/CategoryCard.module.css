@@ -8,6 +8,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-decoration: none;
+  color: inherit;
   transition: transform var(--ease), box-shadow var(--ease), border-color var(--ease);
 }
 

@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { FaFacebookF, FaLinkedinIn, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FiMail, FiPhone, FiMapPin } from "react-icons/fi";
 import { GiMapleLeaf } from "react-icons/gi";
-import { paths } from "../../routes/paths";
+import { paths } from "../../data/navLinks";
 import logo from "../../assets/logo.png";
 
 const quickLinks = [
@@ -15,23 +15,23 @@ const quickLinks = [
 
 const employerLinks = [
   { label: "Post a Job", to: paths.postAJob },
-  { label: "Browse Resumes", to: paths.browseJobs },
-  { label: "Employer Pricing", to: paths.employers },
-  { label: "Resources", to: paths.employers },
+  { label: "Browse Resumes", to: paths.browseResumes },
+  { label: "Employer Pricing", to: paths.employerPricing },
+  { label: "Resources", to: paths.employerResources },
 ];
 
 const seekerLinks = [
   { label: "Browse Jobs", to: paths.browseJobs },
-  { label: "Create Resume", to: paths.dashboard },
-  { label: "Career Advice", to: paths.dashboard },
-  { label: "Job Alerts", to: paths.dashboard },
+  { label: "Create Resume", to: paths.createResume },
+  { label: "Career Advice", to: paths.careerAdvice },
+  { label: "Job Alerts", to: paths.jobAlerts },
 ];
 
 const socials = [
-  { icon: FaFacebookF, href: "#", label: "Facebook" },
-  { icon: FaLinkedinIn, href: "#", label: "LinkedIn" },
-  { icon: FaInstagram, href: "#", label: "Instagram" },
-  { icon: FaYoutube, href: "#", label: "YouTube" },
+  { icon: FaFacebookF, href: "https://facebook.com", label: "Facebook" },
+  { icon: FaLinkedinIn, href: "https://linkedin.com", label: "LinkedIn" },
+  { icon: FaInstagram, href: "https://instagram.com", label: "Instagram" },
+  { icon: FaYoutube, href: "https://youtube.com", label: "YouTube" },
 ];
 
 export default function Footer() {
@@ -41,7 +41,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5">
           {/* Brand column */}
           <div className="sm:col-span-2 lg:col-span-2">
-            <img src={logo} alt="ServiceCare Jobline" className="h-12 w-auto rounded-md" />
+            <NavLink to={paths.home} aria-label="ServiceCare Jobline home">
+              <img src={logo} alt="ServiceCare Jobline" className="h-12 w-auto rounded-md" />
+            </NavLink>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
               Canada's trusted platform for hospitality, healthcare, and other service careers.
               Connecting employers with the right talent, and job seekers with the right
@@ -53,6 +55,8 @@ export default function Footer() {
                   key={label}
                   href={href}
                   aria-label={label}
+                  target="_blank"
+                  rel="noreferrer"
                   className="flex h-9 w-9 items-center justify-center rounded-full border border-brand-teal text-brand-teal transition-colors hover:bg-brand-teal hover:text-brand-navy"
                 >
                   <Icon className="h-4 w-4" />
@@ -77,11 +81,15 @@ export default function Footer() {
           </div>
           <div className="flex items-center gap-2">
             <FiPhone className="h-4 w-4 shrink-0 text-brand-teal" />
-            <span className="text-white/60">1-800-123-4567</span>
+            <a href="tel:18001234567" className="text-white/60 hover:text-brand-gold">
+              1-800-123-4567
+            </a>
           </div>
           <div className="flex items-center gap-2">
             <FiMail className="h-4 w-4 shrink-0 text-brand-teal" />
-            <span className="text-white/60">info@servicecarejobline.ca</span>
+            <a href="mailto:info@servicecarejobline.ca" className="text-white/60 hover:text-brand-gold">
+              info@servicecarejobline.ca
+            </a>
           </div>
         </div>
       </div>
@@ -91,17 +99,17 @@ export default function Footer() {
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-5 py-5 text-xs text-white/50 sm:flex-row lg:px-8">
           <p>© {new Date().getFullYear()} ServiceCare Jobline. All rights reserved.</p>
           <div className="flex items-center gap-4">
-            <a href="#" className="hover:text-white/80">
+            <NavLink to={paths.privacy} className="hover:text-white/80">
               Privacy Policy
-            </a>
+            </NavLink>
             <span className="text-white/20">|</span>
-            <a href="#" className="hover:text-white/80">
+            <NavLink to={paths.terms} className="hover:text-white/80">
               Terms of Use
-            </a>
+            </NavLink>
             <span className="text-white/20">|</span>
-            <a href="#" className="hover:text-white/80">
+            <NavLink to={paths.accessibility} className="hover:text-white/80">
               Accessibility
-            </a>
+            </NavLink>
           </div>
           <GiMapleLeaf className="h-5 w-5 text-brand-teal" />
         </div>

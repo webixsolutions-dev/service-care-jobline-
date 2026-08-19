@@ -10,13 +10,11 @@ export default function CategoryCard({ icon, title, description, slug }) {
   const href = `${paths.browseJobs}?category=${slug}`;
 
   return (
-    <article className={styles.card}>
+    <Link to={href} className={styles.card}>
       <IconBadge icon={Icon} color="tealSoftOutline" size="lg" />
       <h3>{title}</h3>
       <p>{description}</p>
-      <Link to={href} className={styles.link}>
-        Explore Jobs →
-      </Link>
-    </article>
+      <span className={styles.link}>Explore Jobs →</span>
+    </Link>
   );
 }

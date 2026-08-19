@@ -17,9 +17,14 @@ export default function Employers() {
 
   useEffect(() => {
     const scrollToHash = () => {
-      if (window.location.hash === "#pricing") {
+      const hash = window.location.hash;
+      if (!hash) return;
+      if (hash === "#pricing") {
         pricingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
       }
+      const el = document.querySelector(hash);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     };
     const timer = window.setTimeout(scrollToHash, 50);
     window.addEventListener("hashchange", scrollToHash);

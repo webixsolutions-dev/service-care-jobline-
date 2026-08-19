@@ -12,7 +12,8 @@ import DashboardHome from "../pages/dashboard/DashboardHome";
 import RecruiterHome from "../pages/recruiter/RecruiterHome";
 import Signup from "../pages/SignUp";
 import JobDetails from "../pages/JobDetails/JobDetails";
-import ComingSoon from "../components/ComingSoon/ComingSoon";
+import InfoPage from "../pages/InfoPage";
+import { infoPages } from "../data/infoPages";
 import { paths } from "../data/navLinks";
 
 export default function AppRoutes() {
@@ -32,16 +33,16 @@ export default function AppRoutes() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<DashboardHome />} />
         <Route path="/recruiter" element={<RecruiterHome />} />
-        <Route path={paths.browseResumes} element={<ComingSoon title="Browse Resumes" />} />
-        <Route path={paths.employerPricing} element={<ComingSoon title="Employer Pricing" />} />
-        <Route path={paths.resources} element={<ComingSoon title="Resources" />} />
-        <Route path={paths.createResume} element={<ComingSoon title="Create Resume" />} />
-        <Route path={paths.careerAdvice} element={<ComingSoon title="Career Advice" />} />
-        <Route path="/job-alerts" element={<Navigate to={`${paths.browseJobs}#job-alerts`} replace />} />
-        <Route path={paths.helpCenter} element={<ComingSoon title="Help Center" />} />
-        <Route path={paths.privacy} element={<ComingSoon title="Privacy Policy" />} />
-        <Route path={paths.terms} element={<ComingSoon title="Terms of Use" />} />
-        <Route path={paths.accessibility} element={<ComingSoon title="Accessibility" />} />
+        <Route path={paths.browseResumes} element={<InfoPage content={infoPages.browseResumes} />} />
+        <Route path="/employer-pricing" element={<Navigate to={paths.employerPricing} replace />} />
+        <Route path={paths.resources} element={<InfoPage content={infoPages.employerResources} />} />
+        <Route path={paths.createResume} element={<InfoPage content={infoPages.createResume} />} />
+        <Route path={paths.careerAdvice} element={<InfoPage content={infoPages.careerResources} />} />
+        <Route path="/job-alerts" element={<Navigate to={paths.jobAlerts} replace />} />
+        <Route path={paths.helpCenter} element={<InfoPage content={infoPages.helpCenter} />} />
+        <Route path={paths.privacy} element={<InfoPage content={infoPages.privacy} />} />
+        <Route path={paths.terms} element={<InfoPage content={infoPages.terms} />} />
+        <Route path={paths.accessibility} element={<InfoPage content={infoPages.accessibility} />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

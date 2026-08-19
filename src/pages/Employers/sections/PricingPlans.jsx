@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { employersPageContent } from "../../../data/employersPageContent";
 import { pricingPlans } from "../../../data/pricingPlans";
 import { hireableRoles } from "../../../data/hireableRoles";
+import { paths } from "../../../data/navLinks";
 import PricingCard from "../../../components/PricingCard/PricingCard";
 import Pill from "../../../components/Pill/Pill";
 import IconBadge from "../../../components/IconBadge/IconBadge";
@@ -86,7 +87,13 @@ export default function PricingPlans({ sectionRef }) {
             {hireableRoles.map((role) => {
               const Icon = getIcon(role.icon);
               return (
-                <Pill key={role.label} as="span" tone="navy" icon={Icon}>
+                <Pill
+                  key={role.label}
+                  as={Link}
+                  to={`${paths.browseJobs}?keyword=${encodeURIComponent(role.label)}`}
+                  tone="navy"
+                  icon={Icon}
+                >
                   {role.label}
                 </Pill>
               );

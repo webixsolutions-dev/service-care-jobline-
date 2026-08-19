@@ -62,7 +62,7 @@ export default function BrowseJobs() {
       />
       <JobSearchBar values={filters} onChange={setFilters} onSearch={applySearch} />
       <PopularSearches onSelect={selectPopular} activeKeyword={filters.keyword} />
-      <JobListings />
+      <JobListings search={filters} />
       <QuickFilterJobs />
       <TrustedEmployers />
       <JobAlertsBanner />

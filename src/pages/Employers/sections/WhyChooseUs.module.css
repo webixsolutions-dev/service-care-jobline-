@@ -1,6 +1,7 @@
 .section {
   background: var(--color-off-white);
   padding: 80px 0 28px;
+  scroll-margin-top: 96px;
 }
 
 .badge {
