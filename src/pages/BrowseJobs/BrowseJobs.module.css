@@ -1,0 +1,9 @@
+.page {
+  background: var(--color-navy);
+  margin: 0;
+}
+
+.page > * {
+  margin-top: 0;
+  margin-bottom: 0;
+}

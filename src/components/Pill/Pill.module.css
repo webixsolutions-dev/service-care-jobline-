@@ -1,0 +1,105 @@
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: var(--radius-pill);
+  font-size: 0.875rem;
+  font-weight: var(--fw-semibold);
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  background: transparent;
+  transition: background var(--ease), color var(--ease), border-color var(--ease),
+    transform var(--ease);
+}
+
+.pill:hover {
+  transform: translateY(-1px);
+}
+
+.outline {
+  color: var(--color-teal);
+  border-color: var(--color-teal);
+  background: var(--color-white);
+}
+
+.outline:hover,
+.outline.active {
+  background: var(--color-teal-soft);
+}
+
+.outlineLight {
+  color: var(--color-teal);
+  border-color: rgba(45, 212, 191, 0.55);
+  background: transparent;
+}
+
+.outlineLight:hover,
+.outlineLight.active {
+  background: rgba(20, 184, 166, 0.16);
+  border-color: var(--color-teal);
+  color: var(--color-white);
+}
+
+.navy {
+  height: 40px;
+  padding: 0 16px;
+  cursor: default;
+  color: var(--color-white);
+  background: rgba(7, 19, 45, 0.65);
+  border-color: rgba(148, 163, 184, 0.32);
+}
+
+.navy svg {
+  color: var(--color-gold);
+}
+
+.navy:hover {
+  transform: translateY(-1px);
+  border-color: rgba(20, 184, 166, 0.55);
+}
+
+.teal {
+  height: 26px;
+  padding: 0 10px;
+  font-size: 0.72rem;
+  cursor: default;
+  background: #e6f7f4;
+  color: #0f9a8a;
+}
+
+.blue {
+  height: 26px;
+  padding: 0 10px;
+  font-size: 0.72rem;
+  cursor: default;
+  background: #e8f1fb;
+  color: #2563eb;
+}
+
+.purple {
+  height: 26px;
+  padding: 0 10px;
+  font-size: 0.72rem;
+  cursor: default;
+  background: #f0e9fb;
+  color: #7c3aed;
+}
+
+.gold {
+  height: 26px;
+  padding: 0 10px;
+  font-size: 0.72rem;
+  cursor: default;
+  background: #fff4d6;
+  color: #c98900;
+}
+
+.teal:hover,
+.blue:hover,
+.purple:hover,
+.gold:hover {
+  transform: none;
+}

@@ -1,0 +1,48 @@
+.section {
+  background: var(--color-navy);
+  padding: 64px 0 56px;
+}
+
+.heading {
+  text-align: center;
+  color: var(--color-white);
+  font-size: clamp(1.5rem, 2.8vw, 2rem);
+  font-weight: var(--fw-extrabold);
+  letter-spacing: -0.03em;
+}
+
+.teal {
+  color: var(--color-teal);
+}
+
+.gold {
+  color: var(--color-gold);
+}
+
+.sub {
+  text-align: center;
+  color: var(--color-text-on-dark-secondary);
+  font-size: 0.98rem;
+  margin: 14px auto 36px;
+  max-width: 520px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.mobile {
+  grid-template-columns: 1fr;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1000px) and (min-width: 768px) {
+  .grid:not(.mobile) {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+}

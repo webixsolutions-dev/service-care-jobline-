@@ -1,0 +1,20 @@
+.btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-teal);
+  background: var(--color-navy-card);
+  color: var(--color-teal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background var(--ease), color var(--ease), transform var(--ease);
+}
+
+.btn:hover {
+  background: var(--color-teal);
+  color: var(--color-navy);
+  transform: translateY(-2px);
+}

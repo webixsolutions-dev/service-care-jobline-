@@ -1,0 +1,18 @@
+.page {
+  overflow-x: hidden;
+  margin: 0;
+}
+
+.belowHero {
+  background: #0a1b33;
+  padding: 0 0 64px;
+  margin-top: 0;
+}
+
+.belowHero :global(form) {
+  margin-bottom: 0;
+}
+
+.belowHero :global(ul) {
+  margin-top: 0;
+}

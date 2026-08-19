@@ -1,0 +1,134 @@
+.section {
+  background: var(--color-navy);
+  padding: 56px 0 28px;
+}
+
+.kicker,
+.logosKicker {
+  text-align: center;
+  color: var(--color-teal);
+  font-size: 0.78rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.section h2 {
+  text-align: center;
+  color: var(--color-white);
+  font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+  font-weight: var(--fw-extrabold);
+  letter-spacing: -0.03em;
+  margin-top: 12px;
+}
+
+.sub {
+  text-align: center;
+  color: var(--color-text-on-dark-secondary);
+  margin: 12px auto 36px;
+  max-width: 520px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.logosKicker {
+  margin: 48px 0 22px;
+}
+
+.logos {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  align-items: center;
+}
+
+.logos li {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(148, 163, 184, 0.28);
+  margin-right: 18px;
+  flex-shrink: 0;
+}
+
+.wordmark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  color: rgba(226, 232, 240, 0.88);
+}
+
+.wordmark strong {
+  font-size: 0.95rem;
+}
+
+.wordmark small {
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.75;
+  margin-top: 2px;
+}
+
+.script strong {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+}
+
+.script small {
+  text-transform: none;
+  letter-spacing: 0.06em;
+}
+
+.serif strong {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.02rem;
+}
+
+.display strong {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-size: 1.02rem;
+}
+
+.caps strong {
+  letter-spacing: 0.18em;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1100px) {
+  .logos {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px 8px;
+  }
+
+  .divider {
+    display: none;
+  }
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .logos {
+    grid-template-columns: 1fr 1fr;
+  }
+}

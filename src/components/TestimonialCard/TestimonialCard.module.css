@@ -1,0 +1,198 @@
+.card {
+  background: var(--color-navy-card);
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-lg);
+  padding: 28px 26px 24px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  transition: transform var(--ease), border-color var(--ease);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(20, 184, 166, 0.3);
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.quoteIcon {
+  color: var(--color-teal);
+}
+
+.stars {
+  display: flex;
+  gap: 3px;
+  color: var(--color-gold);
+}
+
+.quote {
+  color: var(--color-white);
+  font-style: italic;
+  font-size: var(--fs-md);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.initialsTeal ~ .meta .name {
+  color: var(--color-white);
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(20, 184, 166, 0.35);
+}
+
+.name {
+  color: var(--color-teal);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-base);
+}
+
+.employer .name {
+  color: var(--color-white);
+}
+
+.role {
+  color: var(--color-text-on-dark-secondary);
+  font-size: var(--fs-sm);
+  margin-top: 2px;
+}
+
+.divider {
+  display: block;
+  height: 1px;
+  margin: 20px 0 0;
+  background: rgba(148, 163, 184, 0.22);
+}
+
+.employer .quote {
+  font-style: normal;
+}
+
+.employer .person {
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.meta {
+  min-width: 0;
+  flex: 1;
+}
+
+.company {
+  color: var(--color-teal);
+  font-size: 0.78rem;
+  margin-top: 3px;
+  line-height: 1.4;
+}
+
+.initials,
+.iconAvatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--color-white);
+  color: var(--color-navy);
+  font-weight: var(--fw-bold);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+
+.iconAvatar {
+  background: rgba(20, 184, 166, 0.16);
+  color: var(--color-teal);
+  border: 2px solid rgba(20, 184, 166, 0.35);
+}
+
+.initialsTeal {
+  background: var(--color-teal);
+  color: var(--color-white);
+}
+
+.initialsTeal ~ .meta .name,
+.person:has(.initialsTeal) .name {
+  color: var(--color-white);
+}
+
+.industry {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  margin-left: 8px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: var(--fw-semibold);
+  white-space: nowrap;
+  border: 1.5px solid transparent;
+}
+
+.industryTeal {
+  color: var(--color-teal);
+  border-color: rgba(20, 184, 166, 0.55);
+}
+
+.industryGold {
+  color: var(--color-gold);
+  border-color: rgba(245, 166, 35, 0.55);
+}
+
+.home .name {
+  color: var(--color-white);
+}
+
+.homeTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.homeTop .person {
+  margin-top: 0;
+  flex: 1;
+}
+
+.home .quote {
+  font-style: normal;
+}
+
+.tealInitials .name {
+  color: var(--color-white);
+}
+
+.tealInitials .quote {
+  font-style: normal;
+}
+
+.bottomStars {
+  margin-top: 20px;
+}
+
+.bottomStars .stars {
+  justify-content: flex-start;
+}

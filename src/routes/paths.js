@@ -6,8 +6,8 @@ export const paths = {
   home: "/",
   browseJobs: "/browse-jobs",
   employers: "/employers",
-  aboutUs: "/about-us",
-  contactUs: "/contact-us",
+  aboutUs: "/about",
+  contactUs: "/contact",
   postAJob: "/post-a-job",
   signIn: "/sign-in",
   dashboard: "/dashboard", // job seeker (shared contract, not /seeker/dashboard)

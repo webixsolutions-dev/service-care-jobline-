@@ -1,0 +1,100 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 22px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid transparent;
+  font-size: 0.9375rem;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--ease), transform var(--ease), box-shadow var(--ease),
+    color var(--ease), border-color var(--ease);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn svg {
+  flex-shrink: 0;
+}
+
+.solidTeal {
+  background: var(--color-teal);
+  color: var(--color-white);
+}
+
+.solidTeal:hover {
+  background: var(--color-teal-dark);
+}
+
+.solidGold {
+  background: var(--color-gold);
+  color: var(--color-navy);
+}
+
+.solidGold:hover {
+  background: var(--color-gold-dark);
+}
+
+.solidNavy {
+  background: var(--color-navy);
+  color: var(--color-white);
+}
+
+.solidNavy:hover {
+  background: var(--color-navy-deep);
+}
+
+.outlineGold {
+  background: transparent;
+  color: var(--color-gold);
+  border-color: var(--color-gold);
+}
+
+.outlineGold:hover {
+  background: rgba(245, 166, 35, 0.12);
+}
+
+.outlineTeal {
+  background: transparent;
+  color: var(--color-teal);
+  border-color: var(--color-teal);
+}
+
+.outlineTeal:hover {
+  background: rgba(20, 184, 166, 0.12);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-teal);
+  outline-offset: 3px;
+}
+
+.outlineWhite {
+  background: transparent;
+  color: var(--color-white);
+  border-color: rgba(255, 255, 255, 0.85);
+}
+
+.outlineWhite:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.sm {
+  height: 40px;
+  padding: 0 16px;
+  font-size: 0.85rem;
+  border-radius: 10px;
+}
+
+@media (max-width: 480px) {
+  .btn:not(.sm) {
+    width: 100%;
+  }
+}

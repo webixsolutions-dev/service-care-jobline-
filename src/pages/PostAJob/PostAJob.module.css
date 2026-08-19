@@ -1,0 +1,10 @@
+.page {
+  background: var(--color-navy);
+  overflow-x: hidden;
+  margin: 0;
+}
+
+.belowHero {
+  background: #0a1b33;
+  padding: 0 0 64px;
+}

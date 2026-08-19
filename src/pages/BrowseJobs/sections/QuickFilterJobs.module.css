@@ -1,0 +1,38 @@
+.section {
+  background: var(--color-navy);
+  padding: 36px 0 24px;
+  margin: 0;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  margin-bottom: 28px;
+}
+
+.filters h2 {
+  color: var(--color-white);
+  font-size: 1.05rem;
+  font-weight: var(--fw-bold);
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
