@@ -5,15 +5,15 @@ import { paths } from "./navLinks";
  * Images live in /public as img1–img9 (see user-provided assets).
  */
 export const images = {
-  hero: "/img1.png",
-  healthcareEmployers: "/img2.png",
-  hospitalityEmployers: "/img3.png",
-  jobSeekers: "/img4.png",
-  serviceProfessionals: "/img5.png",
-  hiringTeam: "/img6.png",
-  markD: "/img7.png",
-  priyaS: "/img8.png",
-  jamesL: "/img9.png",
+  hero: "/img1.webp",
+  healthcareEmployers: "/img2.webp",
+  hospitalityEmployers: "/img3.webp",
+  jobSeekers: "/img4.webp",
+  serviceProfessionals: "/img5.webp",
+  hiringTeam: "/img6.webp",
+  markD: "/img7.webp",
+  priyaS: "/img8.webp",
+  jamesL: "/img9.webp",
 };
 
 export const aboutPageContent = {

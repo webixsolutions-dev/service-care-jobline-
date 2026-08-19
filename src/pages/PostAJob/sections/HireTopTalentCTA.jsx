@@ -24,7 +24,12 @@ export default function HireTopTalentCTA({ onPostJob }) {
             <p>{subtext}</p>
           </div>
           <div className={styles.ctas}>
-            <Button variant="solid-gold" icon={Briefcase} onClick={onPostJob}>
+            <Button
+              variant="solid-gold"
+              icon={Briefcase}
+              href="#job-posting-form"
+              onClick={onPostJob}
+            >
               {primaryCta.label}
             </Button>
             <Button to={secondaryCta.to} variant="solid-teal" icon={Send}>

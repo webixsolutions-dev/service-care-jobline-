@@ -15,7 +15,7 @@ export const homePageContent = {
     descriptionAccent: "Your next opportunity starts here.",
     primaryCta: { label: "Browse Jobs", to: paths.browseJobs },
     secondaryCta: { label: "Post a Job", to: paths.postAJob },
-    image: "/img13.webp",
+    image: "/img6.webp",
     imageAlt:
       "Healthcare and hospitality professionals with the Toronto skyline and maple leaf",
     trustBadges: [
@@ -40,8 +40,8 @@ export const homePageContent = {
     ],
   },
   search: {
-    keywordLabel: "Keyword",
-    keywordPlaceholder: "Job title, skills, or company",
+    keywordLabel: "Job Title or Keyword",
+    keywordPlaceholder: "e.g. Nurse, Server, Caregiver",
     locationLabel: "Location",
     locationPlaceholder: "City, province, or postal code",
     categoryLabel: "Category",

@@ -27,6 +27,7 @@ export default function PostAJob() {
         subtext={hero.description}
         primaryCta={{
           label: hero.primaryCta.label,
+          href: "#job-posting-form",
           onClick: scrollToForm,
           icon: Briefcase,
         }}

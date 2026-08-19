@@ -17,7 +17,12 @@ export default function NeedHelpCTA({ onScrollToForm }) {
             <p>{description}</p>
           </div>
           <div className={styles.ctas}>
-            <Button variant="solid-gold" icon={Users} onClick={onScrollToForm}>
+            <Button
+              variant="solid-gold"
+              icon={Users}
+              href="#contact-form"
+              onClick={onScrollToForm}
+            >
               {primaryCta.label}
             </Button>
             <Button to={secondaryCta.to} variant="outline-white" icon={Search}>

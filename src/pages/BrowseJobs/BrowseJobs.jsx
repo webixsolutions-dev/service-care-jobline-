@@ -21,6 +21,14 @@ export default function BrowseJobs() {
   const { hero } = browseJobsContent;
 
   useEffect(() => {
+    setFilters({
+      keyword: searchParams.get("keyword") || "",
+      location: searchParams.get("location") || "",
+      category: searchParams.get("category") || "",
+    });
+  }, [searchParams]);
+
+  useEffect(() => {
     const scrollToHash = () => {
       const hash = window.location.hash;
       if (!hash) return;

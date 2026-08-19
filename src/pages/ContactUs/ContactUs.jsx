@@ -28,7 +28,12 @@ export default function ContactUs() {
         accentLine="teal"
         accentLinePosition="above"
         subtext={hero.description}
-        primaryCta={{ label: hero.primaryCta.label, onClick: scrollToForm, icon: Send }}
+        primaryCta={{
+          label: hero.primaryCta.label,
+          href: "#contact-form",
+          onClick: scrollToForm,
+          icon: Send,
+        }}
         secondaryCta={{ label: hero.secondaryCta.label, to: hero.secondaryCta.to, icon: Briefcase }}
         backgroundImage={hero.image}
         imageAlt={hero.imageAlt}

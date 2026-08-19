@@ -11,8 +11,8 @@ export const postJobPageContent = {
     description:
       "Find the right talent for your team. Post jobs for nurses, caregivers, support workers, hotel staff, restaurant staff, and service professionals across Canada.",
     primaryCta: { label: "Create a Job Post" },
-    secondaryCta: { label: "Browse Talent", to: paths.browseJobs },
-    image: "/img14.png",
+    secondaryCta: { label: "Browse Talent", to: paths.browseResumes },
+    image: "/img14.webp",
     imageAlt:
       "Healthcare, hospitality, and culinary professionals standing together with the Toronto skyline at night",
     trustBadges: [

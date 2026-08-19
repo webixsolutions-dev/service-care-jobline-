@@ -239,6 +239,26 @@ const categorySlugMatchers = {
   hospitality: (job) => /hospitality/i.test(job.category),
 };
 
+/** Convert a listing salary string to an approximate annual CAD amount. */
+export function annualSalaryMin(salary = "") {
+  const numbers = [...String(salary).matchAll(/[\d.]+/g)].map((m) => Number(m[0]));
+  if (!numbers.length) return 0;
+  const min = numbers[0];
+  if (/hr|hour/i.test(salary)) return Math.round(min * 2080);
+  return min;
+}
+
+/** Hours since posting, parsed from strings like "Posted 2 hours ago". */
+export function postedHoursAgo(posted = "") {
+  const hours = posted.match(/(\d+)\s+hours?/i);
+  if (hours) return Number(hours[1]);
+  const days = posted.match(/(\d+)\s+days?/i);
+  if (days) return Number(days[1]) * 24;
+  const minutes = posted.match(/(\d+)\s+minutes?/i);
+  if (minutes) return Number(minutes[1]) / 60;
+  return Number.MAX_SAFE_INTEGER;
+}
+
 /** Match a listing against keyword / location / category query params. */
 export function jobMatchesSearch(job, search = {}) {
   const keyword = (search.keyword || "").trim().toLowerCase();

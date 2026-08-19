@@ -3,7 +3,7 @@ import { homePageContent } from "../../../data/homePageContent";
 import Button from "../../../components/Button/Button";
 import styles from "./HomeSearchBar.module.css";
 
-export default function HomeSearchBar({ values, onChange, onSearch, connected = false }) {
+export default function HomeSearchBar({ values, onChange, onSearch }) {
   const {
     keywordLabel,
     keywordPlaceholder,
@@ -21,7 +21,7 @@ export default function HomeSearchBar({ values, onChange, onSearch, connected = 
 
   return (
     <form
-      className={`${styles.bar} ${connected ? styles.connected : ""}`}
+      className={styles.bar}
       onSubmit={handleSubmit}
       aria-label="Job search"
     >
@@ -39,8 +39,6 @@ export default function HomeSearchBar({ values, onChange, onSearch, connected = 
         </div>
       </div>
 
-      <span className={styles.divider} aria-hidden />
-
       <div className={styles.field}>
         <label htmlFor="home-location">{locationLabel}</label>
         <div className={styles.inputWrap}>
@@ -54,8 +52,6 @@ export default function HomeSearchBar({ values, onChange, onSearch, connected = 
           />
         </div>
       </div>
-
-      <span className={styles.divider} aria-hidden />
 
       <div className={styles.field}>
         <label htmlFor="home-category">{categoryLabel}</label>

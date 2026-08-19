@@ -7,7 +7,7 @@ export const browseJobsContent = {
     line3: "Across Canada",
     description:
       "Find healthcare jobs, hospitality jobs, caregiver roles, hotel jobs, restaurant jobs, and rewarding service careers in communities across Canada. New opportunities added daily.",
-    image: "/img10.png",
+    image: "/img10.webp",
     imageAlt: "ServiceCare Jobline heart, cross, and service bell mark",
   },
   search: {
@@ -79,10 +79,10 @@ export const browseJobsContent = {
   ],
   salary: { min: 20000, max: 120000, step: 1000 },
   extraLocations: [
-    { id: "edmonton", label: "Edmonton, AB", count: 380 },
-    { id: "winnipeg", label: "Winnipeg, MB", count: 290 },
-    { id: "halifax", label: "Halifax, NS", count: 210 },
-    { id: "kelowna", label: "Kelowna, BC", count: 165 },
+    { id: "Edmonton, AB", label: "Edmonton, AB", count: 380 },
+    { id: "Winnipeg, MB", label: "Winnipeg, MB", count: 290 },
+    { id: "Halifax, NS", label: "Halifax, NS", count: 210 },
+    { id: "Kelowna, BC", label: "Kelowna, BC", count: 165 },
   ],
 };
 

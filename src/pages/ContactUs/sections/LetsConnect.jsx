@@ -16,7 +16,12 @@ export default function LetsConnect({ onScrollToForm }) {
         </h2>
         <p>{description}</p>
         <div className={styles.ctas}>
-          <Button variant="solid-teal" icon={Send} onClick={onScrollToForm}>
+          <Button
+            variant="solid-teal"
+            icon={Send}
+            href="#contact-form"
+            onClick={onScrollToForm}
+          >
             {primaryCta.label}
           </Button>
           <Button to={secondaryCta.to} variant="solid-gold" icon={Briefcase}>

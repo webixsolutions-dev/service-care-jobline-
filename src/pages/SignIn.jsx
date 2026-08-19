@@ -32,7 +32,7 @@ const SignIn = () => {
         <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center p-12 border-r border-slate-700/50">
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: "url('/img6.webp')" }}
+            style={{ backgroundImage: "url('/img4.webp')" }}
             aria-hidden
           />
           <div className="absolute inset-0 bg-gradient-to-br from-slate-950/85 via-slate-900/75 to-cyan-950/70" />

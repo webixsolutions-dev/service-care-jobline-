@@ -53,6 +53,7 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
   } = postJobPageContent.form;
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -67,6 +68,7 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
     if (Object.keys(nextErrors).length) return;
 
     console.log("Job posting details:", values);
+    setSubmitted(true);
   }
 
   return (
@@ -74,6 +76,12 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
       <h2 id="job-details-heading">{heading}</h2>
       <span className={styles.bar} />
       <p className={styles.sub}>{subtext}</p>
+
+      {submitted ? (
+        <p className={styles.success} role="status">
+          Job details received. Our team will review your posting and follow up shortly.
+        </p>
+      ) : null}
 
       <form onSubmit={handleSubmit} noValidate>
         <div className={styles.grid}>

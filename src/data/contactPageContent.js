@@ -13,7 +13,7 @@ export const contactPageContent = {
       "Get in touch with Canada's trusted hospitality and healthcare job platform. Whether you are hiring qualified staff or searching for your next opportunity, our team is here to help.",
     primaryCta: { label: "Send a Message" },
     secondaryCta: { label: "Post a Job", to: paths.postAJob },
-    image: "/img11.png",
+    image: "/img11.webp",
     imageAlt:
       "Healthcare, hospitality, and culinary professionals standing together in front of the Toronto skyline",
     supportCards: [

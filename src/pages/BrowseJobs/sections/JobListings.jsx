@@ -1,6 +1,6 @@
 import { useMemo, useState, useEffect } from "react";
 import { List, LayoutGrid, ChevronDown, SlidersHorizontal, X } from "lucide-react";
-import { jobsData, jobMatchesSearch } from "../../../data/jobsData";
+import { jobsData, jobMatchesSearch, annualSalaryMin, postedHoursAgo } from "../../../data/jobsData";
 import { browseJobsContent, filterGroups } from "../../../data/browseJobsContent";
 import JobFilters from "./JobFilters";
 import JobList from "./JobList";
@@ -33,18 +33,30 @@ export default function JobListings({ search = {} }) {
         filters.jobType.includes("all-types") || filters.jobType.includes(job.jobType);
       const locOk = !filters.location.length || filters.location.includes(job.location);
       const shiftOk = filters.shift.includes("all-shifts") || filters.shift.includes(job.shift);
-      return catOk && typeOk && locOk && shiftOk && jobMatchesSearch(job, search);
+      const salary = annualSalaryMin(job.salary);
+      const salaryOk = salary >= filters.salary.min && salary <= filters.salary.max;
+      return catOk && typeOk && locOk && shiftOk && salaryOk && jobMatchesSearch(job, search);
     });
   }, [filters, search]);
 
+  const sorted = useMemo(() => {
+    const list = [...filtered];
+    if (sort === "salary") {
+      list.sort((a, b) => annualSalaryMin(b.salary) - annualSalaryMin(a.salary));
+    } else {
+      list.sort((a, b) => postedHoursAgo(a.posted) - postedHoursAgo(b.posted));
+    }
+    return list;
+  }, [filtered, sort]);
+
   useEffect(() => {
     setPage(1);
-  }, [search.keyword, search.location, search.category]);
+  }, [search.keyword, search.location, search.category, sort, filters]);
 
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const totalPages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
   const start = (currentPage - 1) * PAGE_SIZE;
-  const pageJobs = filtered.slice(start, start + PAGE_SIZE);
+  const pageJobs = sorted.slice(start, start + PAGE_SIZE);
 
   function handleFilters(next) {
     setFilters(next);
@@ -62,8 +74,8 @@ export default function JobListings({ search = {} }) {
                 {browseJobsContent.listings.subtext}
                 <span>
                   {" "}
-                  · Showing {filtered.length ? start + 1 : 0}–{start + pageJobs.length} of{" "}
-                  {filtered.length} hospitality and healthcare jobs
+                  · Showing {sorted.length ? start + 1 : 0}–{start + pageJobs.length} of{" "}
+                  {sorted.length} hospitality and healthcare jobs
                 </span>
               </p>
             </div>

@@ -57,9 +57,8 @@ export default function Home() {
             values={searchValues}
             onChange={setSearchValues}
             onSearch={handleSearch}
-            connected
           />
-          <TrustBadgeStrip items={hero.trustBadges} connected />
+          <TrustBadgeStrip items={hero.trustBadges} />
         </div>
       </section>
       <PopularCategories />

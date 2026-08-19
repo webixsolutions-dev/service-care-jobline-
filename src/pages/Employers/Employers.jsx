@@ -57,6 +57,7 @@ export default function Employers() {
         }}
         secondaryCta={{
           label: hero.secondaryCta.label,
+          href: "#pricing",
           onClick: scrollToPricing,
           icon: Tag,
           variant: "outline-teal",

@@ -15,7 +15,7 @@ export const employersPageContent = {
     primaryCta: { label: "Post a Job", to: paths.postAJob },
     secondaryCta: { label: "View Pricing" },
     note: "No hidden fees. Cancel anytime.",
-    image: "/img12.png",
+    image: "/img2.webp",
     imageAlt:
       "Hiring manager standing with hospitality and healthcare professionals in front of the Toronto skyline",
     trustBadges: [
