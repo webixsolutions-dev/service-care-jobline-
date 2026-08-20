@@ -1,15 +1,12 @@
 import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes/AppRoutes";
-import ScrollOnTop from "./components/common/ScrollOnTop"; // Import ScrollOnTop
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="relative">
-        <AppRoutes />
-        {/* Scroll to Top Button - Global for all pages */}
-        <ScrollOnTop />
-      </div>
+      <ScrollToTop />
+      <AppRoutes />
     </BrowserRouter>
   );
 }

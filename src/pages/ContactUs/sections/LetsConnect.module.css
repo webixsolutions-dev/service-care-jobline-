@@ -1,0 +1,49 @@
+.section {
+  background: var(--color-navy);
+  padding: 56px 0 72px;
+}
+
+.inner {
+  text-align: center;
+}
+
+.mark {
+  margin: 0 auto 22px;
+  color: var(--color-teal);
+}
+
+.inner h2 {
+  color: var(--color-white);
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  font-weight: var(--fw-extrabold);
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+.inner h2 span {
+  color: var(--color-gold);
+}
+
+.inner p {
+  max-width: 640px;
+  margin: 18px auto 0;
+  color: var(--color-text-on-dark-secondary);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.ctas {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.ctas :global(a),
+.ctas :global(button) {
+  height: 50px;
+  padding: 0 24px;
+  border-radius: 12px;
+  font-size: 1rem;
+}

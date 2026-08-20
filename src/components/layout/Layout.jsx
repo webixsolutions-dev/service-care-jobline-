@@ -1,31 +1,18 @@
-import { Outlet, useLocation } from "react-router-dom";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import { Outlet } from "react-router-dom";
+import Navbar from "../Navbar/Navbar";
+import Footer from "../Footer/Footer";
+import styles from "./Layout.module.css";
 
 export default function Layout() {
-  const location = useLocation();
-  
-  // Define paths where Navbar and Footer should be hidden
-  const hideNavbarAndFooter = [
-    '/sign-in',
-    '/signup',
-    '/dashboard',
-    '/recruiter',
-   
-  ];
-  
-  // Check if current path matches any of the hide paths
-  const shouldHide = hideNavbarAndFooter.some(path => 
-    location.pathname === path || location.pathname.startsWith(path + '/')
-  );
-
   return (
-    <div className="flex min-h-screen flex-col">
-      {!shouldHide && <Navbar />}
-      <main className="flex-1">
+    <div className={styles.shell}>
+      <Navbar />
+      <div className={styles.content}>
         <Outlet />
-      </main>
-      {!shouldHide && <Footer />}
+      </div>
+      <div className={styles.footer}>
+        <Footer />
+      </div>
     </div>
   );
 }

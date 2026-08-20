@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   FaEnvelope,
@@ -8,14 +9,13 @@ import {
   FaEyeSlash,
   FaBriefcase,
   FaUserTie,
-  FaGoogle,
-  FaFacebookF,
   FaRegHeart,
   FaPlus,
   FaConciergeBell,
   FaArrowRight,
   FaCheckCircle
 } from 'react-icons/fa';
+import { paths } from '../data/navLinks';
 
 const perks = [
   'Verified employers & candidates',
@@ -27,10 +27,16 @@ const Signup = () => {
   const [role, setRole] = useState('seeker'); // 'seeker' | 'employer'
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const navigate = useNavigate();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    navigate(role === 'employer' ? '/recruiter' : '/dashboard');
+  }
 
   return (
-    <section className="min-h-screen bg-slate-900 flex">
-      <div className="flex flex-col lg:flex-row w-full max-w-7xl mx-auto">
+    <section className="flex-1 bg-slate-900 flex">
+      <div className="container flex flex-col lg:flex-row w-full">
         {/* Left brand panel — hidden on mobile */}
         <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center p-12 bg-slate-800/40 border-r border-slate-700/50">
           <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-cyan-500/10" />
@@ -41,7 +47,7 @@ const Signup = () => {
             transition={{ duration: 0.6 }}
             className="relative z-10 max-w-md"
           >
-            <div className="flex items-center gap-3 mb-10">
+            <Link to={paths.home} className="flex items-center gap-3 mb-10">
               <div className="relative w-12 h-12 shrink-0">
                 <FaRegHeart className="absolute inset-0 w-full h-full text-cyan-400" />
                 <FaPlus className="absolute top-[26%] left-1/2 -translate-x-1/2 text-cyan-400 text-sm" />
@@ -49,7 +55,7 @@ const Signup = () => {
               <span className="text-xl font-bold text-white">
                 ServiceCare <span className="text-cyan-400">Jobline</span>
               </span>
-            </div>
+            </Link>
 
             <h2 className="text-3xl xl:text-4xl font-bold text-white leading-tight mb-4">
               Join <span className="text-amber-400">Hospitality</span> &amp;{' '}
@@ -81,7 +87,7 @@ const Signup = () => {
             className="w-full max-w-md"
           >
             {/* Mobile logo */}
-            <div className="flex lg:hidden items-center gap-3 mb-8 justify-center">
+            <Link to={paths.home} className="flex lg:hidden items-center gap-3 mb-8 justify-center">
               <div className="relative w-10 h-10 shrink-0">
                 <FaRegHeart className="absolute inset-0 w-full h-full text-cyan-400" />
                 <FaPlus className="absolute top-[26%] left-1/2 -translate-x-1/2 text-cyan-400 text-xs" />
@@ -89,7 +95,7 @@ const Signup = () => {
               <span className="text-lg font-bold text-white">
                 ServiceCare <span className="text-cyan-400">Jobline</span>
               </span>
-            </div>
+            </Link>
 
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Create your account</h1>
             <p className="text-sm text-gray-400 mb-8">Join ServiceCare Jobline in a couple of minutes.</p>
@@ -120,7 +126,7 @@ const Signup = () => {
               </button>
             </div>
 
-            <form className="flex flex-col gap-4">
+            <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
               <div>
                 <label className="block text-xs font-medium text-gray-400 mb-1.5">Full name</label>
                 <div className="relative">
@@ -184,8 +190,18 @@ const Signup = () => {
               </div>
 
               <label className="flex items-start gap-2 text-xs text-gray-400">
-                <input type="checkbox" className="mt-0.5 rounded border-slate-600 bg-slate-800 accent-cyan-400" />
-                I agree to the Terms of Service and Privacy Policy.
+                <input type="checkbox" required className="mt-0.5 rounded border-slate-600 bg-slate-800 accent-cyan-400" />
+                <span>
+                  I agree to the{' '}
+                  <Link to={paths.terms} className="text-cyan-400 hover:text-cyan-300 font-medium">
+                    Terms of Service
+                  </Link>{' '}
+                  and{' '}
+                  <Link to={paths.privacy} className="text-cyan-400 hover:text-cyan-300 font-medium">
+                    Privacy Policy
+                  </Link>
+                  .
+                </span>
               </label>
 
               <button
@@ -201,9 +217,9 @@ const Signup = () => {
 
             <p className="text-center text-sm text-gray-400 mt-8">
               Already have an account?{' '}
-              <a href="/login" className="text-cyan-400 font-medium hover:text-cyan-300">
+              <Link to={paths.signIn} className="text-cyan-400 font-medium hover:text-cyan-300">
                 Log in
-              </a>
+              </Link>
             </p>
           </motion.div>
         </div>

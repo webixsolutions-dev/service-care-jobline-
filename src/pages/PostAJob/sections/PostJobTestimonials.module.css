@@ -1,0 +1,36 @@
+.section {
+  background: var(--color-navy);
+  padding: 64px 0 36px;
+}
+
+.kicker {
+  text-align: center;
+  color: var(--color-teal);
+  font-size: 0.78rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.section h2 {
+  text-align: center;
+  color: var(--color-white);
+  font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+  font-weight: var(--fw-extrabold);
+  letter-spacing: -0.03em;
+  margin: 12px 0 36px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+}

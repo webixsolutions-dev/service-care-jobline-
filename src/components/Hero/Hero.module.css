@@ -1,0 +1,545 @@
+.hero {
+  position: relative;
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  background: #0a1b33;
+  margin: 0;
+  min-height: 560px;
+  max-height: 640px;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+}
+
+.bgContain {
+  background-size: contain;
+  background-position: center right;
+}
+
+/* Home hero — img13 integrated on the right 50%, bottom-anchored (reference layout) */
+.heroRightHalf {
+  min-height: 520px;
+  max-height: 580px;
+}
+
+.bgRightHalf {
+  left: 50%;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: auto;
+  background-size: auto 100%;
+  background-position: right bottom;
+  background-repeat: no-repeat;
+}
+
+.heroRightHalf .overlay {
+  background: linear-gradient(
+    90deg,
+    #0a1b33 0%,
+    #0a1b33 36%,
+    rgba(10, 27, 51, 0.82) 46%,
+    rgba(10, 27, 51, 0.2) 50%,
+    transparent 52%
+  );
+}
+
+/* Employers hero — photo locked to the right 50%, faded into navy, gold arcs */
+.heroGoldRings {
+  min-height: 560px;
+  max-height: 640px;
+}
+
+.heroGoldRings .bgRightHalf {
+  left: 50%;
+  right: 0;
+  width: 50%;
+  background-size: auto 100%;
+  background-position: right bottom;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 14%, #000 100%),
+    linear-gradient(to top, transparent 0%, #000 16%, #000 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0%, #000 14%, #000 100%),
+    linear-gradient(to top, transparent 0%, #000 16%, #000 100%);
+  mask-composite: intersect;
+}
+
+.heroGoldRings .overlay {
+  background: linear-gradient(
+    90deg,
+    #0a1b33 0%,
+    #0a1b33 46%,
+    rgba(10, 27, 51, 0.55) 52%,
+    transparent 58%
+  );
+}
+
+/* About hero — img1 occupies the right 50%, bottom-anchored, faded into navy */
+.heroMaple {
+  min-height: 560px;
+  max-height: 640px;
+}
+
+.heroMaple .bgRightHalf {
+  left: 50%;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  z-index: 2;
+  background-size: auto 100%;
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 16%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 16%, #000 100%);
+}
+
+.heroMaple .overlay {
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    #0a1b33 0%,
+    #0a1b33 48%,
+    rgba(10, 27, 51, 0.35) 54%,
+    transparent 62%
+  );
+}
+
+/* Contact hero — img11 locked to the right 50%, bottom-anchored, faded into navy */
+.heroIntegrated {
+  min-height: 560px;
+  max-height: 640px;
+}
+
+.heroIntegrated .bgRightHalf {
+  left: 50%;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  z-index: 2;
+  background-size: auto 100%;
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 18%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 18%, #000 100%);
+}
+
+.heroIntegrated .overlay {
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    #0a1b33 0%,
+    #0a1b33 48%,
+    rgba(10, 27, 51, 0.4) 54%,
+    transparent 62%
+  );
+}
+
+/* Post a Job hero — img14 locked to right 50%, bottom-anchored, faded into navy */
+.heroPostJob {
+  min-height: 560px;
+  max-height: 640px;
+}
+
+.heroPostJob .bgRightHalf {
+  left: 50%;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  z-index: 2;
+  background-size: auto 100%;
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 10%, #000 100%),
+    linear-gradient(to top, transparent 0%, #000 6%, #000 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0%, #000 10%, #000 100%),
+    linear-gradient(to top, transparent 0%, #000 6%, #000 100%);
+  mask-composite: intersect;
+}
+
+.heroPostJob .overlay {
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    #0a1b33 0%,
+    #0a1b33 44%,
+    rgba(10, 27, 51, 0.55) 50%,
+    rgba(10, 27, 51, 0.18) 54%,
+    transparent 58%
+  );
+}
+
+.mapleLeaf {
+  position: absolute;
+  right: -6%;
+  top: 4%;
+  width: min(540px, 48vw);
+  height: min(540px, 48vw);
+  color: rgba(180, 205, 230, 0.1);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.skyline {
+  position: absolute;
+  right: 2%;
+  bottom: 0;
+  width: 46%;
+  height: 72%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.18;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 400' fill='%2394b8d4'%3E%3Crect x='20' y='230' width='70' height='170'/%3E%3Crect x='100' y='170' width='88' height='230'/%3E%3Crect x='200' y='210' width='58' height='190'/%3E%3Crect x='270' y='36' width='16' height='364'/%3E%3Cpolygon points='270,36 286,36 278,6'/%3E%3Crect x='300' y='150' width='90' height='250'/%3E%3Crect x='400' y='190' width='110' height='210'/%3E%3Crect x='520' y='165' width='80' height='235'/%3E%3C/svg%3E")
+    right bottom / contain no-repeat;
+}
+
+.ringInner,
+.ringOuter {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.ringInner {
+  width: min(680px, 58vw);
+  height: min(680px, 58vw);
+  right: -6%;
+  bottom: -22%;
+  border: 1.5px solid rgba(245, 166, 35, 0.55);
+  box-shadow: 0 0 48px rgba(245, 166, 35, 0.12);
+}
+
+.ringOuter {
+  width: min(860px, 74vw);
+  height: min(860px, 74vw);
+  right: -16%;
+  bottom: -34%;
+  border: 1px solid rgba(245, 166, 35, 0.22);
+}
+
+.heroRightHalf .content {
+  justify-content: flex-start;
+  align-items: flex-start;
+  max-width: var(--container-max);
+  padding: 24px var(--container-pad) 36px;
+}
+
+.heroRightHalf .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 0 16px;
+  margin-bottom: 22px;
+  border: 1.5px solid #14b8a6;
+  border-radius: 999px;
+  background: rgba(20, 184, 166, 0.06);
+  color: #14b8a6;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.heroRightHalf .eyebrow svg {
+  flex-shrink: 0;
+  color: #14b8a6;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    #0a1b33 0%,
+    #0a1b33 32%,
+    rgba(10, 27, 51, 0.85) 45%,
+    rgba(10, 27, 51, 0.35) 60%,
+    rgba(10, 27, 51, 0.05) 75%
+  );
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 40px;
+}
+
+.content h1 {
+  max-width: 640px;
+  color: #ffffff;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.block {
+  display: block;
+}
+
+.white {
+  color: #ffffff;
+}
+
+.gold {
+  color: #f5a623;
+}
+
+.teal {
+  color: #14b8a6;
+}
+
+.leaf {
+  display: inline-block;
+  width: 0.72em;
+  height: 0.72em;
+  margin-left: 10px;
+  color: #f5a623;
+  vertical-align: -0.08em;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 14px;
+  margin-bottom: 20px;
+  border: 1.5px solid #14b8a6;
+  border-radius: 999px;
+  color: #14b8a6;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.bar {
+  display: block;
+  width: 42px;
+  height: 4px;
+  margin-top: 16px;
+  border-radius: 4px;
+}
+
+.barTeal {
+  background: #14b8a6;
+}
+
+.barGold {
+  background: #f5a623;
+}
+
+.subtext {
+  max-width: 520px;
+  margin-top: 20px;
+  color: #c9d3de;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.subtextAccent {
+  color: #14b8a6;
+  font-weight: 600;
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.ctas :global(a),
+.ctas :global(button) {
+  height: 50px;
+  padding: 0 24px;
+  border-radius: 12px;
+  font-size: 1rem;
+}
+
+.note {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  color: #14b8a6;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+@media (min-width: 641px) {
+  .content h1 {
+    font-size: 52px;
+  }
+
+  .subtext {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero {
+    min-height: 480px;
+    max-height: 560px;
+  }
+
+  .content {
+    padding: 40px 32px;
+  }
+
+  .heroRightHalf .content {
+    padding: 20px var(--container-pad) 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    min-height: auto;
+    max-height: none;
+  }
+
+  .content {
+    padding: 48px 20px;
+  }
+
+  .heroRightHalf .content {
+    padding: 16px 20px 28px;
+  }
+
+  .heroRightHalf .eyebrow {
+    white-space: normal;
+    text-align: left;
+  }
+
+  .overlay {
+    background:
+      linear-gradient(180deg, #0a1b33 0%, rgba(10, 27, 51, 0.9) 55%, rgba(10, 27, 51, 0.78) 100%),
+      linear-gradient(
+        90deg,
+        #0a1b33 0%,
+        #0a1b33 32%,
+        rgba(10, 27, 51, 0.85) 45%,
+        rgba(10, 27, 51, 0.35) 60%,
+        rgba(10, 27, 51, 0.05) 75%
+      );
+  }
+
+  .bg {
+    background-position: top center;
+    opacity: 0.5;
+  }
+
+  .bgContain {
+    background-position: center right;
+    opacity: 0.45;
+  }
+
+  .bgRightHalf {
+    left: 0;
+    background-size: auto 85%;
+    background-position: center bottom;
+    opacity: 0.38;
+  }
+
+  .heroGoldRings .bgRightHalf {
+    left: 0;
+    width: 100%;
+    background-size: auto 70%;
+    background-position: center bottom;
+    opacity: 0.42;
+  }
+
+  .heroGoldRings .overlay {
+    background:
+      linear-gradient(180deg, #0a1b33 0%, rgba(10, 27, 51, 0.88) 52%, rgba(10, 27, 51, 0.72) 100%),
+      linear-gradient(
+        90deg,
+        #0a1b33 0%,
+        #0a1b33 42%,
+        rgba(10, 27, 51, 0.4) 58%,
+        transparent 70%
+      );
+  }
+
+  .heroMaple .bgRightHalf {
+    left: 0;
+    width: 100%;
+    background-size: auto 78%;
+    background-position: center bottom;
+    opacity: 0.55;
+  }
+
+  .heroMaple .overlay {
+    background:
+      linear-gradient(180deg, #0a1b33 0%, rgba(10, 27, 51, 0.88) 48%, rgba(10, 27, 51, 0.55) 100%),
+      linear-gradient(90deg, #0a1b33 0%, #0a1b33 28%, transparent 70%);
+  }
+
+  .heroIntegrated .bgRightHalf {
+    left: 0;
+    width: 100%;
+    background-size: auto 78%;
+    background-position: center bottom;
+    opacity: 0.55;
+  }
+
+  .heroIntegrated .overlay {
+    background:
+      linear-gradient(180deg, #0a1b33 0%, rgba(10, 27, 51, 0.88) 48%, rgba(10, 27, 51, 0.55) 100%),
+      linear-gradient(90deg, #0a1b33 0%, #0a1b33 28%, transparent 70%);
+  }
+
+  .heroPostJob .bgRightHalf {
+    left: 0;
+    width: 100%;
+    background-size: auto 78%;
+    background-position: center bottom;
+    opacity: 0.55;
+  }
+
+  .heroPostJob .overlay {
+    background:
+      linear-gradient(180deg, #0a1b33 0%, rgba(10, 27, 51, 0.88) 48%, rgba(10, 27, 51, 0.55) 100%),
+      linear-gradient(90deg, #0a1b33 0%, #0a1b33 28%, transparent 70%);
+  }
+
+  .mapleLeaf,
+  .skyline {
+    opacity: 0.35;
+  }
+
+  .ringInner,
+  .ringOuter {
+    opacity: 0.45;
+  }
+
+  .ctas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

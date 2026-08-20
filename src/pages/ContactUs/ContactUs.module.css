@@ -1,0 +1,39 @@
+.page {
+  background: var(--color-navy);
+  margin: 0;
+}
+
+.belowHero {
+  position: relative;
+  z-index: 5;
+  background: transparent;
+  padding: 0 0 64px;
+  margin-top: -120px;
+}
+
+.support {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 960px) {
+  .belowHero {
+    margin-top: -72px;
+  }
+
+  .support {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .belowHero {
+    margin-top: -40px;
+  }
+
+  .support {
+    grid-template-columns: 1fr;
+  }
+}
+
