@@ -1,98 +1,251 @@
+/* =========================================================
+   MAIN SECTION
+========================================================= */
+
 .section {
-  background: var(--color-off-white);
-  padding: 16px 0 8px;
+  width: 100%;
+  margin: 0;
+  padding: 22px 0 24px;
+
+  background:
+    linear-gradient(
+      110deg,
+      #061a34 0%,
+      #071d39 48%,
+      #08213f 100%
+    );
+
+  box-sizing: border-box;
 }
 
-.panel {
-  background: var(--color-white);
-  border-radius: 20px;
-  box-shadow: var(--shadow-card);
-  padding: 36px 36px;
+/* =========================================================
+   TOP AREA
+   WHY SERVICECARE JOBLINE MATTERS
+========================================================= */
+
+.top {
+  width: 100%;
+
   display: grid;
-  grid-template-columns: 0.95fr 1.35fr;
-  gap: 36px;
+
+  grid-template-columns:
+    250px
+    minmax(0, 1fr);
+
   align-items: center;
+
+  gap: 28px;
+
+  box-sizing: border-box;
 }
 
-.copy h2 {
-  font-size: clamp(1.7rem, 2.6vw, 2.2rem);
-  font-weight: var(--fw-extrabold);
-  color: var(--color-navy);
-  letter-spacing: -0.03em;
+/* =========================================================
+   LEFT INTRO
+========================================================= */
+
+.intro {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+  justify-content: center;
+
+  padding: 0;
+
+  background: transparent;
+
+  border: 0;
+
+  box-shadow: none;
 }
+
+.intro h2 {
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  color: #ffffff;
+
+  font-size: 1.4rem;
+
+  font-weight: var(--fw-extrabold);
+
+  letter-spacing: -0.035em;
+
+  line-height: 1.08;
+}
+
+.intro h2 span {
+  display: block;
+
+  color: #ffffff;
+}
+
+.intro h2 strong {
+  display: block;
+
+  margin-top: 5px;
+
+  color: var(--color-teal);
+
+  font-size: 1.34em;
+
+  font-weight: var(--fw-extrabold);
+
+  line-height: 1;
+}
+
+/* =========================================================
+   INTRO BAR
+========================================================= */
 
 .bar {
   display: block;
-  width: 44px;
-  height: 4px;
+
+  width: 36px;
+  height: 2px;
+
+  margin: 11px 0 13px;
+
   background: var(--color-teal);
-  border-radius: 4px;
-  margin: 14px 0 18px;
+
+  border-radius: 999px;
 }
 
-.copy p {
-  color: var(--color-text-body);
-  font-size: 0.98rem;
-  line-height: 1.7;
+/* =========================================================
+   INTRO TEXT
+========================================================= */
+
+.intro p {
+  max-width: 215px;
+
+  margin: 0;
+
+  color: rgba(232, 238, 246, 0.84);
+
+  font-size: 0.62rem;
+
+  font-weight: 400;
+
+  line-height: 1.5;
+
+  text-align: left;
 }
 
-.copy p + p {
-  margin-top: 14px;
-}
+/* =========================================================
+   STATS GRID
+========================================================= */
 
-.values {
+.stats {
+  min-width: 0;
+
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  position: relative;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  align-items: stretch;
+
+  gap: 14px;
 }
 
-.value {
-  position: relative;
-  text-align: center;
-  padding: 8px 14px;
-}
+/* =========================================================
+   STAT CARD
+========================================================= */
 
-.divider {
-  position: absolute;
-  left: 0;
-  top: 10%;
-  bottom: 10%;
-  width: 1px;
-  background: var(--color-border-light);
-}
+.statCard {
+  min-width: 0;
 
-.icon {
-  width: 56px;
-  height: 56px;
-  margin: 0 auto 14px;
-  border-radius: 50%;
+  height: 168px;
+
   display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  padding: 12px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(11, 36, 68, 0.96) 0%,
+      rgba(7, 28, 55, 0.98) 100%
+    );
+
+  border:
+    1px solid
+    rgba(92, 128, 163, 0.34);
+
+  border-radius: 11px;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+}
+
+/* =========================================================
+   STAT ICON
+========================================================= */
+
+.statIcon {
+  width: 39px;
+  height: 39px;
+
+  flex: 0 0 39px;
+
+  display: flex;
+
   align-items: center;
   justify-content: center;
+
+  margin: 0 0 8px;
+
+  background: #071d38;
+
+  border-radius: 50%;
+
+  box-sizing: border-box;
 }
 
-.icon.teal {
-  background: var(--color-teal-soft);
+.statIcon svg {
+  display: block;
+
+  width: 21px;
+  height: 21px;
+}
+
+.tealIcon {
   color: var(--color-teal);
-  box-shadow: inset 0 0 0 1px rgba(245, 166, 35, 0.35);
+
+  border: 1.25px solid var(--color-teal);
 }
 
-.icon.gold {
-  background: var(--color-gold-soft);
+.goldIcon {
   color: var(--color-gold);
-  box-shadow: inset 0 0 0 1px rgba(245, 166, 35, 0.45);
+
+  border: 1.25px solid var(--color-gold);
 }
 
-.value h3 {
-  font-size: 1rem;
-  font-weight: var(--fw-bold);
-  margin-bottom: 8px;
-}
+/* =========================================================
+   STAT VALUE
+========================================================= */
 
-.value p {
-  color: var(--color-navy);
-  font-size: 0.82rem;
-  line-height: 1.5;
+.statCard h3 {
+  margin: 0 0 3px;
+
+  font-size: 1.02rem;
+
+  font-weight: var(--fw-extrabold);
+
+  letter-spacing: -0.025em;
+
+  line-height: 1.04;
 }
 
 .teal {
@@ -103,24 +256,558 @@
   color: var(--color-gold);
 }
 
-@media (max-width: 1100px) {
-  .panel {
-    grid-template-columns: 1fr;
-    padding: 36px 28px;
+/* All Across Canada */
+
+.statCard:nth-child(4) h3 {
+  max-width: 105px;
+
+  font-size: 0.9rem;
+
+  line-height: 1.02;
+}
+
+/* =========================================================
+   STAT LABEL
+========================================================= */
+
+.statCard h4 {
+  margin: 0 0 7px;
+
+  color: #ffffff;
+
+  font-size: 0.56rem;
+
+  font-weight: var(--fw-bold);
+
+  line-height: 1.2;
+}
+
+/* =========================================================
+   STAT DESCRIPTION
+========================================================= */
+
+.statCard p {
+  max-width: 125px;
+
+  margin: 0;
+
+  color: rgba(225, 233, 243, 0.8);
+
+  font-size: 0.54rem;
+
+  line-height: 1.4;
+}
+
+/* =========================================================
+   JOURNEY PANEL
+========================================================= */
+
+.journey {
+  width: 100%;
+
+  margin-top: 20px;
+
+  display: grid;
+
+  grid-template-columns:
+    220px
+    minmax(0, 1fr);
+
+  align-items: stretch;
+
+  gap: 26px;
+
+  padding: 17px 22px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(9, 34, 65, 0.97) 0%,
+      rgba(6, 27, 53, 0.98) 100%
+    );
+
+  border:
+    1px solid
+    rgba(70, 110, 148, 0.4);
+
+  border-radius: 14px;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   JOURNEY INTRO
+========================================================= */
+
+.journeyIntro {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  padding: 2px 2px 0;
+}
+
+.journeyIntro h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 1.1rem;
+
+  font-weight: var(--fw-extrabold);
+
+  letter-spacing: -0.025em;
+
+  line-height: 1.07;
+}
+
+.journeyIntro h2 span {
+  color: var(--color-teal);
+}
+
+/* =========================================================
+   JOURNEY BAR
+========================================================= */
+
+.journeyBar {
+  display: block;
+
+  width: 34px;
+  height: 2px;
+
+  margin: 9px 0 12px;
+
+  background: var(--color-teal);
+
+  border-radius: 999px;
+}
+
+.journeyIntro p {
+  margin: 0;
+
+  color: rgba(225, 233, 243, 0.8);
+
+  font-size: 0.58rem;
+
+  line-height: 1.45;
+}
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+.timeline {
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 22px;
+}
+
+/* =========================================================
+   MILESTONE
+========================================================= */
+
+.milestone {
+  position: relative;
+
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+/* =========================================================
+   CONNECTING LINE
+========================================================= */
+
+.track {
+  position: absolute;
+
+  top: 19px;
+  left: 43px;
+
+  width: calc(100% + 22px - 43px);
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(92, 130, 164, 0.82),
+      rgba(92, 130, 164, 0.42)
+    );
+
+  z-index: 0;
+}
+
+/* =========================================================
+   JOURNEY ICON
+========================================================= */
+
+.journeyIcon {
+  position: relative;
+
+  z-index: 2;
+
+  width: 39px;
+  height: 39px;
+
+  flex: 0 0 39px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 0 7px;
+
+  background: #071d38;
+
+  border-radius: 50%;
+
+  box-sizing: border-box;
+}
+
+.journeyIcon svg {
+  display: block;
+
+  width: 20px;
+  height: 20px;
+}
+
+/* =========================================================
+   YEAR
+========================================================= */
+
+.year {
+  display: block;
+
+  margin: 0 0 3px;
+
+  font-size: 0.57rem;
+
+  font-weight: var(--fw-bold);
+
+  line-height: 1;
+}
+
+/* =========================================================
+   MILESTONE TITLE
+========================================================= */
+
+.milestone h3 {
+  margin: 0 0 5px;
+
+  color: #ffffff;
+
+  font-size: 0.62rem;
+
+  font-weight: var(--fw-bold);
+
+  line-height: 1.2;
+}
+
+/* =========================================================
+   MILESTONE DESCRIPTION
+========================================================= */
+
+.milestone p {
+  max-width: 122px;
+
+  margin: 0;
+
+  color: rgba(225, 233, 243, 0.8);
+
+  font-size: 0.52rem;
+
+  line-height: 1.42;
+}
+
+/* =========================================================
+   LARGE DESKTOP
+========================================================= */
+
+@media (min-width: 1400px) {
+  .top {
+    grid-template-columns:
+      260px
+      minmax(0, 1fr);
+
+    gap: 32px;
   }
 
-  .values {
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+  .stats {
+    gap: 15px;
   }
 
-  .divider {
-    display: none;
+  .statCard {
+    height: 172px;
+
+    padding: 13px;
+  }
+
+  .journey {
+    grid-template-columns:
+      230px
+      minmax(0, 1fr);
+
+    gap: 30px;
+
+    padding: 18px 24px;
+  }
+
+  .timeline {
+    gap: 24px;
+  }
+
+  .track {
+    width: calc(100% + 24px - 43px);
   }
 }
 
-@media (max-width: 560px) {
-  .values {
+/* =========================================================
+   LAPTOP
+========================================================= */
+
+@media (max-width: 1100px) {
+  .top {
+    grid-template-columns:
+      205px
+      minmax(0, 1fr);
+
+    gap: 20px;
+  }
+
+  .intro h2 {
+    font-size: 1.25rem;
+  }
+
+  .intro p {
+    max-width: 185px;
+
+    font-size: 0.58rem;
+  }
+
+  .stats {
+    gap: 10px;
+  }
+
+  .statCard {
+    height: 158px;
+
+    padding: 10px;
+  }
+
+  .statIcon {
+    width: 35px;
+    height: 35px;
+
+    flex-basis: 35px;
+
+    margin-bottom: 7px;
+  }
+
+  .statIcon svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .statCard h3 {
+    font-size: 0.9rem;
+  }
+
+  .statCard h4 {
+    font-size: 0.51rem;
+  }
+
+  .statCard p {
+    font-size: 0.5rem;
+  }
+
+  /* journey */
+
+  .journey {
+    grid-template-columns:
+      185px
+      minmax(0, 1fr);
+
+    gap: 18px;
+
+    padding: 15px;
+  }
+
+  .timeline {
+    gap: 14px;
+  }
+
+  .track {
+    width: calc(100% + 14px - 43px);
+  }
+
+  .milestone p {
+    font-size: 0.49rem;
+  }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .top {
     grid-template-columns: 1fr;
+
+    gap: 22px;
+  }
+
+  .intro {
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .intro h2 {
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .bar {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .intro p {
+    max-width: 500px;
+
+    text-align: center;
+  }
+
+  .stats {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+  }
+
+  .statCard {
+    height: auto;
+
+    min-height: 150px;
+  }
+
+  .statCard p {
+    max-width: 220px;
+  }
+
+  /* journey */
+
+  .journey {
+    grid-template-columns: 1fr;
+
+    gap: 22px;
+  }
+
+  .journeyIntro {
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .journeyBar {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .timeline {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+  }
+
+  .track {
+    display: none;
+  }
+
+  .milestone {
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .milestone p {
+    max-width: 200px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 560px) {
+  .section {
+    padding: 18px 0 20px;
+  }
+
+  .intro h2 {
+    font-size: 1.3rem;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+  .statCard {
+    min-height: 140px;
+
+    height: auto;
+
+    padding: 13px;
+  }
+
+  .statCard h3 {
+    font-size: 1rem;
+  }
+
+  .statCard h4 {
+    font-size: 0.62rem;
+  }
+
+  .statCard p {
+    max-width: none;
+
+    font-size: 0.61rem;
+  }
+
+  /* journey */
+
+  .journey {
+    padding: 14px;
+
+    border-radius: 12px;
+  }
+
+  .timeline {
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+  }
+
+  .milestone p {
+    max-width: 260px;
   }
 }

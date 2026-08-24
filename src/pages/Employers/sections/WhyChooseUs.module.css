@@ -1,22 +1,18 @@
 .section {
+  width: 100%;
+
   background: var(--color-off-white);
-  padding: 80px 0 28px;
+
+  padding: 64px 0 30px;
+
   scroll-margin-top: 96px;
+
+  box-sizing: border-box;
 }
 
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  height: 34px;
-  padding: 0 14px;
-  margin: 0 auto 22px;
-  border-radius: var(--radius-pill);
-  border: 1.5px solid var(--color-teal);
-  color: var(--color-teal);
-  font-size: 0.82rem;
-  font-weight: var(--fw-semibold);
-}
+/* =========================================
+   CONTAINER
+========================================= */
 
 .section :global(.container) {
   display: flex;
@@ -24,43 +20,313 @@
   align-items: center;
 }
 
+/* =========================================
+   BADGE
+========================================= */
+
+.badge {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  min-height: 34px;
+
+  padding: 0 14px;
+
+  margin: 0 auto 18px;
+
+  border: 1.5px solid var(--color-teal);
+
+  border-radius: var(--radius-pill);
+
+  color: var(--color-teal);
+
+  background: transparent;
+
+  font-size: 0.82rem;
+  font-weight: var(--fw-semibold);
+}
+
+/* =========================================
+   HEADING
+========================================= */
+
 .section h2 {
+  margin: 0;
+
   text-align: center;
+
   color: var(--color-navy);
-  font-size: clamp(1.7rem, 3vw, 2.35rem);
+
+  font-size: clamp(
+    1.7rem,
+    3vw,
+    2.35rem
+  );
+
   font-weight: var(--fw-extrabold);
+
   letter-spacing: -0.03em;
+
   line-height: 1.25;
 }
 
 .section h2 span {
+  color: var(--color-teal);
+
   font-weight: var(--fw-extrabold);
 }
 
+/* =========================================
+   SUBTEXT
+========================================= */
+
 .sub {
+  max-width: 680px;
+
+  margin: 12px auto 28px;
+
   text-align: center;
-  max-width: 640px;
-  margin: 16px auto 40px;
+
   color: var(--color-text-body);
-  font-size: 1.02rem;
-  line-height: 1.65;
+
+  font-size: 0.9rem;
+
+  line-height: 1.6;
 }
+
+/* =========================================
+   GRID
+========================================= */
 
 .grid {
   width: 100%;
+
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+
+  align-items: stretch;
 }
 
-@media (max-width: 960px) {
-  .grid {
-    grid-template-columns: 1fr 1fr;
+/* =========================================
+   FEATURE CARD
+========================================= */
+
+.card {
+  min-width: 0;
+
+  min-height: 126px;
+
+  display: grid;
+
+  grid-template-columns: 82px 1fr;
+
+  align-items: center;
+
+  gap: 16px;
+
+  padding: 18px 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #e1e6eb;
+
+  border-radius: 11px;
+
+  box-shadow:
+    0 3px 12px rgba(8, 29, 56, 0.04);
+
+  box-sizing: border-box;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+
+  border-color:
+    rgba(15, 174, 168, 0.28);
+
+  box-shadow:
+    0 7px 18px rgba(8, 29, 56, 0.07);
+}
+
+/* =========================================
+   ICON CIRCLE
+========================================= */
+
+.iconCircle {
+  width: 68px;
+  height: 68px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  justify-self: center;
+  align-self: center;
+
+  border-radius: 50%;
+
+  background: #edf8f8;
+
+  color: #119e9c;
+
+  box-sizing: border-box;
+}
+
+/*
+  SVG ko exact center mein force karta hai
+*/
+
+.iconCircle svg {
+  display: block;
+
+  width: 31px;
+  height: 31px;
+
+  margin: 0 !important;
+
+  padding: 0 !important;
+
+  flex: 0 0 auto;
+}
+
+/* Canada maple leaf */
+
+.canadaIcon {
+  color: #0c9f9b;
+}
+
+.canadaIcon svg {
+  width: 34px;
+  height: 34px;
+}
+
+/* =========================================
+   CARD CONTENT
+========================================= */
+
+.cardContent {
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  text-align: left;
+}
+
+.cardContent h3 {
+  margin: 0 0 6px;
+
+  color: var(--color-navy);
+
+  font-size: 14px;
+
+  line-height: 1.25;
+
+  font-weight: var(--fw-extrabold);
+}
+
+.cardContent p {
+  margin: 0;
+
+  color: var(--color-text-body);
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+/* =========================================
+   LAPTOP
+========================================= */
+
+@media (max-width: 1100px) {
+  .card {
+    grid-template-columns: 70px 1fr;
+
+    gap: 12px;
+
+    padding: 16px;
+  }
+
+  .iconCircle {
+    width: 62px;
+    height: 62px;
+  }
+
+  .iconCircle svg {
+    width: 29px;
+    height: 29px;
   }
 }
 
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
 @media (max-width: 640px) {
+  .section {
+    padding: 46px 0 24px;
+  }
+
+  .section h2 {
+    font-size: 1.6rem;
+  }
+
+  .sub {
+    margin-bottom: 24px;
+
+    font-size: 0.84rem;
+  }
+
   .grid {
     grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .card {
+    min-height: 112px;
+
+    grid-template-columns: 68px 1fr;
+
+    padding: 15px;
+  }
+
+  .iconCircle {
+    width: 58px;
+    height: 58px;
+  }
+
+  .iconCircle svg {
+    width: 27px;
+    height: 27px;
   }
 }

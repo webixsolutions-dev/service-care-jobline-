@@ -1,8 +1,15 @@
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Lock } from "lucide-react";
 import { postJobPageContent } from "../../../data/postJobPageContent";
 import { paths } from "../../../data/navLinks";
+import { useAuth } from "../../../lib/auth/AuthContext";
+import {
+  createEmployerJob,
+  EMPLOYMENT_VALUES,
+  getMyCompanies,
+  getServiceCareCategories,
+} from "../../../lib/jobs";
 import Button from "../../../components/Button/Button";
 import InputField from "../../../components/FormFields/InputField";
 import SelectField from "../../../components/FormFields/SelectField";
@@ -36,39 +43,132 @@ function validate(values, fields) {
   return errors;
 }
 
-/**
- * Controlled job-details form (step 1 of a future multi-step posting flow).
- * handleSubmit is the single place to later POST to an API.
- */
+function parseLocation(value) {
+  const parts = String(value || "").split(",").map((part) => part.trim()).filter(Boolean);
+  if (parts.length > 1) {
+    return { city: parts.slice(0, -1).join(", "), province: parts.at(-1) };
+  }
+  return { city: parts[0] || undefined, province: undefined };
+}
+
+function parseSalary(value) {
+  const numbers = [...String(value || "").matchAll(/[\d,]+/g)]
+    .map((match) => Number(match[0].replace(/,/g, "")))
+    .filter(Number.isFinite);
+  if (!numbers.length) return {};
+  if (/\+$/.test(String(value).trim())) return { salary_min: numbers[0], salary_period: "yearly" };
+  return {
+    salary_min: numbers[0],
+    salary_max: numbers[1] ?? undefined,
+    salary_period: "yearly",
+  };
+}
+
 const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
-  const {
-    heading,
-    subtext,
-    submitLabel,
-    privacy,
-    fields,
-    categories,
-    employmentTypes,
-    salaryRanges,
-  } = postJobPageContent.form;
+  const { heading, subtext, submitLabel, privacy, fields, salaryRanges } = postJobPageContent.form;
+  const { token, profile } = useAuth();
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
-  const [submitted, setSubmitted] = useState(false);
+  const [message, setMessage] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [companies, setCompanies] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [loadingOptions, setLoadingOptions] = useState(false);
+
+  useEffect(() => {
+    setValues((prev) => ({ ...prev, contactEmail: prev.contactEmail || profile?.email || "" }));
+  }, [profile?.email]);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoadingOptions(true);
+    const requests = [getServiceCareCategories()];
+    if (token && profile?.role === "recruiter") requests.push(getMyCompanies(token));
+    else requests.push(Promise.resolve([]));
+
+    Promise.all(requests)
+      .then(([categoryRows, companyRows]) => {
+        if (cancelled) return;
+        setCategories(Array.isArray(categoryRows) ? categoryRows : []);
+        setCompanies(Array.isArray(companyRows) ? companyRows : []);
+        if (companyRows?.length === 1) {
+          setValues((prev) => ({ ...prev, companyName: prev.companyName || companyRows[0].name }));
+        }
+      })
+      .catch((err) => {
+        if (!cancelled) setMessage(err?.message || "Could not load posting options.");
+      })
+      .finally(() => {
+        if (!cancelled) setLoadingOptions(false);
+      });
+
+    return () => { cancelled = true; };
+  }, [token, profile?.role]);
+
+  const categoryOptions = useMemo(
+    () => categories.map((category) => ({ value: String(category.id), label: category.name })),
+    [categories],
+  );
 
   function handleChange(e) {
     const { name, value } = e.target;
     setValues((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: undefined }));
+    setMessage("");
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     const nextErrors = validate(values, fields);
     setErrors(nextErrors);
+    setMessage("");
     if (Object.keys(nextErrors).length) return;
 
-    console.log("Job posting details:", values);
-    setSubmitted(true);
+    if (!token || profile?.role !== "recruiter") {
+      setMessage("Sign in with an Employer account before posting a job.");
+      return;
+    }
+
+    const company = companies.find(
+      (item) => String(item.name || "").trim().toLowerCase() === values.companyName.trim().toLowerCase(),
+    );
+    if (!company) {
+      setErrors((prev) => ({
+        ...prev,
+        companyName: "Select a company linked to your Employer account before posting.",
+      }));
+      return;
+    }
+
+    const { city, province } = parseLocation(values.location);
+    const salary = parseSalary(values.salaryRange);
+
+    setSubmitting(true);
+    try {
+      const job = await createEmployerJob({
+        company_id: company.id,
+        category_id: Number(values.category),
+        title: values.jobTitle.trim(),
+        description: values.jobSummary.trim(),
+        city,
+        province,
+        is_remote: false,
+        employment_type: values.employmentType,
+        salary_currency: "CAD",
+        ...salary,
+      }, token);
+
+      setMessage(`Job submitted successfully. Status: ${String(job?.status || "pending_review").replaceAll("_", " ")}.`);
+      setValues((prev) => ({
+        ...initialValues,
+        companyName: company.name,
+        contactEmail: profile?.email || prev.contactEmail,
+      }));
+    } catch (err) {
+      setMessage(err?.message || "Could not submit the job.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -77,11 +177,7 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
       <span className={styles.bar} />
       <p className={styles.sub}>{subtext}</p>
 
-      {submitted ? (
-        <p className={styles.success} role="status">
-          Job details received. Our team will review your posting and follow up shortly.
-        </p>
-      ) : null}
+      {message ? <p className={styles.success} role="status">{message}</p> : null}
 
       <form onSubmit={handleSubmit} noValidate>
         <div className={styles.grid}>
@@ -90,12 +186,16 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
             name="companyName"
             label={fields.companyName.label}
             required
-            placeholder={fields.companyName.placeholder}
+            placeholder={companies.length ? "Select your linked company" : fields.companyName.placeholder}
             value={values.companyName}
             onChange={handleChange}
             error={errors.companyName}
             autoComplete="organization"
+            list="employer-company-options"
           />
+          <datalist id="employer-company-options">
+            {companies.map((company) => <option key={company.id} value={company.name} />)}
+          </datalist>
           <InputField
             id="job-title"
             name="jobTitle"
@@ -111,8 +211,8 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
             name="category"
             label={fields.category.label}
             required
-            placeholder={fields.category.placeholder}
-            options={categories}
+            placeholder={loadingOptions ? "Loading categories..." : fields.category.placeholder}
+            options={categoryOptions}
             value={values.category}
             onChange={handleChange}
             error={errors.category}
@@ -134,7 +234,7 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
             label={fields.employmentType.label}
             required
             placeholder={fields.employmentType.placeholder}
-            options={employmentTypes}
+            options={EMPLOYMENT_VALUES}
             value={values.employmentType}
             onChange={handleChange}
             error={errors.employmentType}
@@ -182,7 +282,7 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
           iconPosition="right"
           className={styles.submit}
         >
-          {submitLabel}
+          {submitting ? "Submitting..." : submitLabel}
         </Button>
       </form>
 

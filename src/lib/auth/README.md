@@ -1,7 +1,4 @@
-# Auth (isolated per Audit R4)
+# Authentication
 
-All auth/session/client code must live in this single folder so Phase 4.1
-can delete it and swap in `@jooblie/core` cleanly. Do not import Supabase
-or write session logic anywhere outside `src/lib/auth/`.
-
-Nothing lives here yet -- this site has no backend wired up.
+Authentication is handled through the central Jooblie NestJS API. The browser stores only the
+returned user session; no Supabase service-role or direct database credentials are used here.

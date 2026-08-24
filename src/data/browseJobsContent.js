@@ -40,7 +40,7 @@ export const browseJobsContent = {
     { id: "part-time", label: "Part-time", icon: "clock" },
     { id: "on-site", label: "On-site", icon: "mapPin" },
     { id: "contract", label: "Contract", icon: "fileText" },
-    { id: "healthcare", label: "Healthcare", icon: "heart" },
+    { id: "food-beverage", label: "Food & Beverage", icon: "heart" },
     { id: "hospitality", label: "Hospitality", icon: "bell" },
   ],
   trustedEmployers: {

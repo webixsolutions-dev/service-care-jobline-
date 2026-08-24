@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   FaEnvelope,
@@ -14,15 +14,38 @@ import {
   FaArrowRight
 } from 'react-icons/fa';
 import { paths } from '../data/navLinks';
+import { useAuth } from '../lib/auth/AuthContext';
 
 const SignIn = () => {
   const [role, setRole] = useState('seeker'); // 'seeker' | 'employer'
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { signIn } = useAuth();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    navigate(role === 'employer' ? '/recruiter' : '/dashboard');
+    setError('');
+    setSubmitting(true);
+    try {
+      const session = await signIn({ email, password });
+      const expectedRole = role === 'employer' ? 'recruiter' : 'job_seeker';
+      if (session?.profile?.role !== expectedRole) {
+        setError(`This account is registered as ${session?.profile?.role === 'recruiter' ? 'an Employer' : 'a Job Seeker'}. Select the correct account type.`);
+        return;
+      }
+      const returnTo = location.state?.returnTo;
+      if (expectedRole === 'job_seeker' && returnTo) navigate(returnTo, { replace: true });
+      else navigate(expectedRole === 'recruiter' ? '/recruiter' : '/dashboard', { replace: true });
+    } catch (err) {
+      setError(err?.message || 'Unable to sign in.');
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -137,6 +160,9 @@ const SignIn = () => {
                   <input
                     type="email"
                     placeholder="you@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
                     className="w-full bg-slate-800/60 border border-slate-700/60 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/70 focus:ring-1 focus:ring-cyan-400/50 transition-colors"
                   />
                 </div>
@@ -149,6 +175,9 @@ const SignIn = () => {
                   <input
                     type={showPassword ? 'text' : 'password'}
                     placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
                     className="w-full bg-slate-800/60 border border-slate-700/60 rounded-xl pl-11 pr-11 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/70 focus:ring-1 focus:ring-cyan-400/50 transition-colors"
                   />
                   <button
@@ -171,11 +200,14 @@ const SignIn = () => {
                 </Link>
               </div>
 
+              {error ? <p className="text-sm text-red-400" role="alert">{error}</p> : null}
+
               <button
                 type="submit"
+                disabled={submitting}
                 className="w-full flex items-center justify-center gap-2 bg-cyan-400 hover:bg-cyan-300 text-slate-900 font-semibold py-3 rounded-xl transition-colors mt-2"
               >
-                Log In
+                {submitting ? 'Logging In...' : 'Log In'}
                 <FaArrowRight className="text-sm" />
               </button>
             </form>

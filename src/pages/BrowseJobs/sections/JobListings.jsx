@@ -1,7 +1,8 @@
 import { useMemo, useState, useEffect } from "react";
 import { List, LayoutGrid, ChevronDown, SlidersHorizontal, X } from "lucide-react";
-import { jobsData, jobMatchesSearch, annualSalaryMin, postedHoursAgo } from "../../../data/jobsData";
+import { jobMatchesSearch, annualSalaryMin, postedHoursAgo } from "../../../data/jobsData";
 import { browseJobsContent, filterGroups } from "../../../data/browseJobsContent";
+import useServiceCareJobs from "../../../hooks/useServiceCareJobs";
 import JobFilters from "./JobFilters";
 import JobList from "./JobList";
 import Pagination from "../../../components/Pagination/Pagination";
@@ -10,10 +11,9 @@ import styles from "./JobListings.module.css";
 const PAGE_SIZE = 4;
 
 const defaultFilters = {
-  category: [filterGroups.category.allId],
+  category: ["all-categories"],
   jobType: [filterGroups.jobType.allId],
   location: [],
-  shift: [filterGroups.shift.allId],
   salary: { min: browseJobsContent.salary.min, max: browseJobsContent.salary.max },
   showSalary: true,
 };
@@ -24,27 +24,46 @@ export default function JobListings({ search = {} }) {
   const [layout, setLayout] = useState("list");
   const [page, setPage] = useState(1);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { jobs, categories, loading, error } = useServiceCareJobs({ limit: 100 });
+
+  const categoryOptions = useMemo(() => {
+    return categories.map((category) => ({
+      id: String(category.id),
+      label: category.name,
+      count: jobs.filter((job) => Number(job.categoryId) === Number(category.id)).length,
+    }));
+  }, [categories, jobs]);
+
+  const locationOptions = useMemo(() => {
+    const counts = new Map();
+    for (const job of jobs) {
+      if (!job.location) continue;
+      counts.set(job.location, (counts.get(job.location) || 0) + 1);
+    }
+    return [...counts.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .map(([label, count]) => ({ id: label, label, count }));
+  }, [jobs]);
 
   const filtered = useMemo(() => {
-    return jobsData.filter((job) => {
+    return jobs.filter((job) => {
       const catOk =
-        filters.category.includes("all-categories") || filters.category.includes(job.category);
+        filters.category.includes("all-categories") || filters.category.includes(String(job.categoryId));
       const typeOk =
         filters.jobType.includes("all-types") || filters.jobType.includes(job.jobType);
       const locOk = !filters.location.length || filters.location.includes(job.location);
-      const shiftOk = filters.shift.includes("all-shifts") || filters.shift.includes(job.shift);
-      const salary = annualSalaryMin(job.salary);
-      const salaryOk = salary >= filters.salary.min && salary <= filters.salary.max;
-      return catOk && typeOk && locOk && shiftOk && salaryOk && jobMatchesSearch(job, search);
+      const salary = annualSalaryMin(job);
+      const salaryOk = !salary || (salary >= filters.salary.min && salary <= filters.salary.max);
+      return catOk && typeOk && locOk && salaryOk && jobMatchesSearch(job, search);
     });
-  }, [filters, search]);
+  }, [filters, jobs, search]);
 
   const sorted = useMemo(() => {
     const list = [...filtered];
     if (sort === "salary") {
-      list.sort((a, b) => annualSalaryMin(b.salary) - annualSalaryMin(a.salary));
+      list.sort((a, b) => annualSalaryMin(b) - annualSalaryMin(a));
     } else {
-      list.sort((a, b) => postedHoursAgo(a.posted) - postedHoursAgo(b.posted));
+      list.sort((a, b) => postedHoursAgo(a) - postedHoursAgo(b));
     }
     return list;
   }, [filtered, sort]);
@@ -74,31 +93,20 @@ export default function JobListings({ search = {} }) {
                 {browseJobsContent.listings.subtext}
                 <span>
                   {" "}
-                  · Showing {sorted.length ? start + 1 : 0}–{start + pageJobs.length} of{" "}
-                  {sorted.length} hospitality and healthcare jobs
+                  · Showing {sorted.length ? start + 1 : 0}–{start + pageJobs.length} of {sorted.length} active jobs
                 </span>
               </p>
             </div>
             <div className={styles.controls}>
-              <button
-                type="button"
-                className={styles.mobileFilters}
-                onClick={() => setDrawerOpen(true)}
-              >
+              <button type="button" className={styles.mobileFilters} onClick={() => setDrawerOpen(true)}>
                 <SlidersHorizontal size={16} /> Filters
               </button>
               <label className={styles.sort}>
                 <span className={styles.sortLabel}>Sort by</span>
                 <span className={styles.selectWrap}>
-                  <select
-                    value={sort}
-                    aria-label="Sort jobs"
-                    onChange={(e) => setSort(e.target.value)}
-                  >
+                  <select value={sort} aria-label="Sort jobs" onChange={(e) => setSort(e.target.value)}>
                     {browseJobsContent.listings.sortOptions.map((opt) => (
-                      <option key={opt.value} value={opt.value}>
-                        {opt.label}
-                      </option>
+                      <option key={opt.value} value={opt.value}>{opt.label}</option>
                     ))}
                   </select>
                   <ChevronDown size={16} aria-hidden />
@@ -131,16 +139,17 @@ export default function JobListings({ search = {} }) {
                 filters={filters}
                 onChange={handleFilters}
                 onReset={() => handleFilters(defaultFilters)}
+                categoryOptions={categoryOptions}
+                locationOptions={locationOptions}
               />
             </div>
             <div className={styles.main}>
-              <JobList jobs={pageJobs} layout={layout} showSalary={filters.showSalary} />
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={setPage}
-                maxVisible={5}
-              />
+              {loading ? <p>Loading jobs...</p> : null}
+              {!loading && error ? <p>{error}</p> : null}
+              {!loading && !error ? <JobList jobs={pageJobs} layout={layout} showSalary={filters.showSalary} /> : null}
+              {!loading && !error ? (
+                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setPage} maxVisible={5} />
+              ) : null}
             </div>
           </div>
         </div>
@@ -150,18 +159,15 @@ export default function JobListings({ search = {} }) {
         <div className={styles.drawer} role="dialog" aria-label="Filters">
           <div className={styles.drawerScrim} onClick={() => setDrawerOpen(false)} />
           <div className={styles.drawerPanel}>
-            <button
-              type="button"
-              className={styles.drawerClose}
-              aria-label="Close filters"
-              onClick={() => setDrawerOpen(false)}
-            >
+            <button type="button" className={styles.drawerClose} aria-label="Close filters" onClick={() => setDrawerOpen(false)}>
               <X size={20} />
             </button>
             <JobFilters
               filters={filters}
               onChange={handleFilters}
               onReset={() => handleFilters(defaultFilters)}
+              categoryOptions={categoryOptions}
+              locationOptions={locationOptions}
             />
           </div>
         </div>

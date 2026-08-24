@@ -1,11 +1,13 @@
 import { Search, MapPin, LayoutGrid, ChevronDown, ArrowRight } from "lucide-react";
 import { browseJobsContent } from "../../../data/browseJobsContent";
+import useServiceCareCategories from "../../../hooks/useServiceCareCategories";
 import Button from "../../../components/Button/Button";
 import styles from "./JobSearchBar.module.css";
 
 export default function JobSearchBar({ values, onChange, onSearch }) {
-  const { keywordLabel, keywordPlaceholder, locationLabel, locationPlaceholder, categoryLabel, categories, submitLabel } =
+  const { keywordLabel, keywordPlaceholder, locationLabel, locationPlaceholder, categoryLabel, submitLabel } =
     browseJobsContent.search;
+  const { categories } = useServiceCareCategories();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -36,21 +38,11 @@ export default function JobSearchBar({ values, onChange, onSearch }) {
             <input
               id="job-location"
               type="text"
-              list="job-location-options"
               placeholder={locationPlaceholder}
               value={values.location}
               onChange={(e) => onChange({ ...values, location: e.target.value })}
             />
             <ChevronDown size={16} className={styles.chevron} aria-hidden />
-            <datalist id="job-location-options">
-              <option value="Toronto, ON" />
-              <option value="Vancouver, BC" />
-              <option value="Calgary, AB" />
-              <option value="Montreal, QC" />
-              <option value="Ottawa, ON" />
-              <option value="Edmonton, AB" />
-              <option value="Winnipeg, MB" />
-            </datalist>
           </div>
         </div>
 
@@ -63,9 +55,10 @@ export default function JobSearchBar({ values, onChange, onSearch }) {
               value={values.category}
               onChange={(e) => onChange({ ...values, category: e.target.value })}
             >
-              {categories.map((opt) => (
-                <option key={opt.label} value={opt.value}>
-                  {opt.label}
+              <option value="">All Categories</option>
+              {categories.map((category) => (
+                <option key={category.id} value={String(category.id)}>
+                  {category.name}
                 </option>
               ))}
             </select>

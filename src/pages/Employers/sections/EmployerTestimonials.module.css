@@ -1,134 +1,984 @@
 .section {
+  width: 100%;
   background: var(--color-navy);
-  padding: 56px 0 28px;
+  padding: 80px 0 36px;
+  scroll-margin-top: 96px;
+  box-sizing: border-box;
 }
 
-.kicker,
-.logosKicker {
+/* =========================================
+   KICKER
+========================================= */
+
+.kicker {
+  margin: 0 0 16px;
   text-align: center;
   color: var(--color-teal);
   font-size: 0.78rem;
   font-weight: var(--fw-bold);
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
+/* =========================================
+   MAIN HEADING
+========================================= */
+
 .section h2 {
+  margin: 0;
   text-align: center;
   color: var(--color-white);
-  font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+  font-size: clamp(1.7rem, 3.2vw, 2.55rem);
   font-weight: var(--fw-extrabold);
   letter-spacing: -0.03em;
-  margin-top: 12px;
+  line-height: 1.22;
 }
 
+.gold {
+  color: var(--color-gold);
+}
+
+.teal {
+  color: var(--color-teal);
+}
+
+/* =========================================
+   SUBTEXT
+========================================= */
+
 .sub {
+  max-width: 620px;
+  margin: 16px auto 44px;
   text-align: center;
   color: var(--color-text-on-dark-secondary);
-  margin: 12px auto 36px;
-  max-width: 520px;
+  font-size: 1rem;
+  line-height: 1.65;
 }
+
+/* =========================================
+   PRICING GRID
+========================================= */
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  align-items: stretch;
+  padding-top: 18px;
 }
 
-.logosKicker {
-  margin: 48px 0 22px;
-}
+/* =========================================
+   NOTE
+========================================= */
 
-.logos {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  align-items: center;
-}
-
-.logos li {
+.note {
   display: flex;
   align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  margin: 28px 0 18px;
+
+  color: var(--color-text-on-dark-secondary);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.note svg {
+  flex: 0 0 auto;
+  color: var(--color-teal);
+}
+
+/* =========================================
+   STATS STRIP
+========================================= */
+
+.stats {
+  width: 100%;
+  min-height: 96px;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+
+  gap: 0;
+
+  margin: 0 0 18px;
+  padding: 12px 18px;
+
+  background: rgba(9, 31, 60, 0.72);
+
+  border: 1px solid var(--color-border-dark);
+  border-radius: 14px;
+
+  box-sizing: border-box;
+  list-style: none;
+}
+
+.statItem,
+.stats li {
+  position: relative;
   min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  padding: 4px 28px;
+
+  box-sizing: border-box;
 }
 
-.divider {
+.statItem:not(:last-child)::after,
+.stats li:not(:last-child)::after {
+  content: "";
+
+  position: absolute;
+
+  top: 4px;
+  right: 0;
+
   width: 1px;
-  height: 36px;
-  background: rgba(148, 163, 184, 0.28);
-  margin-right: 18px;
-  flex-shrink: 0;
+  height: calc(100% - 8px);
+
+  background: rgba(148, 163, 184, 0.22);
 }
 
-.wordmark {
+.stats li + li {
+  border-left: 0;
+}
+
+/* =========================================
+   STAT ICON
+========================================= */
+
+.statIcon {
+  width: 48px;
+  height: 48px;
+
+  flex: 0 0 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--color-teal);
+}
+
+.statIcon svg {
+  display: block;
+
+  width: 42px;
+  height: 42px;
+
+  margin: 0;
+  padding: 0;
+
+  color: inherit;
+}
+
+/* =========================================
+   STAT CONTENT
+========================================= */
+
+.statContent {
+  min-width: 0;
+
   display: flex;
   flex-direction: column;
-  line-height: 1.15;
-  color: rgba(226, 232, 240, 0.88);
+
+  align-items: flex-start;
+  justify-content: center;
+
+  text-align: left;
 }
 
-.wordmark strong {
-  font-size: 0.95rem;
-}
+.value {
+  margin: 0 0 2px;
 
-.wordmark small {
-  font-size: 0.68rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  opacity: 0.75;
-  margin-top: 2px;
-}
+  color: var(--color-teal);
 
-.script strong {
-  font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: 1.2rem;
-  letter-spacing: -0.02em;
-}
+  font-size: 1.65rem;
+  font-weight: var(--fw-extrabold);
 
-.script small {
-  text-transform: none;
-  letter-spacing: 0.06em;
-}
-
-.serif strong {
-  font-family: var(--font-serif);
-  font-weight: 600;
-  font-size: 1.02rem;
-}
-
-.display strong {
-  font-weight: 800;
   letter-spacing: -0.03em;
-  font-size: 1.02rem;
+  line-height: 1;
 }
 
-.caps strong {
-  letter-spacing: 0.18em;
-  font-size: 0.95rem;
-  text-transform: uppercase;
+.label {
+  margin: 0 0 3px;
+
+  color: var(--color-white);
+
+  font-size: 0.8rem;
+  font-weight: var(--fw-semibold);
+
+  line-height: 1.2;
 }
 
-@media (max-width: 1100px) {
-  .logos {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px 8px;
+.reachLabel {
+  margin: 0 0 5px;
+
+  color: var(--color-teal);
+
+  font-size: 1.15rem;
+  font-weight: var(--fw-extrabold);
+
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+
+  white-space: nowrap;
+}
+
+.statDesc {
+  max-width: 215px;
+
+  margin: 0;
+
+  color: var(--color-text-on-dark-secondary);
+
+  font-size: 0.65rem;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   ROLES YOU CAN HIRE FOR
+========================================================= */
+
+.roles {
+  width: 100%;
+  min-height: 102px;
+
+  display: grid;
+
+  grid-template-columns:
+    190px
+    minmax(620px, 1fr)
+    195px;
+
+  align-items: center;
+
+  gap: 18px;
+
+  padding: 13px 20px;
+
+  margin: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(9, 31, 61, 0.98) 0%,
+      rgba(5, 24, 49, 0.98) 100%
+    );
+
+  border: 1px solid rgba(47, 96, 140, 0.58);
+  border-radius: 14px;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+}
+
+/* =========================================
+   LEFT AREA
+========================================= */
+
+.rolesLabel {
+  width: 100%;
+  min-width: 0;
+  min-height: 74px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding-right: 18px;
+
+  border-right: 1px solid rgba(148, 163, 184, 0.26);
+
+  box-sizing: border-box;
+}
+
+.rolesIcon {
+  width: 56px;
+  height: 56px;
+
+  flex: 0 0 56px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1.8px solid var(--color-teal);
+
+  border-radius: 50%;
+
+  background: rgba(3, 21, 43, 0.62);
+
+  color: var(--color-teal);
+
+  box-sizing: border-box;
+}
+
+.rolesIcon svg {
+  display: block;
+
+  width: 29px;
+  height: 29px;
+
+  margin: 0;
+}
+
+.rolesLabel h3 {
+  margin: 0;
+
+  color: var(--color-white);
+
+  font-size: 12.5px;
+
+  font-weight: var(--fw-bold);
+
+  line-height: 1.3;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   CENTER ROLE PILLS
+========================================================= */
+
+.pills {
+  width: 100%;
+
+  min-width: 0;
+  min-height: 74px;
+
+  display: grid;
+
+  /*
+    First Row:
+    Nurse | Caregiver | Personal Support Worker | Server
+
+    Second Row:
+    Cook | Housekeeper | Front Desk
+  */
+
+  grid-template-columns:
+    110px
+    140px
+    235px
+    110px;
+
+  grid-template-rows:
+    39px
+    39px;
+
+  align-content: center;
+  align-items: center;
+
+  justify-content: start;
+
+  column-gap: 12px;
+  row-gap: 9px;
+
+  padding-right: 20px;
+
+  border-right: 1px solid rgba(148, 163, 184, 0.26);
+
+  box-sizing: border-box;
+}
+
+/* =========================================
+   EXACT POSITIONS
+========================================= */
+
+.pills > :nth-child(1) {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.pills > :nth-child(2) {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.pills > :nth-child(3) {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.pills > :nth-child(4) {
+  grid-column: 4;
+  grid-row: 1;
+}
+
+.pills > :nth-child(5) {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.pills > :nth-child(6) {
+  grid-column: 2;
+  grid-row: 2;
+
+  width: 150px;
+}
+
+.pills > :nth-child(7) {
+  grid-column: 3;
+  grid-row: 2;
+
+  width: 142px;
+}
+
+/* =========================================================
+   ROLE BUTTONS
+========================================================= */
+
+.pills :global(a),
+.pills :global(button) {
+  width: 100% !important;
+
+  height: 39px !important;
+  min-height: 39px !important;
+
+  display: inline-flex !important;
+
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  gap: 10px !important;
+
+  margin: 0 !important;
+
+  padding: 0 14px !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(18, 42, 76, 0.98),
+      rgba(9, 30, 59, 0.98)
+    ) !important;
+
+  border: 1px solid rgba(135, 158, 183, 0.4) !important;
+
+  border-radius: 7px !important;
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.03) !important;
+
+  color: #ffffff !important;
+
+  font-size: 11px !important;
+  font-weight: var(--fw-medium) !important;
+
+  line-height: 1 !important;
+
+  white-space: nowrap !important;
+
+  text-decoration: none !important;
+
+  box-sizing: border-box !important;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease !important;
+}
+
+.pills :global(a:hover),
+.pills :global(button:hover),
+.pills :global(a:focus-visible),
+.pills :global(button:focus-visible) {
+  background: rgba(20, 49, 88, 1) !important;
+
+  border-color:
+    rgba(18, 187, 181, 0.6) !important;
+
+  color: #ffffff !important;
+
+  transform: translateY(-1px);
+}
+
+/* =========================================
+   BIG GOLD ICONS
+========================================= */
+
+.pills :global(svg) {
+  width: 22px !important;
+  height: 22px !important;
+
+  flex: 0 0 22px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  color: var(--color-gold) !important;
+
+  stroke-width: 2.15;
+}
+
+/* =========================================
+   RIGHT HELP
+========================================= */
+
+.help {
+  width: 100%;
+
+  min-width: 0;
+  min-height: 74px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+  justify-content: center;
+
+  padding-left: 5px;
+
+  box-sizing: border-box;
+}
+
+.help p {
+  max-width: 155px;
+
+  margin: 0 0 9px;
+
+  color: var(--color-teal);
+
+  font-size: 10.5px;
+  font-weight: var(--fw-semibold);
+
+  line-height: 1.35;
+}
+
+.help a {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: var(--color-white);
+
+  font-size: 10.5px;
+  font-weight: var(--fw-medium);
+
+  line-height: 1;
+
+  white-space: nowrap;
+
+  text-decoration: none;
+}
+
+.help a:hover,
+.help a:focus-visible {
+  color: var(--color-teal);
+}
+
+.help a svg {
+  width: 16px;
+  height: 16px;
+
+  flex: 0 0 16px;
+
+  color: var(--color-teal);
+}
+
+/* =========================================================
+   LARGE DESKTOP
+========================================================= */
+
+@media (min-width: 1450px) {
+  .stats {
+    min-height: 100px;
+
+    padding-left: 22px;
+    padding-right: 22px;
   }
 
-  .divider {
-    display: none;
+  .statItem,
+  .stats li {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .roles {
+    grid-template-columns:
+      200px
+      minmax(650px, 1fr)
+      205px;
+
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .pills {
+    grid-template-columns:
+      115px
+      145px
+      245px
+      115px;
+
+    column-gap: 13px;
+  }
+
+  .pills > :nth-child(6) {
+    width: 158px;
+  }
+
+  .pills > :nth-child(7) {
+    width: 148px;
   }
 }
 
-@media (max-width: 960px) {
+/* =========================================================
+   LAPTOP
+========================================================= */
+
+@media (max-width: 1250px) {
+  .stats {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .statItem,
+  .stats li {
+    gap: 12px;
+
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .statIcon {
+    width: 42px;
+    height: 42px;
+
+    flex-basis: 42px;
+  }
+
+  .statIcon svg {
+    width: 38px;
+    height: 38px;
+  }
+
+  .value {
+    font-size: 1.5rem;
+  }
+
+  .reachLabel {
+    font-size: 1rem;
+    white-space: normal;
+  }
+
+  .statDesc {
+    font-size: 0.62rem;
+  }
+
+  .roles {
+    grid-template-columns:
+      165px
+      minmax(500px, 1fr)
+      165px;
+
+    gap: 11px;
+
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .rolesLabel {
+    gap: 10px;
+
+    padding-right: 11px;
+  }
+
+  .rolesIcon {
+    width: 47px;
+    height: 47px;
+
+    flex-basis: 47px;
+  }
+
+  .rolesIcon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .rolesLabel h3 {
+    font-size: 10.5px;
+  }
+
+  .pills {
+    grid-template-columns:
+      88px
+      112px
+      185px
+      88px;
+
+    grid-template-rows:
+      33px
+      33px;
+
+    column-gap: 8px;
+    row-gap: 7px;
+
+    padding-right: 10px;
+  }
+
+  .pills > :nth-child(6) {
+    width: 126px;
+  }
+
+  .pills > :nth-child(7) {
+    width: 116px;
+  }
+
+  .pills :global(a),
+  .pills :global(button) {
+    height: 33px !important;
+    min-height: 33px !important;
+
+    padding: 0 10px !important;
+
+    gap: 8px !important;
+
+    font-size: 9px !important;
+  }
+
+  .pills :global(svg) {
+    width: 18px !important;
+    height: 18px !important;
+
+    flex-basis: 18px !important;
+  }
+
+  .help p,
+  .help a {
+    font-size: 8.5px;
+  }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
   .grid {
     grid-template-columns: 1fr;
-    max-width: 520px;
-    margin: 0 auto;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+
+    padding: 6px 18px;
+  }
+
+  .statItem,
+  .stats li {
+    width: 100%;
+
+    padding: 16px 4px;
+  }
+
+  .statItem:not(:last-child)::after,
+  .stats li:not(:last-child)::after {
+    top: auto;
+    right: auto;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 1px;
+  }
+
+  .roles {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+
+    padding: 15px 16px;
+  }
+
+  .rolesLabel {
+    min-height: auto;
+
+    padding-right: 0;
+    padding-bottom: 12px;
+
+    border-right: 0;
+
+    border-bottom:
+      1px solid
+      rgba(148, 163, 184, 0.22);
+  }
+
+  .pills {
+    width: 100%;
+
+    min-height: auto;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    padding-right: 0;
+    padding-bottom: 12px;
+
+    border-right: 0;
+
+    border-bottom:
+      1px solid
+      rgba(148, 163, 184, 0.22);
+  }
+
+  .pills > :nth-child(n) {
+    width: auto !important;
+
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .pills :global(a),
+  .pills :global(button) {
+    width: auto !important;
+
+    height: 35px !important;
+    min-height: 35px !important;
+
+    padding: 0 12px !important;
+  }
+
+  .help {
+    min-height: auto;
+
+    padding-left: 0;
+  }
+
+  .help p {
+    max-width: none;
   }
 }
 
-@media (max-width: 640px) {
-  .logos {
-    grid-template-columns: 1fr 1fr;
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 560px) {
+  .section {
+    padding: 56px 0 28px;
+  }
+
+  .sub {
+    margin-bottom: 32px;
+
+    font-size: 0.9rem;
+  }
+
+  .note {
+    margin: 22px 0 14px;
+
+    font-size: 0.72rem;
+  }
+
+  .stats {
+    padding: 5px 14px;
+
+    border-radius: 12px;
+  }
+
+  .statItem,
+  .stats li {
+    gap: 13px;
+
+    padding: 14px 2px;
+  }
+
+  .statIcon {
+    width: 40px;
+    height: 40px;
+
+    flex-basis: 40px;
+  }
+
+  .statIcon svg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .value {
+    font-size: 1.4rem;
+  }
+
+  .label {
+    font-size: 0.75rem;
+  }
+
+  .reachLabel {
+    font-size: 0.95rem;
+  }
+
+  .statDesc {
+    font-size: 0.6rem;
+  }
+
+  .roles {
+    padding: 13px;
+
+    border-radius: 12px;
+  }
+
+  .rolesIcon {
+    width: 45px;
+    height: 45px;
+
+    flex-basis: 45px;
+  }
+
+  .rolesIcon svg {
+    width: 23px;
+    height: 23px;
+  }
+
+  .rolesLabel h3 {
+    font-size: 10px;
+    white-space: normal;
+  }
+
+  .pills {
+    gap: 7px;
+  }
+
+  .pills :global(a),
+  .pills :global(button) {
+    height: 33px !important;
+    min-height: 33px !important;
+
+    padding: 0 10px !important;
+
+    gap: 7px !important;
+
+    font-size: 8.5px !important;
+  }
+
+  .pills :global(svg) {
+    width: 17px !important;
+    height: 17px !important;
+
+    flex-basis: 17px !important;
+  }
+
+  .help p,
+  .help a {
+    font-size: 9px;
   }
 }

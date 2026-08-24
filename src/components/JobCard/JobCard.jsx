@@ -1,6 +1,4 @@
-import { useState } from "react";
-
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { MapPin, Briefcase, Heart } from "lucide-react";
 
@@ -15,6 +13,8 @@ import Pill from "../Pill/Pill";
 import Button from "../Button/Button";
 
 import styles from "./JobCard.module.css";
+import { useAuth } from "../../lib/auth/AuthContext";
+import { useSavedJobs } from "../../lib/SavedJobsContext";
 
 
 
@@ -68,7 +68,10 @@ export default function JobCard({
 
 }) {
 
-  const [saved, setSaved] = useState(false);
+  const navigate = useNavigate();
+  const { profile } = useAuth();
+  const { savedIds, toggleSaved } = useSavedJobs();
+  const saved = savedIds.has(String(job.id));
 
   const { Icon, bgColor, color } = getJobIconMeta(job);
 
@@ -79,6 +82,18 @@ export default function JobCard({
   const stacked = variant === "featured" || layout === "grid" || isHome;
 
   const isFeatured = variant === "featured";
+
+  async function handleSave() {
+    if (profile?.role !== "job_seeker") {
+      navigate(paths.signIn, { state: { returnTo: href } });
+      return;
+    }
+    try {
+      await toggleSaved(job.id);
+    } catch {
+      // Keep the card layout unchanged; failed saves are rolled back by the provider.
+    }
+  }
 
   const tags = [
 
@@ -144,7 +159,7 @@ export default function JobCard({
           <Button to={href} variant={buttonVariant} size="sm" className={styles.homeBtn}>
             {job.ctaLabel || "Apply Now"}
           </Button>
-          <SaveButton saved={saved} onToggle={() => setSaved((v) => !v)} className={styles.homeSave} />
+          <SaveButton saved={saved} onToggle={handleSave} className={styles.homeSave} />
         </div>
 
       </article>
@@ -210,7 +225,7 @@ export default function JobCard({
 
               <span className={styles.posted}>{job.posted}</span>
 
-              <SaveButton saved={saved} onToggle={() => setSaved((v) => !v)} />
+              <SaveButton saved={saved} onToggle={handleSave} />
 
             </div>
 
@@ -270,7 +285,7 @@ export default function JobCard({
 
         <div className={styles.aside}>
 
-          <SaveButton saved={saved} onToggle={() => setSaved((v) => !v)} />
+          <SaveButton saved={saved} onToggle={handleSave} />
 
           {showSalary ? <p className={styles.salary}>{job.salary}</p> : null}
 

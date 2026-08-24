@@ -1,9 +1,47 @@
 .page {
-  background: var(--color-navy);
+  width: 100%;
+
   margin: 0;
+
+  padding: 0;
+
+  background: var(--color-navy);
+
+  overflow-x: hidden;
+
+  box-sizing: border-box;
 }
+
+/* =========================================
+   ALL DIRECT PAGE SECTIONS
+========================================= */
 
 .page > * {
   margin-top: 0;
   margin-bottom: 0;
+}
+
+/* Har next module ke upar thora gap */
+.page > * + * {
+  margin-top: 18px;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+  .page > * + * {
+    margin-top: 16px;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+  .page > * + * {
+    margin-top: 12px;
+  }
 }
