@@ -19,7 +19,7 @@ const BrowserHero = () => {
 
     return (
         <>
-            <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-16 md:py-24">
+            <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-10 md:py-14">
                 {/* Background Image */}
                 <div
                     className="absolute inset-0 opacity-20"
@@ -36,20 +36,8 @@ const BrowserHero = () => {
                     <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-sky-400 blur-3xl"></div>
                 </div>
 
-                <div className="container mx-auto relative px-4">
-                    <div className="max-w-4xl mx-3 text-start">
-                        {/* Badge */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
-                            className="inline-block mb-4"
-                        >
-                            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-sky-400/20 to-amber-400/20 border border-sky-400/30 text-sky-300 text-sm font-medium">
-                                <FiTrendingUp className="w-4 h-4" />
-                                Canada's Trusted Office Job Board
-                            </span>
-                        </motion.div>
+                <div className="mx-auto w-full max-w-full relative px-[10%]">
+                    <div className="max-w-4xl text-start">
 
                         {/* Heading */}
                         <motion.h1

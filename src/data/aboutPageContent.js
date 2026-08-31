@@ -22,7 +22,7 @@ export const aboutPageContent = {
     title: "ServiceCare",
     accent: "Jobline",
     description:
-      "Canada's trusted platform for hospitality jobs, healthcare jobs, and service careers. Connecting talent with employers across the country.",
+      "A leading platform for hospitality jobs, healthcare jobs, and service careers. Connecting talent with employers across the country.",
     primaryCta: { label: "Browse Jobs", to: paths.browseJobs },
     secondaryCta: { label: "Post a Job", to: paths.postAJob },
     image: images.hero,

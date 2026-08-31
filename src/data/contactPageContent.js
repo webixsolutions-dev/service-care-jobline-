@@ -10,7 +10,7 @@ export const contactPageContent = {
     title: "ServiceCare",
     accent: "Jobline",
     description:
-      "Get in touch with Canada's trusted hospitality and healthcare job platform. Whether you are hiring qualified staff or searching for your next opportunity, our team is here to help.",
+      "Get in touch with ServiceCare Jobline. Whether you are hiring qualified staff or searching for your next opportunity, our team is here to help.",
     primaryCta: { label: "Send a Message" },
     secondaryCta: { label: "Post a Job", to: paths.postAJob },
     image: "/img11.webp",

@@ -62,7 +62,6 @@ export default function BrowseJobs() {
           { text: hero.line2, color: "teal", block: true },
           { text: hero.line3, color: "white", block: true, leaf: true },
         ]}
-        accentLine="gold"
         subtext={hero.description}
         backgroundImage={hero.image}
         imageAlt={hero.imageAlt}

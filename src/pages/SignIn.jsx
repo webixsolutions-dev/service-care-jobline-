@@ -14,14 +14,19 @@ import {
   FaArrowRight
 } from 'react-icons/fa';
 import { paths } from '../data/navLinks';
+import { useAuth } from '../context/AuthContext';
 
 const SignIn = () => {
   const [role, setRole] = useState('seeker'); // 'seeker' | 'employer'
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   function handleSubmit(e) {
     e.preventDefault();
+    login(email || (role === 'employer' ? 'employer@example.com' : 'alex.rivera@example.com'), role);
     navigate(role === 'employer' ? '/recruiter' : '/dashboard');
   }
 

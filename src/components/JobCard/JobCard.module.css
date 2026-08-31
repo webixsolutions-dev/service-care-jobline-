@@ -227,6 +227,7 @@
 .home {
   display: flex;
   flex-direction: column;
+  height: 100%;
   gap: 0;
   padding: 22px 22px 20px;
 }
@@ -298,9 +299,24 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 16px;
+  margin-top: auto;
+  padding-top: 16px;
 }
 
 .homeBtn {
   flex: 1;
 }
+
+.appliedBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  background: var(--color-teal-soft);
+  color: var(--color-teal-dark);
+  border: 1px solid rgba(20, 184, 166, 0.3);
+}
+

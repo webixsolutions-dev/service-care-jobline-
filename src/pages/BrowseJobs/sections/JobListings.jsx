@@ -18,7 +18,7 @@ const defaultFilters = {
   showSalary: true,
 };
 
-export default function JobListings({ search = {} }) {
+export default function JobListings({ search = {}, isDashboard = false }) {
   const [filters, setFilters] = useState(defaultFilters);
   const [sort, setSort] = useState("recent");
   const [layout, setLayout] = useState("list");
@@ -65,7 +65,7 @@ export default function JobListings({ search = {} }) {
 
   return (
     <section className={styles.section} id="job-listings" aria-labelledby="listings-heading">
-      <div className="container">
+      <div className={isDashboard ? "w-full" : "container"}>
         <div className={styles.panel}>
           <div className={styles.header}>
             <div>

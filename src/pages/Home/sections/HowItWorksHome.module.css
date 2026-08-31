@@ -65,9 +65,9 @@
 
 .steps {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: space-between;
-  gap: 8px;
+  gap: 12px;
   position: relative;
 }
 

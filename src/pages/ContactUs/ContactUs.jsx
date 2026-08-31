@@ -25,8 +25,6 @@ export default function ContactUs() {
           { text: `${hero.kicker} ${hero.title}`, color: "white", block: true },
           { text: hero.accent, color: "gold", block: true },
         ]}
-        accentLine="teal"
-        accentLinePosition="above"
         subtext={hero.description}
         primaryCta={{
           label: hero.primaryCta.label,

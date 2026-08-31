@@ -3,7 +3,7 @@ import { browseJobsContent } from "../../../data/browseJobsContent";
 import Button from "../../../components/Button/Button";
 import styles from "./JobSearchBar.module.css";
 
-export default function JobSearchBar({ values, onChange, onSearch }) {
+export default function JobSearchBar({ values, onChange, onSearch, isDashboard = false }) {
   const { keywordLabel, keywordPlaceholder, locationLabel, locationPlaceholder, categoryLabel, categories, submitLabel } =
     browseJobsContent.search;
 
@@ -13,8 +13,9 @@ export default function JobSearchBar({ values, onChange, onSearch }) {
   }
 
   return (
-    <section className={styles.wrap} aria-label="Job search">
-      <form className={`container ${styles.card}`} onSubmit={handleSubmit}>
+    <section className={isDashboard ? styles.wrapDashboard : styles.wrap} aria-label="Job search">
+      <div className={isDashboard ? "w-full" : "container"}>
+        <form className={styles.card} onSubmit={handleSubmit}>
         <div className={styles.field}>
           <label htmlFor="job-keyword">{keywordLabel}</label>
           <div className={styles.inputWrap}>
@@ -79,6 +80,7 @@ export default function JobSearchBar({ values, onChange, onSearch }) {
           </Button>
         </div>
       </form>
+      </div>
     </section>
   );
 }

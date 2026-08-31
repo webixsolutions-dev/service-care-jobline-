@@ -46,8 +46,53 @@ npm run preview
 - ✅ Module 4: Employers page (hero, why-choose-us, how it works, pricing plans, testimonials)
 - ✅ Module 5: Home page (hero + search, job categories, featured jobs, how it works, why choose us, testimonial carousel)
 - ✅ Module 6: Post a Job page (job posting form, why post with us, how it works, posting plans, testimonials)
+- ✅ Module 7: Job Seeker Dashboard (v3 Spec) — private workspace featuring Overview, Find Jobs, My Applications, Saved Jobs, My Profile, and Settings pages.
+- ✅ Module 8: Employer / Recruiter Dashboard — private workspace featuring Overview, Job Postings (Active/Draft/Closed), Post/Edit Job, Applicants (scoped & unscoped), Candidate Drawer, Company Profile, and Employer Settings.
 
-All core pages are now built. Future modules may add auth (Sign In), a job detail page, employer/candidate dashboards, and real backend integration.
+## Job Seeker Dashboard (v3 Spec)
+- **Route Group (`/dashboard/*`)**:
+  - `/dashboard` → redirects to `/dashboard/overview`
+  - `/dashboard/overview` → `OverviewPage`
+  - `/dashboard/find-jobs` → `FindJobsPage`
+  - `/dashboard/applications` → `MyApplicationsPage`
+  - `/dashboard/saved-jobs` → `SavedJobsPage`
+  - `/dashboard/profile` → `MyProfilePage`
+  - `/dashboard/settings` → `SettingsPage`
+- **Auth Gating & Protection**:
+  - Protected via `RequireAuth` route guard and `AuthContext`.
+  - Redirects logged-out visitors to `/sign-in`.
+  - Redirects Employer-role users to `/employer-dashboard/overview`.
+- **State Management**:
+  - `DashboardDataContext` holds in-memory application records, saved jobs, and profile state.
+  - Action handlers (`applyToJob`, `withdrawApplication`, `toggleSaveJob`, `updateProfile`) perform optimistic updates ready for future API wiring.
+- **v3 Spec Omissions & Simplifications**:
+  - **My Profile**: Intentionally simplified for non-technical newcomers (Full Name, Email Address prominently under name, Phone, City/Location, Skills tag input, optional Work Experience & Education). Resume upload and professional headline fields were explicitly removed.
+  - **Settings**: Contains Account credentials and Notification switches only. Account deletion / Danger Zone actions were explicitly omitted.
+  - **Sidebar**: Features a single **Workspace** nav group plus pinned Settings & Sign Out items. The Community/Network nav section was explicitly removed.
+
+## Employer / Recruiter Dashboard
+- **Route Group (`/employer-dashboard/*`)**:
+  - `/employer-dashboard` → redirects to `/employer-dashboard/overview`
+  - `/employer-dashboard/overview` → `EmployerOverviewPage`
+  - `/employer-dashboard/job-postings` → `JobPostingsPage`
+  - `/employer-dashboard/post-a-job` → `PostJobDashboardPage` (creates or edits a posting)
+  - `/employer-dashboard/job-postings/:jobId/applicants` → `JobApplicantsPage` (posting-scoped candidates)
+  - `/employer-dashboard/applicants` → `AllApplicantsPage` (unscoped candidates across all postings)
+  - `/employer-dashboard/company-profile` → `CompanyProfilePage`
+  - `/employer-dashboard/settings` → `EmployerSettingsPage`
+- **Auth Protection & Shell Reuse**:
+  - Protected via `RequireAuth` (`allowedRole="employer"`). Redirects job seekers to `/dashboard/overview`.
+  - Reuses the exact same `DashboardLayout`, `DashboardSidebar`, `DashboardTopBanner`, and `StatCardRow` shell components, parameterizing sidebar nav links and role labels.
+- **Pipeline Stage Mapping (Seeker ↔ Employer)**:
+  - Employer-facing pipeline stages map 1:1 to seeker-facing labels:
+    - **New** ↔ **Applied**
+    - **Reviewed** / **Shortlisted** ↔ **In Review**
+    - **Interview** ↔ **Interview**
+    - **Offer** ↔ **Offer**
+    - **Rejected** ↔ **Not Selected**
+- **State Management**:
+  - `EmployerDataContext` manages postings (`Active`, `Draft`, `Closed`), applicants, company profile, candidate stage advancement, recruiter notes, and posting deletion.
+
 
 ## Notes
 - The Home page search bar navigates to `/browse-jobs?keyword=&location=&category=` — Browse Jobs should read these query params (via `useSearchParams`) and pre-fill its own search/filter state when that module is revisited/polished.
@@ -70,3 +115,4 @@ All core pages are now built. Future modules may add auth (Sign In), a job detai
 - The job-posting "Continue / Submit Job Details" button currently just logs form data — this is a natural place to introduce a multi-step posting flow (e.g. details → plan selection → payment → confirmation) once the backend exists.
 - `PricingCard` now supports a `checkIconColor` prop; `StepItem`'s connector now supports `'chevron' | 'dotted-line' | 'line'`.
 - Keep everything modular — this is page 4 of a multi-module build; upcoming prompts will add more pages reusing these same components.
+

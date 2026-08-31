@@ -1,6 +1,6 @@
-import { forwardRef, useState } from "react";
+import { forwardRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Lock } from "lucide-react";
+import { ArrowRight, Lock, Save } from "lucide-react";
 import { postJobPageContent } from "../../../data/postJobPageContent";
 import { paths } from "../../../data/navLinks";
 import Button from "../../../components/Button/Button";
@@ -9,7 +9,7 @@ import SelectField from "../../../components/FormFields/SelectField";
 import TextareaField from "../../../components/FormFields/TextareaField";
 import styles from "./JobPostingForm.module.css";
 
-const initialValues = {
+const defaultInitialValues = {
   companyName: "",
   jobTitle: "",
   category: "",
@@ -37,23 +37,52 @@ function validate(values, fields) {
 }
 
 /**
- * Controlled job-details form (step 1 of a future multi-step posting flow).
- * handleSubmit is the single place to later POST to an API.
+ * Controlled job-details form reused across public /post-a-job page and dashboard job posting page.
  */
-const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
+const JobPostingForm = forwardRef(function JobPostingForm(
+  {
+    initialData,
+    onSubmitAction,
+    customHeading,
+    customSubtext,
+    customSubmitLabel,
+    showSaveDraft = false,
+  },
+  ref
+) {
   const {
-    heading,
-    subtext,
-    submitLabel,
+    heading: defaultHeading,
+    subtext: defaultSubtext,
+    submitLabel: defaultSubmitLabel,
     privacy,
     fields,
     categories,
     employmentTypes,
     salaryRanges,
   } = postJobPageContent.form;
-  const [values, setValues] = useState(initialValues);
+
+  const heading = customHeading || defaultHeading;
+  const subtext = customSubtext || defaultSubtext;
+  const submitLabel = customSubmitLabel || defaultSubmitLabel;
+
+  const [values, setValues] = useState(defaultInitialValues);
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (initialData) {
+      setValues({
+        companyName: initialData.companyName || "",
+        jobTitle: initialData.title || initialData.jobTitle || "",
+        category: initialData.category || "",
+        location: initialData.location || "",
+        employmentType: initialData.employmentType || "",
+        salaryRange: initialData.salaryRange || "",
+        contactEmail: initialData.contactEmail || "",
+        jobSummary: initialData.jobSummary || "",
+      });
+    }
+  }, [initialData]);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -61,14 +90,18 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
     setErrors((prev) => ({ ...prev, [name]: undefined }));
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  function handleFormSubmit(e, isDraft = false) {
+    if (e) e.preventDefault();
     const nextErrors = validate(values, fields);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) return;
 
-    console.log("Job posting details:", values);
-    setSubmitted(true);
+    if (onSubmitAction) {
+      onSubmitAction(values, isDraft);
+    } else {
+      console.log("Job posting details:", values);
+      setSubmitted(true);
+    }
   }
 
   return (
@@ -83,7 +116,7 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
         </p>
       ) : null}
 
-      <form onSubmit={handleSubmit} noValidate>
+      <form onSubmit={(e) => handleFormSubmit(e, false)} noValidate>
         <div className={styles.grid}>
           <InputField
             id="job-company"
@@ -175,15 +208,28 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
           />
         </div>
 
-        <Button
-          type="submit"
-          variant="solid-gold"
-          icon={ArrowRight}
-          iconPosition="right"
-          className={styles.submit}
-        >
-          {submitLabel}
-        </Button>
+        <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginTop: "20px" }}>
+          {showSaveDraft && (
+            <Button
+              type="button"
+              variant="outline-navy"
+              icon={Save}
+              onClick={(e) => handleFormSubmit(e, true)}
+            >
+              Save as Draft
+            </Button>
+          )}
+
+          <Button
+            type="submit"
+            variant="solid-gold"
+            icon={ArrowRight}
+            iconPosition="right"
+            className={styles.submit}
+          >
+            {submitLabel}
+          </Button>
+        </div>
       </form>
 
       <p className={styles.privacy}>

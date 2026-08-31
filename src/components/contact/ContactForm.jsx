@@ -64,7 +64,7 @@ const ContactForm = () => {
 
   return (
     <section className="py-16 bg-white">
-      <div className="container mx-auto px-4">
+      <div className="mx-auto max-w-7xl px-6 sm:px-12 md:px-16 lg:px-24">
         {/* Header */}
         <div className="text-center mb-12">
           <motion.h2

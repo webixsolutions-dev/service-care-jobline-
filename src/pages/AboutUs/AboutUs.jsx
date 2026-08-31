@@ -19,7 +19,6 @@ export default function AboutUs() {
           { text: `${hero.kicker} ${hero.title}`, color: "white", block: true },
           { text: hero.accent, color: "gold", block: true },
         ]}
-        accentLine="teal"
         subtext={hero.description}
         primaryCta={{ label: hero.primaryCta.label, to: hero.primaryCta.to, icon: Search }}
         secondaryCta={{ label: hero.secondaryCta.label, to: hero.secondaryCta.to, icon: Briefcase }}
