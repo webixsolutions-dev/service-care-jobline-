@@ -14,81 +14,9 @@ import { homePageContent } from "../../../data/homePageContent";
 import useServiceCareCategories from "../../../hooks/useServiceCareCategories";
 
 import styles from "./PopularCategories.module.css";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
-/*
-  UI cards intentionally contain 6 presentation items.
-
-  Real backend category mapping:
-
-  305 = Hospitality & Guest Services
-  306 = Food & Beverage
-  307 = Housekeeping & Facilities
-  308 = Recreation & Wellness
-
-  Some cards share a backend category but apply an additional keyword.
-*/
-
-const CARD_CONFIG = [
-  {
-    key: "hotel-jobs",
-    title: "Hotel Jobs",
-    description:
-      "Explore front desk, housekeeping, and other hotel careers.",
-    categoryId: 305,
-    keyword: "hotel",
-    Icon: Hotel,
-  },
-
-  {
-    key: "guest-services",
-    title: "Guest Service Jobs",
-    description:
-      "Discover hospitality and guest service opportunities across Canada.",
-    categoryId: 305,
-    keyword: "guest service",
-    Icon: HandHeart,
-  },
-
-  {
-    key: "restaurant-jobs",
-    title: "Restaurant Jobs",
-    description:
-      "Find kitchen, server, and management roles in restaurants.",
-    categoryId: 306,
-    keyword: "restaurant",
-    Icon: Utensils,
-  },
-
-  {
-    key: "food-beverage",
-    title: "Food & Beverage Jobs",
-    description:
-      "Explore food service, kitchen, server, and beverage opportunities.",
-    categoryId: 306,
-    keyword: "",
-    Icon: ConciergeBell,
-  },
-
-  {
-    key: "housekeeping",
-    title: "Housekeeping Jobs",
-    description:
-      "Discover cleaning, facilities, and property support roles.",
-    categoryId: 307,
-    keyword: "",
-    Icon: Building2,
-  },
-
-  {
-    key: "recreation-wellness",
-    title: "Recreation & Wellness",
-    description:
-      "Explore recreation, wellness, community, and support opportunities.",
-    categoryId: 308,
-    keyword: "",
-    Icon: Users,
-  },
-];
+const CATEGORY_ICONS = [Hotel, HandHeart, Utensils, ConciergeBell, Building2, Users];
 
 export default function PopularCategories() {
   const {
@@ -104,27 +32,11 @@ export default function PopularCategories() {
     error,
   } = useServiceCareCategories();
 
-  /*
-    Backend categories ko verify karte hain.
-    Agar category active/backend mein available ho tabhi card show hoga.
-  */
-  const availableIds = new Set(
-    categories.map((category) => Number(category.id))
-  );
+  const visibleCategories = categories.slice(0, 6);
 
-  const visibleCards = CARD_CONFIG.filter((card) =>
-    availableIds.has(card.categoryId)
-  );
-
-  function buildCategoryUrl(card) {
+  function buildCategoryUrl(category) {
     const params = new URLSearchParams();
-
-    params.set("category", String(card.categoryId));
-
-    if (card.keyword) {
-      params.set("keyword", card.keyword);
-    }
-
+    params.set("category", String(category.id));
     return `${paths.browseJobs}?${params.toString()}`;
   }
 
@@ -162,9 +74,7 @@ export default function PopularCategories() {
         </div>
 
         {loading ? (
-          <div className={styles.state}>
-            Loading categories...
-          </div>
+          <div className={styles.state}><LoadingSpinner label="Loading categories" /></div>
         ) : null}
 
         {!loading && error ? (
@@ -175,12 +85,12 @@ export default function PopularCategories() {
 
         {!loading && !error ? (
           <div className={styles.grid}>
-            {visibleCards.map((card) => {
-              const Icon = card.Icon;
+            {visibleCategories.map((category, index) => {
+              const Icon = CATEGORY_ICONS[index % CATEGORY_ICONS.length];
 
               return (
                 <article
-                  key={card.key}
+                  key={category.id}
                   className={styles.card}
                 >
                   <div className={styles.iconCircle}>
@@ -192,15 +102,15 @@ export default function PopularCategories() {
                   </div>
 
                   <h3 className={styles.cardTitle}>
-                    {card.title}
+                    {category.name}
                   </h3>
 
                   <p className={styles.description}>
-                    {card.description}
+                    Explore active {category.name.toLowerCase()} opportunities from verified employers.
                   </p>
 
                   <Link
-                    to={buildCategoryUrl(card)}
+                    to={buildCategoryUrl(category)}
                     className={styles.explore}
                   >
                     <span>Explore Jobs</span>

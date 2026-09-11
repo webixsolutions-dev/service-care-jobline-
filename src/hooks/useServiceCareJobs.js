@@ -14,9 +14,9 @@ export default function useServiceCareJobs(query = {}) {
     setError("");
 
     Promise.all([getPublicJobs(query), getServiceCareCategories()])
-      .then(([jobs, cats]) => {
+      .then(([jobsResponse, cats]) => {
         if (cancelled) return;
-        setRawJobs(Array.isArray(jobs) ? jobs : []);
+        setRawJobs(Array.isArray(jobsResponse?.items) ? jobsResponse.items : []);
         setCategories(Array.isArray(cats) ? cats : []);
       })
       .catch((err) => {

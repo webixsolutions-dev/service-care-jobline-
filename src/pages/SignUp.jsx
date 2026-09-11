@@ -13,7 +13,9 @@ import {
   FaPlus,
   FaConciergeBell,
   FaArrowRight,
-  FaCheckCircle
+  FaCheckCircle,
+  FaGlobe,
+  FaIdCard
 } from 'react-icons/fa';
 import { paths } from '../data/navLinks';
 import { useAuth } from '../lib/auth/AuthContext';
@@ -32,6 +34,9 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [companyWebsite, setCompanyWebsite] = useState('');
+  const [registrationNumber, setRegistrationNumber] = useState('');
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -49,7 +54,7 @@ const Signup = () => {
     setSubmitting(true);
     try {
       const backendRole = role === 'employer' ? 'recruiter' : 'job_seeker';
-      const result = await signUp({ email, password, fullName, role: backendRole });
+      const result = await signUp({ email, password, fullName, role: backendRole, companyName, companyWebsite, registrationNumber });
       if (result?.requiresEmailConfirmation) {
         setMessage('Account created. Check your email to confirm your account, then sign in.');
         return;
@@ -185,6 +190,32 @@ const Signup = () => {
                 </div>
               </div>
 
+              {role === 'employer' ? (
+                <>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-400 mb-1.5">Company name</label>
+                    <div className="relative">
+                      <FaBriefcase className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm" />
+                      <input type="text" placeholder="Company legal name" value={companyName} onChange={(e) => setCompanyName(e.target.value)} required className="w-full bg-slate-800/60 border border-slate-700/60 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/70 focus:ring-1 focus:ring-cyan-400/50 transition-colors" />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-400 mb-1.5">Company website</label>
+                    <div className="relative">
+                      <FaGlobe className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm" />
+                      <input type="url" placeholder="https://company.ca" value={companyWebsite} onChange={(e) => setCompanyWebsite(e.target.value)} required className="w-full bg-slate-800/60 border border-slate-700/60 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/70 focus:ring-1 focus:ring-cyan-400/50 transition-colors" />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-400 mb-1.5">Registration number</label>
+                    <div className="relative">
+                      <FaIdCard className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm" />
+                      <input type="text" placeholder="Business registration number" value={registrationNumber} onChange={(e) => setRegistrationNumber(e.target.value)} required className="w-full bg-slate-800/60 border border-slate-700/60 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/70 focus:ring-1 focus:ring-cyan-400/50 transition-colors" />
+                    </div>
+                  </div>
+                </>
+              ) : null}
+
               <div>
                 <label className="block text-xs font-medium text-gray-400 mb-1.5">Password</label>
                 <div className="relative">
@@ -254,8 +285,7 @@ const Signup = () => {
                 disabled={submitting}
                 className="w-full flex items-center justify-center gap-2 bg-cyan-400 hover:bg-cyan-300 text-slate-900 font-semibold py-3 rounded-xl transition-colors mt-2"
               >
-                {submitting ? 'Creating Account...' : 'Create Account'}
-                <FaArrowRight className="text-sm" />
+              {submitting ? <><span className="sc-spinner sc-spinner-sm" /> Creating Account</> : <><span>Create Account</span><FaArrowRight className="text-sm" /></>}
               </button>
             </form>
 

@@ -1,4 +1,5 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import Layout from "../components/layout/Layout";
 import Home from "../pages/Home";
 import BrowseJobs from "../pages/BrowseJobs/BrowseJobs";
@@ -15,10 +16,15 @@ import JobDetails from "../pages/JobDetails/JobDetails";
 import InfoPage from "../pages/InfoPage";
 import { infoPages } from "../data/infoPages";
 import { paths } from "../data/navLinks";
+import PageTransition from "../components/PageTransition/PageTransition";
+import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 
 export default function AppRoutes() {
+  const location = useLocation();
   return (
-    <Routes>
+    <AnimatePresence mode="wait" initial={false}>
+    <PageTransition key={location.pathname}>
+    <Routes location={location}>
       <Route element={<Layout />}>
         <Route path={paths.home} element={<Home />} />
         <Route path={paths.browseJobs} element={<BrowseJobs />} />
@@ -31,8 +37,8 @@ export default function AppRoutes() {
         <Route path={paths.postAJob} element={<PostAJob />} />
         <Route path={paths.signIn} element={<SignIn />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/dashboard" element={<DashboardHome />} />
-        <Route path="/recruiter" element={<RecruiterHome />} />
+        <Route path="/dashboard" element={<ProtectedRoute role="job_seeker"><DashboardHome /></ProtectedRoute>} />
+        <Route path="/recruiter" element={<ProtectedRoute role="recruiter"><RecruiterHome /></ProtectedRoute>} />
         <Route path={paths.browseResumes} element={<InfoPage content={infoPages.browseResumes} />} />
         <Route path="/employer-pricing" element={<Navigate to={paths.employerPricing} replace />} />
         <Route path={paths.resources} element={<InfoPage content={infoPages.employerResources} />} />
@@ -46,5 +52,7 @@ export default function AppRoutes() {
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
+    </PageTransition>
+    </AnimatePresence>
   );
 }

@@ -3,11 +3,12 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, MapPin, Briefcase } from "lucide-react";
 import { getJobIconMeta } from "../../data/categoryIcons";
 import { paths } from "../../data/navLinks";
-import { applyToJob, getPublicJob, getServiceCareCategories, normalizeJob, recordJobView } from "../../lib/jobs";
+import { applyToJob, getPublicJob, getServiceCareCategories, normalizeJob } from "../../lib/jobs";
 import { useAuth } from "../../lib/auth/AuthContext";
 import Button from "../../components/Button/Button";
 import Pill from "../../components/Pill/Pill";
 import styles from "./JobDetails.module.css";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 export default function JobDetails() {
   const { jobId } = useParams();
@@ -27,7 +28,6 @@ export default function JobDetails() {
       .then(([row, categories]) => {
         if (cancelled) return;
         setJob(normalizeJob(row, categories));
-        recordJobView(jobId).catch(() => {});
       })
       .catch((err) => {
         if (!cancelled) setError(err?.message || "Job not found");
@@ -63,9 +63,7 @@ export default function JobDetails() {
   if (loading) {
     return (
       <main className={styles.page}>
-        <div className={`container ${styles.missing}`}>
-          <h1>Loading job...</h1>
-        </div>
+        <div className={`container ${styles.missing}`}><LoadingSpinner label="Loading job" size="lg" /></div>
       </main>
     );
   }
@@ -119,8 +117,8 @@ export default function JobDetails() {
           {applyState.message ? <p className={styles.body}>{applyState.message}</p> : null}
           {applyState.error ? <p className={styles.body}>{applyState.error}</p> : null}
           <div className={styles.actions}>
-            <Button variant="solid-teal" onClick={handleApply}>
-              {applyState.loading ? "Applying..." : "Apply Now"}
+            <Button variant="solid-teal" onClick={handleApply} disabled={applyState.loading} aria-busy={applyState.loading}>
+              {applyState.loading ? <><span className="sc-spinner sc-spinner-sm" /> Applying</> : "Apply Now"}
             </Button>
             <Button to={paths.contactUs} variant="solid-gold">
               Contact Employer

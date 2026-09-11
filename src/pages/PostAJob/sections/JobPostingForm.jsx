@@ -119,19 +119,16 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const nextErrors = validate(values, fields);
-    setErrors(nextErrors);
     setMessage("");
-    if (Object.keys(nextErrors).length) return;
-
     if (!token || profile?.role !== "recruiter") {
       setMessage("Sign in with an Employer account before posting a job.");
       return;
     }
+    const nextErrors = validate(values, fields);
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length) return;
 
-    const company = companies.find(
-      (item) => String(item.name || "").trim().toLowerCase() === values.companyName.trim().toLowerCase(),
-    );
+    const company = companies[0];
     if (!company) {
       setErrors((prev) => ({
         ...prev,
@@ -146,19 +143,19 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
     setSubmitting(true);
     try {
       const job = await createEmployerJob({
-        company_id: company.id,
         category_id: Number(values.category),
         title: values.jobTitle.trim(),
         description: values.jobSummary.trim(),
         city,
         province,
-        is_remote: false,
+        workplace_type: "onsite",
+        experience_level: "entry_level",
         employment_type: values.employmentType,
         salary_currency: "CAD",
         ...salary,
       }, token);
 
-      setMessage(`Job submitted successfully. Status: ${String(job?.status || "pending_review").replaceAll("_", " ")}.`);
+      setMessage(`Job submitted successfully. Status: ${String(job?.status || "active").replaceAll("_", " ")}.`);
       setValues((prev) => ({
         ...initialValues,
         companyName: company.name,
@@ -191,11 +188,8 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
             onChange={handleChange}
             error={errors.companyName}
             autoComplete="organization"
-            list="employer-company-options"
+            readOnly
           />
-          <datalist id="employer-company-options">
-            {companies.map((company) => <option key={company.id} value={company.name} />)}
-          </datalist>
           <InputField
             id="job-title"
             name="jobTitle"
@@ -281,8 +275,10 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
           icon={ArrowRight}
           iconPosition="right"
           className={styles.submit}
+          disabled={submitting || loadingOptions}
+          aria-busy={submitting}
         >
-          {submitting ? "Submitting..." : submitLabel}
+          {submitting ? <><span className="sc-spinner sc-spinner-sm" /> Submitting</> : submitLabel}
         </Button>
       </form>
 

@@ -44,7 +44,6 @@ export const contactPageContent = {
       "Reach our team for hiring support, job posting assistance, candidate questions, and platform guidance across Canada.",
     submitLabel: "Submit Inquiry",
     privacy: "Your information is secure and will only be used to respond to your inquiry.",
-    successMessage: "Thank you — your inquiry has been received. We'll be in touch shortly.",
     fields: {
       name: { label: "Name", placeholder: "Enter your full name", required: true },
       email: { label: "Email", placeholder: "Enter your email address", required: true },
@@ -70,14 +69,14 @@ export const contactPageContent = {
       {
         icon: "mapPin",
         iconColor: "tealOutline",
-        title: "Office Location",
-        description: "Visit our Toronto office or reach out online.",
+        title: "Portal Support",
+        description: "Use the configured portal contact channel for account and platform support.",
       },
       {
         icon: "clock",
         iconColor: "goldOutline",
-        title: "Hours of Operation",
-        description: "Monday – Friday 8:30 AM – 5:30 PM ET",
+        title: "Secure Access",
+        description: "Account and application data is handled through the shared authenticated backend.",
       },
       {
         icon: "headphones",
@@ -92,14 +91,6 @@ export const contactPageContent = {
         description: "We're here to help you find the right opportunity.",
       },
     ],
-    office: {
-      title: "ServiceCare Jobline – Toronto Office",
-      addressLines: ["425 University Avenue, Suite 200", "Toronto, ON M5G 1T6 Canada"],
-      phone: "(416) 555-0199",
-      email: "support@servicecarejobline.ca",
-      website: "www.servicecarejobline.ca",
-      websiteHref: "https://www.servicecarejobline.ca",
-    },
   },
 
   faq: {

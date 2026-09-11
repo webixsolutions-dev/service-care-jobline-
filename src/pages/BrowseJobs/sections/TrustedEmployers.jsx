@@ -1,137 +1,37 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-
 import { browseJobsContent } from "../../../data/browseJobsContent";
-import EmployerMark from "./EmployerMark";
-
+import usePublicDataset from "../../../hooks/usePublicDataset";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 import styles from "./TrustedEmployers.module.css";
 
-/* =========================================
-   MOCK TRUSTED EMPLOYERS
-========================================= */
-
-const mockEmployers = [
-  {
-    id: 1,
-    name: "Sunnybrook",
-    sub: "Health Centre",
-    style: "tree",
-    color: "#5d9b3f",
-  },
-  {
-    id: 2,
-    name: "Coast",
-    sub: "Hotels",
-    style: "wave",
-    color: "#147ea3",
-  },
-  {
-    id: 3,
-    name: "Comfort",
-    sub: "Home Care",
-    style: "heartHouse",
-    color: "#13a99f",
-  },
-  {
-    id: 4,
-    name: "River Valley",
-    sub: "Seniors Residence",
-    style: "leaf",
-    color: "#26745d",
-  },
-  {
-    id: 5,
-    name: "HealthPlus",
-    sub: "Medical Clinic",
-    style: "cross",
-    color: "#2472c8",
-  },
-  {
-    id: 6,
-    name: "Fairmont",
-    sub: "Hotels & Resorts",
-    style: "script",
-    color: "#15243a",
-  },
-];
-
-/* =========================================
-   COMPONENT
-========================================= */
+const colors = ["#0891b2", "#0f766e", "#1d4ed8", "#334155", "#b45309", "#0369a1"];
 
 export default function TrustedEmployers() {
-  const {
-    heading,
-    viewAllLabel,
-    viewAllTo,
-  } = browseJobsContent.trustedEmployers;
-
+  const { heading, viewAllLabel, viewAllTo } = browseJobsContent.trustedEmployers;
+  const { dataset, loading, error } = usePublicDataset();
+  const employers = (dataset?.companies || []).slice(0, 6);
   return (
-    <section
-      className={styles.section}
-      aria-labelledby="employers-heading"
-    >
-      <div className="container">
-        <div className={styles.card}>
-          {/* HEADER */}
-
-          <div className={styles.head}>
-            <h2 id="employers-heading">
-              {heading ||
-                "Trusted Employers in Healthcare & Hospitality"}
-            </h2>
-
-            <Link
-              to={viewAllTo || "/employers"}
-              className={styles.viewAll}
-            >
-              <span>
-                {viewAllLabel || "View All Employers"}
-              </span>
-
-              <ArrowRight
-                size={15}
-                strokeWidth={2}
-              />
-            </Link>
-          </div>
-
-          {/* EMPLOYERS */}
-
+    <section className={styles.section} aria-labelledby="employers-heading">
+      <div className="container"><div className={styles.card}>
+        <div className={styles.head}>
+          <h2 id="employers-heading">{heading || "Active Employers in Healthcare & Hospitality"}</h2>
+          <Link to={viewAllTo || "/employers"} className={styles.viewAll}><span>{viewAllLabel || "View Employers"}</span><ArrowRight size={15} /></Link>
+        </div>
+        {loading ? <LoadingSpinner label="Loading employers" /> : null}
+        {!loading && error ? <p>{error}</p> : null}
+        {!loading && !error && !employers.length ? <p>No active employers are available right now.</p> : null}
+        {!loading && !error && employers.length ? (
           <ul className={styles.logos}>
-            {mockEmployers.map((employer) => (
-              <li key={employer.id}>
-                <Link
-                  to={viewAllTo || "/employers"}
-                  className={`${styles.logo} ${
-                    employer.style === "script"
-                      ? styles.script
-                      : ""
-                  }`}
-                  style={{
-                    color: employer.color,
-                  }}
-                >
-                  <EmployerMark
-                    styleName={employer.style}
-                    color={employer.color}
-                  />
-
-                  <span className={styles.companyText}>
-                    <strong>
-                      {employer.name}
-                    </strong>
-
-                    <small>
-                      {employer.sub}
-                    </small>
-                  </span>
-                </Link>
-              </li>
+            {employers.map((employer, index) => (
+              <li key={employer.id}><Link to={viewAllTo || "/employers"} className={styles.logo} style={{ color: colors[index % colors.length] }}>
+                <span aria-hidden="true" style={{ width: 42, height: 42, borderRadius: "50%", display: "grid", placeItems: "center", background: "currentColor" }}><strong style={{ color: "white" }}>{employer.name?.slice(0, 1)?.toUpperCase()}</strong></span>
+                <span className={styles.companyText}><strong>{employer.name}</strong><small>{employer.verification_status === "verified" ? "Verified employer" : "Active employer"}</small></span>
+              </Link></li>
             ))}
           </ul>
-        </div>
-      </div>
+        ) : null}
+      </div></div>
     </section>
   );
 }

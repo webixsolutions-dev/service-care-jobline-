@@ -2,7 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import ContentPage from "../../components/ContentPage/ContentPage";
 import { paths } from "../../data/navLinks";
 import { useAuth } from "../../lib/auth/AuthContext";
-import { getEmployerJobs, getJobApplications, getJobViews } from "../../lib/jobs";
+import { getRecruiterDashboard } from "../../lib/jobs";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 export default function RecruiterHome() {
   const { token, profile, loading: authLoading } = useAuth();
@@ -20,26 +21,15 @@ export default function RecruiterHome() {
     }
 
     setLoading(true);
-    getEmployerJobs(token)
-      .then(async (rows) => {
+    getRecruiterDashboard(token)
+      .then((data) => {
         if (cancelled) return;
-        const list = Array.isArray(rows) ? rows : [];
+        const list = Array.isArray(data?.jobs) ? data.jobs : [];
         setJobs(list);
-        const detailRows = await Promise.all(
-          list.map(async (job) => {
-            const [applications, views] = await Promise.all([
-              getJobApplications(job.id, token).catch(() => []),
-              getJobViews(job.id, token).catch(() => []),
-            ]);
-            return { jobId: job.id, applications: applications.length, views: views.length };
-          }),
-        );
-        if (cancelled) return;
-        const byJob = Object.fromEntries(detailRows.map((row) => [row.jobId, row]));
         setStats({
-          applications: detailRows.reduce((sum, row) => sum + row.applications, 0),
-          views: detailRows.reduce((sum, row) => sum + row.views, 0),
-          byJob,
+          applications: Number(data?.metrics?.applications || 0),
+          views: Number(data?.metrics?.views || 0),
+          byJob: Object.fromEntries(list.map((job) => [job.id, { applications: Number(job.applications_count || 0), views: Number(job.views_count || 0) }])),
         });
       })
       .catch((err) => {
@@ -60,7 +50,7 @@ export default function RecruiterHome() {
   });
 
   if (authLoading || loading) {
-    return <ContentPage kicker="Employer" title="Recruiter dashboard" intro="Loading your jobs and applications..." />;
+    return <LoadingSpinner label="Loading recruiter dashboard" size="lg" full />;
   }
 
   if (!token || profile?.role !== "recruiter") {

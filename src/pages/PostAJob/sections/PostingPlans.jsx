@@ -9,7 +9,6 @@ export default function PostingPlans({ onSelectPlan }) {
   const { headingBefore, headingAccent, subtext, highlights } = postJobPageContent.plans;
 
   function handleSelect(planId) {
-    console.log("Selected posting plan:", planId);
     onSelectPlan?.(planId);
   }
 

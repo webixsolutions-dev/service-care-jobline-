@@ -1,42 +1,29 @@
 import { api } from "./api";
 import { jobDetailsPath } from "../data/navLinks";
 
-export const SERVICE_CARE_CATEGORY_IDS = [305, 306, 307, 308];
-
-export const EMPLOYMENT_LABELS = {
-  full_time: "Full-time",
-  part_time: "Part-time",
-  contract: "Contract",
-  temporary: "Temporary",
-  internship: "Internship",
-  seasonal: "Seasonal",
-};
-
+export const EMPLOYMENT_LABELS = { full_time: "Full-time", part_time: "Part-time", contract: "Contract", temporary: "Temporary", internship: "Internship", seasonal: "Seasonal" };
 export const EMPLOYMENT_VALUES = Object.entries(EMPLOYMENT_LABELS).map(([value, label]) => ({ value, label }));
 
-const CATEGORY_ICON_KEYS = {
-  305: "bell",
-  306: "server",
-  307: "housekeeping",
-  308: "caregiver",
-};
+function categoryIconKey(category) {
+  const value = `${category?.slug || ""} ${category?.name || ""}`.toLowerCase();
+  if (value.includes("food") || value.includes("restaurant")) return "server";
+  if (value.includes("house") || value.includes("facilit")) return "housekeeping";
+  if (value.includes("care") || value.includes("health")) return "caregiver";
+  return "bell";
+}
 
 export function salaryLabel(job) {
   if (job.salary_min == null && job.salary_max == null) return "Salary not listed";
   const currency = job.salary_currency || "CAD";
   const period = job.salary_period ? ` / ${job.salary_period.replace("ly", "")}` : "";
   const fmt = (value) => Number(value).toLocaleString("en-CA", { maximumFractionDigits: 0 });
-  if (job.salary_min != null && job.salary_max != null) {
-    return `${currency} $${fmt(job.salary_min)} – $${fmt(job.salary_max)}${period}`;
-  }
-  const value = job.salary_min ?? job.salary_max;
-  return `${currency} $${fmt(value)}${period}`;
+  if (job.salary_min != null && job.salary_max != null) return `${currency} $${fmt(job.salary_min)} – $${fmt(job.salary_max)}${period}`;
+  return `${currency} $${fmt(job.salary_min ?? job.salary_max)}${period}`;
 }
 
 export function relativePosted(dateValue) {
   if (!dateValue) return "Recently posted";
-  const date = new Date(dateValue);
-  const diffMs = Date.now() - date.getTime();
+  const diffMs = Date.now() - new Date(dateValue).getTime();
   if (!Number.isFinite(diffMs) || diffMs < 0) return "Recently posted";
   const minutes = Math.floor(diffMs / 60000);
   if (minutes < 60) return `Posted ${Math.max(minutes, 1)} minute${minutes === 1 ? "" : "s"} ago`;
@@ -46,95 +33,27 @@ export function relativePosted(dateValue) {
   return `Posted ${days} day${days === 1 ? "" : "s"} ago`;
 }
 
-export function formatCategoryName(category) {
-  return category?.name || "Service & Hospitality";
-}
-
 export function normalizeJob(job, categories = []) {
-  const category = categories.find((item) => Number(item.id) === Number(job.category_id));
-  const location = job.is_remote
-    ? [job.city, job.province].filter(Boolean).join(", ") || "Remote"
-    : [job.city, job.province].filter(Boolean).join(", ") || "Canada";
-
-  return {
-    ...job,
-    id: job.id,
-    title: job.title,
-    company: job.company?.name || "Employer",
-    companyId: job.company_id,
-    verified: job.company?.verification_status === "verified",
-    location,
-    jobType: EMPLOYMENT_LABELS[job.employment_type] || job.employment_type || "Job",
-    category: formatCategoryName(category),
-    categoryId: Number(job.category_id),
-    shift: null,
-    workMode: job.is_remote ? "Remote" : "On-site",
-    salary: salaryLabel(job),
-    posted: relativePosted(job.published_at || job.created_at),
-    ctaLabel: "View Job",
-    iconKey: CATEGORY_ICON_KEYS[Number(job.category_id)] || "bell",
-    featured: true,
-    description: job.description || "",
-    href: jobDetailsPath(job.id),
-  };
+  const category = job.categories || categories.find((item) => Number(item.id) === Number(job.category_id));
+  const company = job.companies || job.company || null;
+  const location = job.is_remote ? "Remote, Canada" : [job.city, job.province].filter(Boolean).join(", ") || "Canada";
+  return { ...job, id: job.id, title: job.title || "Untitled job", company: company?.name || "Employer", companyId: job.company_id, verified: company?.verification_status === "verified", location, jobType: EMPLOYMENT_LABELS[job.employment_type] || job.employment_type || "Job", category: category?.name || "Service & Care", categoryId: Number(job.category_id), category_slug: category?.slug || "", shift: null, workMode: job.workplace_type === "hybrid" ? "Hybrid" : job.is_remote ? "Remote" : "On-site", salary: salaryLabel(job), posted: relativePosted(job.published_at || job.created_at), ctaLabel: "View Job", iconKey: categoryIconKey(category), featured: true, description: job.description || "", href: jobDetailsPath(job.id) };
 }
 
-export async function getServiceCareCategories() {
-  const rows = await api("/v1/taxonomy/categories?sector_id=3");
-  return (rows || []).filter((row) => SERVICE_CARE_CATEGORY_IDS.includes(Number(row.id)));
-}
-
+export async function getPublicDataset() { return api("/public/dataset"); }
+export async function getServiceCareCategories() { const data = await api("/public/categories"); return data?.items || []; }
 export async function getPublicJobs(query = {}) {
-  const params = new URLSearchParams();
+  const params = new URLSearchParams({ limit: String(query.limit || 60) });
   if (query.q) params.set("q", query.q);
-  if (query.category_id) params.set("category_id", String(query.category_id));
-  if (query.city) params.set("city", query.city);
-  if (query.province) params.set("province", query.province);
-  if (query.employment_type) params.set("employment_type", query.employment_type);
-  if (typeof query.is_remote === "boolean") params.set("is_remote", String(query.is_remote));
-  params.set("limit", String(query.limit || 100));
-  return api(`/v1/jobs?${params.toString()}`);
+  if (query.location) params.set("location", query.location);
+  if (query.type) params.set("type", query.type);
+  return api(`/public/jobs?${params}`);
 }
-
-export async function getPublicJob(id) {
-  return api(`/v1/jobs/${encodeURIComponent(id)}`);
-}
-
-export async function recordJobView(id) {
-  return api(`/v1/jobs/${encodeURIComponent(id)}/view`, { method: "POST", body: JSON.stringify({}) });
-}
-
-export async function applyToJob(id, token, coverLetter = "") {
-  return api(`/v1/jobs/${encodeURIComponent(id)}/applications`, {
-    method: "POST",
-    body: JSON.stringify({ cover_letter: coverLetter || undefined }),
-  }, token);
-}
-
-
-export async function getMyApplications(token) {
-  return api("/v1/me/applications", {}, token);
-}
-
-export async function getMyCompanies(token) {
-  return api("/v1/companies", {}, token);
-}
-
-export async function getEmployerJobs(token) {
-  return api("/v1/employer/jobs", {}, token);
-}
-
-export async function getJobApplications(jobId, token) {
-  return api(`/v1/employer/jobs/${encodeURIComponent(jobId)}/applications`, {}, token);
-}
-
-export async function getJobViews(jobId, token) {
-  return api(`/v1/employer/jobs/${encodeURIComponent(jobId)}/views`, {}, token);
-}
-
-export async function createEmployerJob(payload, token) {
-  return api("/v1/employer/jobs", {
-    method: "POST",
-    body: JSON.stringify(payload),
-  }, token);
-}
+export async function getPublicJob(id) { const data = await api(`/public/jobs/${encodeURIComponent(id)}`); return data?.job || null; }
+export async function applyToJob(id, token, coverLetter = "") { return api(`/job-seeker/jobs/${encodeURIComponent(id)}/apply`, { method: "POST", body: JSON.stringify({ cover_letter: coverLetter || undefined }) }, token); }
+export async function getSeekerDashboard(token) { return api("/job-seeker/dashboard", {}, token); }
+export async function saveJob(id, token) { return api(`/job-seeker/jobs/${encodeURIComponent(id)}/save`, { method: "POST", body: JSON.stringify({}) }, token); }
+export async function unsaveJob(id, token) { return api(`/job-seeker/jobs/${encodeURIComponent(id)}/save`, { method: "DELETE" }, token); }
+export async function getRecruiterDashboard(token) { return api("/recruiter/dashboard", {}, token); }
+export async function getMyCompanies(token) { const data = await api("/recruiter/companies", {}, token); return data?.items || data?.companies || (Array.isArray(data) ? data : []); }
+export async function createEmployerJob(payload, token) { const data = await api("/recruiter/jobs", { method: "POST", body: JSON.stringify(payload) }, token); return data?.job || data; }

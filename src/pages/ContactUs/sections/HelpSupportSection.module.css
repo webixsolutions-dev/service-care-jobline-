@@ -682,3 +682,7 @@
     font-size: 0.64rem;
   }
 }
+
+.portalOffice {
+  grid-column: 1 / -1;
+}

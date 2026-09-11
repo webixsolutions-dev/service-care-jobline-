@@ -49,13 +49,11 @@ export const browseJobsContent = {
     viewAllTo: paths.employers,
   },
   alerts: {
-    line1: "Get Hospitality &",
+    line1: "Save Hospitality &",
     line2: "Healthcare",
-    accent: "Job Alerts",
-    subtext: "Sign up and be the first to know about new opportunities that match your skills.",
-    placeholder: "Enter your email address",
-    submitLabel: "Subscribe",
-    privacy: "We respect your privacy. Unsubscribe anytime.",
+    accent: "Opportunities",
+    subtext: "Create your account to save jobs, apply securely, and track each application from your dashboard.",
+    submitLabel: "Create Account",
   },
   trustBadges: [
     {

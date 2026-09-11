@@ -7,6 +7,7 @@ import JobFilters from "./JobFilters";
 import JobList from "./JobList";
 import Pagination from "../../../components/Pagination/Pagination";
 import styles from "./JobListings.module.css";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
 const PAGE_SIZE = 4;
 
@@ -144,7 +145,7 @@ export default function JobListings({ search = {} }) {
               />
             </div>
             <div className={styles.main}>
-              {loading ? <p>Loading jobs...</p> : null}
+              {loading ? <LoadingSpinner label="Loading jobs" /> : null}
               {!loading && error ? <p>{error}</p> : null}
               {!loading && !error ? <JobList jobs={pageJobs} layout={layout} showSalary={filters.showSalary} /> : null}
               {!loading && !error ? (

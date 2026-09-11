@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import ContentPage from "../../components/ContentPage/ContentPage";
 import { paths } from "../../data/navLinks";
 import { useAuth } from "../../lib/auth/AuthContext";
-import { getMyApplications } from "../../lib/jobs";
+import { getSeekerDashboard } from "../../lib/jobs";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 export default function DashboardHome() {
   const { token, profile, loading: authLoading } = useAuth();
@@ -17,15 +18,15 @@ export default function DashboardHome() {
       setLoading(false);
       return undefined;
     }
-    getMyApplications(token)
-      .then((rows) => { if (!cancelled) setApplications(Array.isArray(rows) ? rows : []); })
+    getSeekerDashboard(token)
+      .then((data) => { if (!cancelled) setApplications(Array.isArray(data?.applications) ? data.applications : []); })
       .catch((err) => { if (!cancelled) setError(err?.message || "Could not load applications."); })
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, [authLoading, token, profile?.role]);
 
   if (authLoading || loading) {
-    return <ContentPage kicker="Job Seeker" title="Your dashboard" intro="Loading your applications..." />;
+    return <LoadingSpinner label="Loading your dashboard" size="lg" full />;
   }
 
   if (!token || profile?.role !== "job_seeker") {

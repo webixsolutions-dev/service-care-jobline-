@@ -25,7 +25,7 @@ const SignIn = () => {
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { signIn } = useAuth();
+  const { signIn, signOut } = useAuth();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -35,6 +35,7 @@ const SignIn = () => {
       const session = await signIn({ email, password });
       const expectedRole = role === 'employer' ? 'recruiter' : 'job_seeker';
       if (session?.profile?.role !== expectedRole) {
+        signOut();
         setError(`This account is registered as ${session?.profile?.role === 'recruiter' ? 'an Employer' : 'a Job Seeker'}. Select the correct account type.`);
         return;
       }
@@ -207,8 +208,7 @@ const SignIn = () => {
                 disabled={submitting}
                 className="w-full flex items-center justify-center gap-2 bg-cyan-400 hover:bg-cyan-300 text-slate-900 font-semibold py-3 rounded-xl transition-colors mt-2"
               >
-                {submitting ? 'Logging In...' : 'Log In'}
-                <FaArrowRight className="text-sm" />
+              {submitting ? <><span className="sc-spinner sc-spinner-sm" /> Logging In</> : <><span>Log In</span><FaArrowRight className="text-sm" /></>}
               </button>
             </form>
 

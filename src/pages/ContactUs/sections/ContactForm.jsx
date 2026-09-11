@@ -34,11 +34,12 @@ function validate(values, fields) {
  * Controlled contact form. handleSubmit is the single place to later POST to an API.
  */
 const ContactForm = forwardRef(function ContactForm(_, ref) {
-  const { heading, subtext, submitLabel, privacy, successMessage, fields, subjects } =
+  const { heading, subtext, submitLabel, privacy, fields, subjects } =
     contactPageContent.form;
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
-  const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [status, setStatus] = useState("");
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -51,14 +52,29 @@ const ContactForm = forwardRef(function ContactForm(_, ref) {
     const nextErrors = validate(values, fields);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) {
-      setSubmitted(false);
+      setStatus("");
       return;
     }
 
-    // Mocked submit — replace this log with a real endpoint when the backend is ready.
-    console.log("Contact inquiry:", values);
-    setSubmitted(true);
-    setValues(initialValues);
+    const supportEmail = String(import.meta.env.VITE_SUPPORT_EMAIL || "").trim();
+    if (!supportEmail) {
+      setStatus("Contact email is not configured for this deployment yet.");
+      return;
+    }
+    const body = [
+      values.message,
+      "",
+      `Name: ${values.name}`,
+      `Email: ${values.email}`,
+      values.phone ? `Phone: ${values.phone}` : "",
+    ].filter(Boolean).join("\n");
+    const mailto = `mailto:${supportEmail}?subject=${encodeURIComponent(values.subject)}&body=${encodeURIComponent(body)}`;
+    setSubmitting(true);
+    setStatus("Opening your email app so you can send this inquiry securely.");
+    window.setTimeout(() => {
+      window.location.assign(mailto);
+      setSubmitting(false);
+    }, 250);
   }
 
   return (
@@ -67,9 +83,9 @@ const ContactForm = forwardRef(function ContactForm(_, ref) {
       <span className={styles.bar} />
       <p className={styles.sub}>{subtext}</p>
 
-      {submitted ? (
+      {status ? (
         <p className={styles.success} role="status">
-          {successMessage}
+          {status}
         </p>
       ) : null}
 
@@ -131,8 +147,8 @@ const ContactForm = forwardRef(function ContactForm(_, ref) {
           error={errors.message}
         />
 
-        <Button type="submit" variant="solid-gold" icon={Send} className={styles.submit}>
-          {submitLabel}
+        <Button type="submit" variant="solid-gold" icon={submitting ? null : Send} className={styles.submit} disabled={submitting} aria-busy={submitting}>
+          {submitting ? <><span className="sc-spinner sc-spinner-sm" aria-hidden="true" /> Opening email…</> : submitLabel}
         </Button>
       </form>
 
