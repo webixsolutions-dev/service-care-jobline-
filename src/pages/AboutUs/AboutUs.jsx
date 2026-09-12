@@ -30,7 +30,6 @@ export default function AboutUs() {
             block: true,
           },
         ]}
-        accentLine="teal"
         subtext={hero.description}
         primaryCta={{
           label: hero.primaryCta.label,

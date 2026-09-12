@@ -14,39 +14,24 @@ import {
   FaArrowRight
 } from 'react-icons/fa';
 import { paths } from '../data/navLinks';
-import { useAuth } from '../lib/auth/AuthContext';
+import { useAuth } from '../context/AuthContext';
 
 const SignIn = () => {
   const [role, setRole] = useState('seeker'); // 'seeker' | 'employer'
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
-  const { signIn, signOut } = useAuth();
+  const { login } = useAuth();
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setError('');
-    setSubmitting(true);
-    try {
-      const session = await signIn({ email, password });
-      const expectedRole = role === 'employer' ? 'recruiter' : 'job_seeker';
-      if (session?.profile?.role !== expectedRole) {
-        signOut();
-        setError(`This account is registered as ${session?.profile?.role === 'recruiter' ? 'an Employer' : 'a Job Seeker'}. Select the correct account type.`);
-        return;
-      }
-      const returnTo = location.state?.returnTo;
-      if (expectedRole === 'job_seeker' && returnTo) navigate(returnTo, { replace: true });
-      else navigate(expectedRole === 'recruiter' ? '/recruiter' : '/dashboard', { replace: true });
-    } catch (err) {
-      setError(err?.message || 'Unable to sign in.');
-    } finally {
-      setSubmitting(false);
-    }
+    login(email || (role === 'employer' ? 'employer@example.com' : 'alex.rivera@example.com'), role);
+    navigate(role === 'employer' ? '/recruiter' : '/dashboard');
   }
 
   return (

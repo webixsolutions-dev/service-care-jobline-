@@ -64,22 +64,23 @@ const WhyChooseJobline = () => {
         <div className="absolute bottom-20 left-20 h-64 w-64 rounded-full bg-sky-400 blur-3xl"></div>
       </div>
 
-      <div className="container mx-auto px-4 relative">
+      <div className="mx-auto max-w-7xl px-6 sm:px-12 md:px-16 lg:px-24 relative">
         {/* Heading Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center max-w-4xl mx-auto mb-16"
+          transition={{ duration: 0.6 }}
+          className="max-w-3xl mx-auto text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-6 tracking-tight">
             Why Choose
-            <span className="text-amber-400 block mt-2">Office Jobline</span>
+            <span className="text-sky-400"> ServiceCare</span>
+            <span className="text-amber-400 block mt-2">Jobline</span>
           </h2>
           
           <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
-            Office Jobline is Canada's trusted job board for office and administrative professionals. 
+            ServiceCare Jobline is a dedicated job platform for healthcare, hospitality, caregiving, and other service industry professionals. 
             Whether you're looking for receptionist jobs, executive assistant roles, office coordinator 
             jobs, HR support jobs, customer service office roles, or data entry opportunities, we connect 
             you with quality employers hiring across Canada.

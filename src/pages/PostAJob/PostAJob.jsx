@@ -23,7 +23,6 @@ export default function PostAJob() {
           color: line.color,
           block: true,
         }))}
-        accentLine="teal"
         subtext={hero.description}
         primaryCta={{
           label: hero.primaryCta.label,

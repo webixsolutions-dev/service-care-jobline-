@@ -283,7 +283,7 @@ const Testimonials = () => {
         {getQuoteIcon(3)}
       </motion.div>
 
-      <div className="container mx-auto px-4 relative">
+      <div className="mx-auto max-w-7xl px-6 sm:px-12 md:px-16 lg:px-24 relative">
         {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: -30 }}

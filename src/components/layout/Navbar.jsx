@@ -30,7 +30,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-brand-navy border-b border-white/5">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 lg:px-8">
+      <nav className="mx-auto flex w-full max-w-full items-center justify-between gap-4 px-[10%] py-4">
         {/* Logo */}
         <NavLink to={paths.home} className="shrink-0" onClick={() => setOpen(false)}>
           <img src={logo} alt="ServiceCare Jobline" className="h-12 w-auto rounded-md" />

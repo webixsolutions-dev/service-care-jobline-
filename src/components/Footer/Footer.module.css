@@ -9,9 +9,10 @@
   display: grid;
   grid-template-columns: 1.4fr 0.85fr 0.95fr 0.95fr 1.15fr;
   gap: 36px;
-  max-width: 1280px;
+  width: 100%;
+  max-width: 100% !important;
   margin: 0 auto;
-  padding: 0 40px 56px;
+  padding: 0 10% 56px !important;
 }
 
 .logo {
@@ -130,10 +131,11 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  max-width: 1280px;
+  width: 100%;
+  max-width: 100% !important;
   margin: 0 auto;
   min-height: 64px;
-  padding: 0 40px;
+  padding: 0 10% !important;
   font-size: 0.82rem;
 }
 
@@ -155,7 +157,7 @@
 @media (max-width: 1100px) {
   .inner {
     grid-template-columns: 1fr 1fr 1fr;
-    padding: 0 40px 56px;
+    padding: 0 10% 56px !important;
   }
 
   .brand {
