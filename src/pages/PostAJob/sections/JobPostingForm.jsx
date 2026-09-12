@@ -3,6 +3,13 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Lock, Save } from "lucide-react";
 import { postJobPageContent } from "../../../data/postJobPageContent";
 import { paths } from "../../../data/navLinks";
+import { useAuth } from "../../../lib/auth/AuthContext";
+import {
+  createEmployerJob,
+  EMPLOYMENT_VALUES,
+  getMyCompanies,
+  getServiceCareCategories,
+} from "../../../lib/jobs";
 import Button from "../../../components/Button/Button";
 import InputField from "../../../components/FormFields/InputField";
 import SelectField from "../../../components/FormFields/SelectField";
@@ -67,7 +74,46 @@ const JobPostingForm = forwardRef(function JobPostingForm(
 
   const [values, setValues] = useState(defaultInitialValues);
   const [errors, setErrors] = useState({});
-  const [submitted, setSubmitted] = useState(false);
+  const [message, setMessage] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [companies, setCompanies] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [loadingOptions, setLoadingOptions] = useState(false);
+
+  useEffect(() => {
+    setValues((prev) => ({ ...prev, contactEmail: prev.contactEmail || profile?.email || "" }));
+  }, [profile?.email]);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoadingOptions(true);
+    const requests = [getServiceCareCategories()];
+    if (token && profile?.role === "recruiter") requests.push(getMyCompanies(token));
+    else requests.push(Promise.resolve([]));
+
+    Promise.all(requests)
+      .then(([categoryRows, companyRows]) => {
+        if (cancelled) return;
+        setCategories(Array.isArray(categoryRows) ? categoryRows : []);
+        setCompanies(Array.isArray(companyRows) ? companyRows : []);
+        if (companyRows?.length === 1) {
+          setValues((prev) => ({ ...prev, companyName: prev.companyName || companyRows[0].name }));
+        }
+      })
+      .catch((err) => {
+        if (!cancelled) setMessage(err?.message || "Could not load posting options.");
+      })
+      .finally(() => {
+        if (!cancelled) setLoadingOptions(false);
+      });
+
+    return () => { cancelled = true; };
+  }, [token, profile?.role]);
+
+  const categoryOptions = useMemo(
+    () => categories.map((category) => ({ value: String(category.id), label: category.name })),
+    [categories],
+  );
 
   useEffect(() => {
     if (initialData) {
@@ -88,6 +134,7 @@ const JobPostingForm = forwardRef(function JobPostingForm(
     const { name, value } = e.target;
     setValues((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: undefined }));
+    setMessage("");
   }
 
   function handleFormSubmit(e, isDraft = false) {
@@ -110,11 +157,7 @@ const JobPostingForm = forwardRef(function JobPostingForm(
       <span className={styles.bar} />
       <p className={styles.sub}>{subtext}</p>
 
-      {submitted ? (
-        <p className={styles.success} role="status">
-          Job details received. Our team will review your posting and follow up shortly.
-        </p>
-      ) : null}
+      {message ? <p className={styles.success} role="status">{message}</p> : null}
 
       <form onSubmit={(e) => handleFormSubmit(e, false)} noValidate>
         <div className={styles.grid}>
@@ -123,11 +166,12 @@ const JobPostingForm = forwardRef(function JobPostingForm(
             name="companyName"
             label={fields.companyName.label}
             required
-            placeholder={fields.companyName.placeholder}
+            placeholder={companies.length ? "Select your linked company" : fields.companyName.placeholder}
             value={values.companyName}
             onChange={handleChange}
             error={errors.companyName}
             autoComplete="organization"
+            readOnly
           />
           <InputField
             id="job-title"
@@ -144,8 +188,8 @@ const JobPostingForm = forwardRef(function JobPostingForm(
             name="category"
             label={fields.category.label}
             required
-            placeholder={fields.category.placeholder}
-            options={categories}
+            placeholder={loadingOptions ? "Loading categories..." : fields.category.placeholder}
+            options={categoryOptions}
             value={values.category}
             onChange={handleChange}
             error={errors.category}
@@ -167,7 +211,7 @@ const JobPostingForm = forwardRef(function JobPostingForm(
             label={fields.employmentType.label}
             required
             placeholder={fields.employmentType.placeholder}
-            options={employmentTypes}
+            options={EMPLOYMENT_VALUES}
             value={values.employmentType}
             onChange={handleChange}
             error={errors.employmentType}

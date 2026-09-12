@@ -1,4 +1,5 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import Layout from "../components/layout/Layout";
 import Home from "../pages/Home";
 import BrowseJobs from "../pages/BrowseJobs/BrowseJobs";
@@ -35,8 +36,11 @@ import EmployerSettingsPage from "../pages/employerDashboard/EmployerSettingsPag
 
 import { infoPages } from "../data/infoPages";
 import { paths } from "../data/navLinks";
+import PageTransition from "../components/PageTransition/PageTransition";
+import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 
 export default function AppRoutes() {
+  const location = useLocation();
   return (
     <Routes>
       {/* Public Marketing Site Routes (with public Navbar & Footer) */}
@@ -93,5 +97,7 @@ export default function AppRoutes() {
         </Route>
       </Route>
     </Routes>
+    </PageTransition>
+    </AnimatePresence>
   );
 }

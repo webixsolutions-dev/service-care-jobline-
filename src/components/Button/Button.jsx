@@ -25,6 +25,8 @@ export default function Button({
   className = "",
   type = "button",
   onClick,
+  disabled = false,
+  ...rest
 }) {
   const classes = `${styles.btn} ${variantClass[variant] || styles.solidTeal} ${
     size === "sm" ? styles.sm : ""
@@ -54,7 +56,7 @@ export default function Button({
   }
 
   return (
-    <button type={type} className={classes} onClick={onClick}>
+    <button type={type} className={classes} onClick={onClick} disabled={disabled} {...rest}>
       {content}
     </button>
   );

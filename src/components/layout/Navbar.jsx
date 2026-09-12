@@ -5,6 +5,7 @@ import { HiMenu, HiX } from "react-icons/hi";
 import { FiBriefcase, FiUser } from "react-icons/fi";
 import { paths } from "../../routes/paths";
 import logo from "../../assets/logo.png";
+import { useAuth } from "../../lib/auth/AuthContext";
 
 const navLinks = [
   { label: "Home", to: paths.home },
@@ -16,6 +17,9 @@ const navLinks = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const { profile, isAuthenticated } = useAuth();
+  const accountPath = profile?.role === "recruiter" ? "/recruiter" : "/dashboard";
+  const accountLabel = isAuthenticated ? "Dashboard" : "Sign In";
 
   const linkClass = ({ isActive }) =>
     `relative pb-1 text-[15px] font-medium transition-colors ${
@@ -53,11 +57,11 @@ export default function Navbar() {
             Post a Job
           </NavLink>
           <NavLink
-            to={paths.signIn}
+            to={isAuthenticated ? accountPath : paths.signIn}
             className="flex items-center gap-2 rounded-lg border border-brand-gold px-5 py-2.5 text-sm font-semibold text-brand-gold transition-colors hover:bg-brand-gold hover:text-brand-navy"
           >
             <FiUser className="h-4 w-4" />
-            Sign In
+            {accountLabel}
           </NavLink>
         </div>
 
@@ -109,12 +113,12 @@ export default function Navbar() {
                 Post a Job
               </NavLink>
               <NavLink
-                to={paths.signIn}
+                to={isAuthenticated ? accountPath : paths.signIn}
                 onClick={() => setOpen(false)}
                 className="flex items-center justify-center gap-2 rounded-lg border border-brand-gold px-5 py-2.5 text-sm font-semibold text-brand-gold"
               >
                 <FiUser className="h-4 w-4" />
-                Sign In
+                {accountLabel}
               </NavLink>
             </div>
           </motion.div>

@@ -13,9 +13,12 @@ import {
   FaPlus,
   FaConciergeBell,
   FaArrowRight,
-  FaCheckCircle
+  FaCheckCircle,
+  FaGlobe,
+  FaIdCard
 } from 'react-icons/fa';
 import { paths } from '../data/navLinks';
+import { useAuth } from '../lib/auth/AuthContext';
 
 const perks = [
   'Verified employers & candidates',
@@ -27,11 +30,41 @@ const Signup = () => {
   const [role, setRole] = useState('seeker'); // 'seeker' | 'employer'
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [companyWebsite, setCompanyWebsite] = useState('');
+  const [registrationNumber, setRegistrationNumber] = useState('');
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
+  const { signUp } = useAuth();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    navigate(role === 'employer' ? '/recruiter' : '/dashboard');
+    setError('');
+    setMessage('');
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const backendRole = role === 'employer' ? 'recruiter' : 'job_seeker';
+      const result = await signUp({ email, password, fullName, role: backendRole, companyName, companyWebsite, registrationNumber });
+      if (result?.requiresEmailConfirmation) {
+        setMessage('Account created. Check your email to confirm your account, then sign in.');
+        return;
+      }
+      navigate(backendRole === 'recruiter' ? '/recruiter' : '/dashboard', { replace: true });
+    } catch (err) {
+      setError(err?.message || 'Unable to create account.');
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -134,6 +167,9 @@ const Signup = () => {
                   <input
                     type="text"
                     placeholder="Jane Doe"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    required
                     className="w-full bg-slate-800/60 border border-slate-700/60 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/70 focus:ring-1 focus:ring-cyan-400/50 transition-colors"
                   />
                 </div>
@@ -146,10 +182,39 @@ const Signup = () => {
                   <input
                     type="email"
                     placeholder="you@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
                     className="w-full bg-slate-800/60 border border-slate-700/60 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/70 focus:ring-1 focus:ring-cyan-400/50 transition-colors"
                   />
                 </div>
               </div>
+
+              {role === 'employer' ? (
+                <>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-400 mb-1.5">Company name</label>
+                    <div className="relative">
+                      <FaBriefcase className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm" />
+                      <input type="text" placeholder="Company legal name" value={companyName} onChange={(e) => setCompanyName(e.target.value)} required className="w-full bg-slate-800/60 border border-slate-700/60 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/70 focus:ring-1 focus:ring-cyan-400/50 transition-colors" />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-400 mb-1.5">Company website</label>
+                    <div className="relative">
+                      <FaGlobe className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm" />
+                      <input type="url" placeholder="https://company.ca" value={companyWebsite} onChange={(e) => setCompanyWebsite(e.target.value)} required className="w-full bg-slate-800/60 border border-slate-700/60 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/70 focus:ring-1 focus:ring-cyan-400/50 transition-colors" />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-400 mb-1.5">Registration number</label>
+                    <div className="relative">
+                      <FaIdCard className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm" />
+                      <input type="text" placeholder="Business registration number" value={registrationNumber} onChange={(e) => setRegistrationNumber(e.target.value)} required className="w-full bg-slate-800/60 border border-slate-700/60 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/70 focus:ring-1 focus:ring-cyan-400/50 transition-colors" />
+                    </div>
+                  </div>
+                </>
+              ) : null}
 
               <div>
                 <label className="block text-xs font-medium text-gray-400 mb-1.5">Password</label>
@@ -158,6 +223,10 @@ const Signup = () => {
                   <input
                     type={showPassword ? 'text' : 'password'}
                     placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    minLength={8}
+                    required
                     className="w-full bg-slate-800/60 border border-slate-700/60 rounded-xl pl-11 pr-11 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/70 focus:ring-1 focus:ring-cyan-400/50 transition-colors"
                   />
                   <button
@@ -177,6 +246,10 @@ const Signup = () => {
                   <input
                     type={showConfirm ? 'text' : 'password'}
                     placeholder="••••••••"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    minLength={8}
+                    required
                     className="w-full bg-slate-800/60 border border-slate-700/60 rounded-xl pl-11 pr-11 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/70 focus:ring-1 focus:ring-cyan-400/50 transition-colors"
                   />
                   <button
@@ -204,12 +277,15 @@ const Signup = () => {
                 </span>
               </label>
 
+              {error ? <p className="text-sm text-red-400" role="alert">{error}</p> : null}
+              {message ? <p className="text-sm text-cyan-300" role="status">{message}</p> : null}
+
               <button
                 type="submit"
+                disabled={submitting}
                 className="w-full flex items-center justify-center gap-2 bg-cyan-400 hover:bg-cyan-300 text-slate-900 font-semibold py-3 rounded-xl transition-colors mt-2"
               >
-                Create Account
-                <FaArrowRight className="text-sm" />
+              {submitting ? <><span className="sc-spinner sc-spinner-sm" /> Creating Account</> : <><span>Create Account</span><FaArrowRight className="text-sm" /></>}
               </button>
             </form>
 

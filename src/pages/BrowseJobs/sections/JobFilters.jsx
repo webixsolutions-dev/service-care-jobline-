@@ -18,14 +18,18 @@ function Checkbox({ id, label, count, checked, onChange }) {
   );
 }
 
-export default function JobFilters({ filters, onChange, onReset }) {
+export default function JobFilters({
+  filters,
+  onChange,
+  onReset,
+  categoryOptions = [],
+  locationOptions = [],
+}) {
   const [showMore, setShowMore] = useState(false);
   const [locationQuery, setLocationQuery] = useState("");
-  const extra = browseJobsContent.extraLocations;
-  const locationOptions = [
-    ...filterGroups.location.options,
-    ...(showMore ? extra : []),
-  ].filter((opt) => opt.label.toLowerCase().includes(locationQuery.toLowerCase()));
+  const visibleLocations = (showMore ? locationOptions : locationOptions.slice(0, 5)).filter((opt) =>
+    opt.label.toLowerCase().includes(locationQuery.toLowerCase()),
+  );
 
   function toggleGroup(key, allId, optionId) {
     const current = filters[key];
@@ -50,14 +54,21 @@ export default function JobFilters({ filters, onChange, onReset }) {
       </div>
 
       <FilterGroup title={filterGroups.category.title} icon={getIcon(filterGroups.category.icon)}>
-        {filterGroups.category.options.map((opt) => (
+        <Checkbox
+          id="cat-all-categories"
+          label="All Categories"
+          count={null}
+          checked={filters.category.includes("all-categories")}
+          onChange={() => toggleGroup("category", "all-categories", "all-categories")}
+        />
+        {categoryOptions.map((opt) => (
           <Checkbox
             key={opt.id}
             id={`cat-${opt.id}`}
             label={opt.label}
             count={opt.count}
-            checked={filters.category.includes(opt.id)}
-            onChange={() => toggleGroup("category", filterGroups.category.allId, opt.id)}
+            checked={filters.category.includes(String(opt.id))}
+            onChange={() => toggleGroup("category", "all-categories", String(opt.id))}
           />
         ))}
       </FilterGroup>
@@ -68,7 +79,7 @@ export default function JobFilters({ filters, onChange, onReset }) {
             key={opt.id}
             id={`type-${opt.id}`}
             label={opt.label}
-            count={opt.count}
+            count={null}
             checked={filters.jobType.includes(opt.id)}
             onChange={() => toggleGroup("jobType", filterGroups.jobType.allId, opt.id)}
           />
@@ -86,7 +97,7 @@ export default function JobFilters({ filters, onChange, onReset }) {
             aria-label="Filter locations"
           />
         </div>
-        {locationOptions.map((opt) => (
+        {visibleLocations.map((opt) => (
           <Checkbox
             key={opt.id}
             id={`loc-${opt.id}`}
@@ -101,9 +112,11 @@ export default function JobFilters({ filters, onChange, onReset }) {
             }}
           />
         ))}
-        <button type="button" className={styles.more} onClick={() => setShowMore((v) => !v)}>
-          {showMore ? "Show Less" : "Show More"}
-        </button>
+        {locationOptions.length > 5 ? (
+          <button type="button" className={styles.more} onClick={() => setShowMore((v) => !v)}>
+            {showMore ? "Show Less" : "Show More"}
+          </button>
+        ) : null}
       </FilterGroup>
 
       <FilterGroup title="Salary Range" icon={DollarSign}>
@@ -121,19 +134,6 @@ export default function JobFilters({ filters, onChange, onReset }) {
           checked={filters.showSalary}
           onChange={() => onChange({ ...filters, showSalary: !filters.showSalary })}
         />
-      </FilterGroup>
-
-      <FilterGroup title={filterGroups.shift.title} icon={getIcon(filterGroups.shift.icon)}>
-        {filterGroups.shift.options.map((opt) => (
-          <Checkbox
-            key={opt.id}
-            id={`shift-${opt.id}`}
-            label={opt.label}
-            count={opt.count}
-            checked={filters.shift.includes(opt.id)}
-            onChange={() => toggleGroup("shift", filterGroups.shift.allId, opt.id)}
-          />
-        ))}
       </FilterGroup>
     </aside>
   );

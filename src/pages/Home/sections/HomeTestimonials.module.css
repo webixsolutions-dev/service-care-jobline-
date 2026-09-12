@@ -1,14 +1,33 @@
 .section {
+  width: 100%;
+
   background: var(--color-navy);
+
   padding: 64px 0 56px;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
 }
 
+/* =========================================
+   HEADING
+========================================= */
+
 .heading {
+  margin: 0;
+
   text-align: center;
+
   color: var(--color-white);
+
   font-size: clamp(1.5rem, 2.8vw, 2rem);
+
   font-weight: var(--fw-extrabold);
+
   letter-spacing: -0.03em;
+
+  line-height: 1.15;
 }
 
 .teal {
@@ -19,30 +38,153 @@
   color: var(--color-gold);
 }
 
+/* =========================================
+   SUBTEXT
+========================================= */
+
 .sub {
-  text-align: center;
-  color: var(--color-text-on-dark-secondary);
-  font-size: 0.98rem;
-  margin: 14px auto 36px;
   max-width: 520px;
+
+  margin: 14px auto 36px;
+
+  text-align: center;
+
+  color: var(--color-text-on-dark-secondary);
+
+  font-size: 0.98rem;
+
+  line-height: 1.6;
 }
+
+/* =========================================
+   SLIDER WRAPPER
+========================================= */
+
+.slider {
+  position: relative;
+
+  width: 100%;
+
+  overflow: hidden;
+}
+
+/* =========================================
+   GRID
+========================================= */
 
 .grid {
+  width: 100%;
+
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
   gap: 20px;
+
+  align-items: stretch;
+
+  animation: testimonialSlideIn 0.3s ease;
 }
 
-.mobile {
-  grid-template-columns: 1fr;
-  max-width: 480px;
-  margin: 0 auto;
+/* =========================================
+   SLIDE ANIMATION
+========================================= */
+
+@keyframes testimonialSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-@media (max-width: 1000px) and (min-width: 768px) {
-  .grid:not(.mobile) {
+/* =========================================
+   DOT AREA
+========================================= */
+
+.dots {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 18px;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1099px) and (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+  }
+
+  .sub {
+    margin-bottom: 30px;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 767px) {
+  .section {
+    padding: 44px 0 40px;
+  }
+
+  .heading {
+    font-size: 1.5rem;
+  }
+
+  .sub {
+    margin: 12px auto 26px;
+
+    padding: 0 10px;
+
+    font-size: 0.88rem;
+
+    line-height: 1.55;
+  }
+
+  .grid {
     grid-template-columns: 1fr;
-    max-width: 520px;
+
+    max-width: 480px;
+
     margin: 0 auto;
+
+    gap: 16px;
+  }
+
+  .dots {
+    margin-top: 16px;
+  }
+}
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+  .section {
+    padding: 38px 0 34px;
+  }
+
+  .heading {
+    font-size: 1.35rem;
+  }
+
+  .sub {
+    font-size: 0.82rem;
   }
 }

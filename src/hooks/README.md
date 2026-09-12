@@ -1,6 +1,4 @@
-# Hooks (mock data layer)
+# Hooks
 
-Data-fetching hooks (useApplications, useSavedJobs, useProfile, etc.) go
-here. Each hook should have a clear "connect your backend here" boundary
-so Phase 4.1 can swap the mock implementation for real Supabase queries
-without touching the components that call them.
+Runtime data hooks call the central Jooblie NestJS API. ServiceCare identifies itself with
+`X-Site-Slug: service-care` through the shared API client.

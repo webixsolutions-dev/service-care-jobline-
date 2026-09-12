@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 import { homePageContent } from "../../../data/homePageContent";
-import { featuredJobsHome } from "../../../data/featuredJobsHome";
 import JobCard from "../../../components/JobCard/JobCard";
+import useServiceCareJobs from "../../../hooks/useServiceCareJobs";
 import styles from "./FeaturedJobs.module.css";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
 export default function FeaturedJobs() {
   const { heading, viewAllLabel, viewAllTo } = homePageContent.featuredJobs;
+  const { jobs, loading, error } = useServiceCareJobs({ limit: 8 });
+  const featured = jobs.slice(0, 4);
 
   return (
     <section className={styles.section} aria-labelledby="featured-jobs-heading">
@@ -20,7 +23,10 @@ export default function FeaturedJobs() {
           </Link>
         </div>
         <div className={styles.grid}>
-          {featuredJobsHome.map((job) => (
+          {loading ? <LoadingSpinner label="Loading jobs" /> : null}
+          {!loading && error ? <p>{error}</p> : null}
+          {!loading && !error && !featured.length ? <p>No active jobs are available right now.</p> : null}
+          {featured.map((job) => (
             <JobCard
               key={job.id}
               job={job}

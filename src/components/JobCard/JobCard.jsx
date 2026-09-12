@@ -7,6 +7,8 @@ import { paths } from "../../data/navLinks";
 import Pill from "../Pill/Pill";
 import Button from "../Button/Button";
 import styles from "./JobCard.module.css";
+import { useAuth } from "../../lib/auth/AuthContext";
+import { useSavedJobs } from "../../lib/SavedJobsContext";
 
 const tagTone = {
   jobType: "teal",
@@ -54,6 +56,18 @@ export default function JobCard({
   const isHome = layout === "home";
   const stacked = variant === "featured" || layout === "grid" || isHome;
   const isFeatured = variant === "featured";
+
+  async function handleSave() {
+    if (profile?.role !== "job_seeker") {
+      navigate(paths.signIn, { state: { returnTo: href } });
+      return;
+    }
+    try {
+      await toggleSaved(job.id);
+    } catch {
+      // Keep the card layout unchanged; failed saves are rolled back by the provider.
+    }
+  }
 
   const tags = [
     { label: job.jobType, tone: tagTone.jobType },

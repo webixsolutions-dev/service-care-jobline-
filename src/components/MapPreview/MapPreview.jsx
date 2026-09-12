@@ -13,7 +13,7 @@ const AVENUES = [
 ];
 
 /**
- * Stylized Toronto map mockup. Pass `embedSrc` later to swap in a real Maps iframe.
+ * Decorative Toronto service-area illustration. Pass `embedSrc` to use a verified map URL.
  */
 export default function MapPreview({
   embedSrc = null,

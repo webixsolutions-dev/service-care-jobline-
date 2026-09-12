@@ -1,255 +1,42 @@
 import { jobDetailsPath } from "./navLinks";
 
-/** Mock listings for Module 2. Replace with API data when the backend is ready. */
-export const jobsData = [
-  {
-    id: "rn-sunnybrook",
-    title: "Registered Nurse (RN)",
-    company: "Sunnybrook Health Centre",
-    verified: true,
-    location: "Toronto, ON",
-    jobType: "Full-time",
-    category: "Healthcare",
-    shift: "Day Shift",
-    workMode: "On-site",
-    salary: "$42.00 – $48.00 /hr",
-    posted: "Posted 2 hours ago",
-    ctaLabel: "View Details",
-    iconKey: "nurse",
-    featured: false,
-    description:
-      "Deliver exceptional patient care on a busy medical unit. Collaborate with a multidisciplinary team and support families across the care journey.",
-  },
-  {
-    id: "psw-comfort-toronto",
-    title: "Personal Support Worker (PSW)",
-    company: "Comfort Care Home Services",
-    verified: true,
-    location: "Toronto, ON",
-    jobType: "Part-time",
-    category: "Caregiver",
-    shift: "Day Shift",
-    workMode: "On-site",
-    salary: "$22.00 – $28.00 /hr",
-    posted: "Posted 1 hour ago",
-    ctaLabel: "View Details",
-    iconKey: "caregiver",
-    featured: false,
-    description:
-      "Provide compassionate personal care, meal support, and companionship for clients in home settings across the Greater Toronto Area.",
-  },
-  {
-    id: "front-desk-vancouver",
-    title: "Front Desk Agent",
-    company: "Maple Leaf Hotel Vancouver",
-    verified: true,
-    location: "Vancouver, BC",
-    jobType: "Full-time",
-    category: "Hospitality",
-    shift: "Evening Shift",
-    workMode: "On-site",
-    salary: "$21.00 – $24.50 /hr",
-    posted: "Posted 3 hours ago",
-    ctaLabel: "Apply Now",
-    iconKey: "bell",
-    featured: false,
-    description:
-      "Welcome guests, manage check-ins, and deliver a warm Canadian hospitality experience at a downtown boutique hotel.",
-  },
-  {
-    id: "rn-rockyview",
-    title: "Registered Nurse (RN)",
-    company: "Rockyview Medical Centre",
-    verified: true,
-    location: "Calgary, AB",
-    jobType: "Full-time",
-    category: "Healthcare",
-    shift: "Rotating Shifts",
-    workMode: "On-site",
-    salary: "$40.00 – $46.00 /hr",
-    posted: "Posted 5 hours ago",
-    ctaLabel: "View Details",
-    iconKey: "nurse",
-    featured: false,
-    description:
-      "Join a respected acute-care team supporting surgical and medical patients. Strong assessment skills and a calm, caring approach required.",
-  },
-  {
-    id: "server-montreal",
-    title: "Restaurant Server",
-    company: "Bistro du Vieux-Port",
-    verified: true,
-    location: "Montreal, QC",
-    jobType: "Part-time",
-    category: "Hospitality",
-    shift: "Evening Shift",
-    workMode: "On-site",
-    salary: "$16.50 /hr + Tips",
-    posted: "Posted 6 hours ago",
-    ctaLabel: "Apply Now",
-    iconKey: "server",
-    featured: false,
-    description:
-      "Serve guests in a lively Old Port bistro. Menu knowledge, bilingual service, and a genuine love of hospitality are a plus.",
-  },
-  {
-    id: "housekeeping-kelowna",
-    title: "Housekeeping Attendant",
-    company: "Coast Mountain Lodge",
-    verified: true,
-    location: "Kelowna, BC",
-    jobType: "Full-time",
-    category: "Hospitality",
-    shift: "Day Shift",
-    workMode: "On-site",
-    salary: "$20.00 – $23.00 /hr",
-    posted: "Posted 4 hours ago",
-    ctaLabel: "View Job",
-    iconKey: "housekeeping",
-    featured: true,
-    description:
-      "Keep guest rooms and public spaces spotless at a lakeside lodge. Attention to detail and pride in presentation are essential.",
-  },
-  {
-    id: "cook-edmonton",
-    title: "Cook",
-    company: "River Valley Seniors Residence",
-    verified: true,
-    location: "Edmonton, AB",
-    jobType: "Full-time",
-    category: "Hospitality",
-    shift: "Day Shift",
-    workMode: "On-site",
-    salary: "$22.00 – $26.00 /hr",
-    posted: "Posted 8 hours ago",
-    ctaLabel: "View Job",
-    iconKey: "cook",
-    featured: true,
-    description:
-      "Prepare nutritious, appealing meals for residents. Work with a supportive culinary team in a modern seniors-living kitchen.",
-  },
-  {
-    id: "caregiver-ottawa",
-    title: "Caregiver",
-    company: "Comfort Home Care",
-    verified: true,
-    location: "Ottawa, ON",
-    jobType: "Part-time",
-    category: "Caregiver",
-    shift: "Day Shift",
-    workMode: "On-site",
-    salary: "$21.00 – $25.00 /hr",
-    posted: "Posted 7 hours ago",
-    ctaLabel: "View Job",
-    iconKey: "caregiver",
-    featured: true,
-    description:
-      "Support seniors with daily living, light housekeeping, and companionship in a trusted home-care network across Ottawa.",
-  },
-  {
-    id: "moa-winnipeg",
-    title: "Medical Office Assistant",
-    company: "HealthPlus Medical Clinic",
-    verified: true,
-    location: "Winnipeg, MB",
-    jobType: "Full-time",
-    category: "Healthcare",
-    shift: "Day Shift",
-    workMode: "On-site",
-    salary: "$23.00 – $27.00 /hr",
-    posted: "Posted 9 hours ago",
-    ctaLabel: "View Job",
-    iconKey: "clipboard",
-    featured: true,
-    description:
-      "Coordinate appointments, greet patients, and keep clinic records accurate. Ideal for organized professionals who enjoy patient-facing work.",
-  },
-  {
-    id: "housekeeper-fairmont",
-    title: "Housekeeper",
-    company: "Fairmont Hotels & Resorts",
-    verified: true,
-    location: "Toronto, ON",
-    jobType: "Full-time",
-    category: "Hospitality",
-    shift: "Day Shift",
-    workMode: "On-site",
-    salary: "$21.50 – $24.00 /hr",
-    posted: "Posted 11 hours ago",
-    ctaLabel: "View Details",
-    iconKey: "housekeeping",
-    featured: true,
-    description:
-      "Deliver five-star room presentation for a landmark hotel. Training provided; reliability and a guest-first mindset required.",
-  },
-  {
-    id: "psw-rivervalley",
-    title: "Personal Support Worker (PSW)",
-    company: "River Valley Seniors Residence",
-    verified: true,
-    location: "Edmonton, AB",
-    jobType: "Casual",
-    category: "Caregiver",
-    shift: "Night Shift",
-    workMode: "On-site",
-    salary: "$23.00 – $27.50 /hr",
-    posted: "Posted 12 hours ago",
-    ctaLabel: "Apply Now",
-    iconKey: "caregiver",
-    featured: true,
-    description:
-      "Overnight PSW coverage in a respectful seniors community. Help residents rest comfortably and respond to care needs with empathy.",
-  },
-  {
-    id: "server-coast",
-    title: "Restaurant Server",
-    company: "Coast Hotels",
-    verified: true,
-    location: "Vancouver, BC",
-    jobType: "Part-time",
-    category: "Hospitality",
-    shift: "Evening Shift",
-    workMode: "On-site",
-    salary: "$17.40 /hr + Tips",
-    posted: "Posted 14 hours ago",
-    ctaLabel: "Apply Now",
-    iconKey: "server",
-    featured: true,
-    description:
-      "Serve hotel restaurant and lounge guests with professionalism. Flexible evenings and weekends; previous serving experience preferred.",
-  },
-];
-
-export function getJobById(id) {
-  return jobsData.find((job) => job.id === id) || null;
-}
-
 export function jobHref(job) {
   return jobDetailsPath(job.id);
 }
 
-const categorySlugMatchers = {
-  nursing: (job) => /nurse|nursing|healthcare/i.test(`${job.title} ${job.category}`),
-  caregiver: (job) => /caregiver|psw|support/i.test(`${job.title} ${job.category}`),
-  hotel: (job) => /hotel|front desk|housekeep|hospitality/i.test(`${job.title} ${job.company} ${job.category}`),
-  restaurant: (job) => /restaurant|server|cook|bistro|hospitality/i.test(`${job.title} ${job.company} ${job.category}`),
-  "support-worker": (job) => /support|psw|caregiver/i.test(`${job.title} ${job.category}`),
-  "front-desk": (job) => /front desk|hospitality/i.test(`${job.title} ${job.category}`),
-  healthcare: (job) => /healthcare|caregiver/i.test(job.category),
-  hospitality: (job) => /hospitality/i.test(job.category),
-};
+export function annualSalaryMin(jobOrSalary = "") {
+  if (jobOrSalary && typeof jobOrSalary === "object") {
+    const value = Number(jobOrSalary.salary_min ?? jobOrSalary.salary_max ?? 0);
+    if (!value) return 0;
+    switch (jobOrSalary.salary_period) {
+      case "hourly": return Math.round(value * 2080);
+      case "weekly": return Math.round(value * 52);
+      case "monthly": return Math.round(value * 12);
+      case "yearly": return Math.round(value);
+      default: return Math.round(value);
+    }
+  }
 
-/** Convert a listing salary string to an approximate annual CAD amount. */
-export function annualSalaryMin(salary = "") {
-  const numbers = [...String(salary).matchAll(/[\d.]+/g)].map((m) => Number(m[0]));
+  const salary = String(jobOrSalary || "");
+  const numbers = [...salary.matchAll(/[\d,.]+/g)]
+    .map((m) => Number(m[0].replace(/,/g, "")))
+    .filter(Number.isFinite);
   if (!numbers.length) return 0;
   const min = numbers[0];
   if (/hr|hour/i.test(salary)) return Math.round(min * 2080);
+  if (/week/i.test(salary)) return Math.round(min * 52);
+  if (/month/i.test(salary)) return Math.round(min * 12);
   return min;
 }
 
-/** Hours since posting, parsed from strings like "Posted 2 hours ago". */
-export function postedHoursAgo(posted = "") {
+export function postedHoursAgo(jobOrPosted = "") {
+  if (jobOrPosted && typeof jobOrPosted === "object") {
+    const value = jobOrPosted.published_at || jobOrPosted.created_at;
+    if (!value) return Number.MAX_SAFE_INTEGER;
+    return Math.max(0, (Date.now() - new Date(value).getTime()) / 3600000);
+  }
+
+  const posted = String(jobOrPosted || "");
   const hours = posted.match(/(\d+)\s+hours?/i);
   if (hours) return Number(hours[1]);
   const days = posted.match(/(\d+)\s+days?/i);
@@ -259,23 +46,19 @@ export function postedHoursAgo(posted = "") {
   return Number.MAX_SAFE_INTEGER;
 }
 
-/** Match a listing against keyword / location / category query params. */
 export function jobMatchesSearch(job, search = {}) {
   const keyword = (search.keyword || "").trim().toLowerCase();
   const location = (search.location || "").trim().toLowerCase();
   const category = (search.category || "").trim().toLowerCase();
 
   if (keyword) {
-    const haystack = `${job.title} ${job.company} ${job.description} ${job.category}`.toLowerCase();
+    const haystack = `${job.title || ""} ${job.company || ""} ${job.description || ""} ${job.category || ""}`.toLowerCase();
     if (!haystack.includes(keyword)) return false;
   }
-  if (location && !job.location.toLowerCase().includes(location)) return false;
+  if (location && !(job.location || "").toLowerCase().includes(location)) return false;
   if (category) {
-    const match = categorySlugMatchers[category];
-    if (match) return match(job);
-    if (job.category.toLowerCase() !== category) return false;
+    const categoryHaystack = `${job.category || ""} ${job.categoryId || ""} ${job.category_slug || ""}`.toLowerCase();
+    if (!categoryHaystack.includes(category.replace(/-/g, " ")) && !categoryHaystack.includes(category)) return false;
   }
   return true;
 }
-
-export const featuredJobs = jobsData.filter((job) => job.featured);

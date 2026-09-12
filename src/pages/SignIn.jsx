@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   FaEnvelope,
@@ -21,10 +21,14 @@ const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     login(email || (role === 'employer' ? 'employer@example.com' : 'alex.rivera@example.com'), role);
     navigate(role === 'employer' ? '/recruiter' : '/dashboard');
@@ -142,6 +146,9 @@ const SignIn = () => {
                   <input
                     type="email"
                     placeholder="you@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
                     className="w-full bg-slate-800/60 border border-slate-700/60 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/70 focus:ring-1 focus:ring-cyan-400/50 transition-colors"
                   />
                 </div>
@@ -154,6 +161,9 @@ const SignIn = () => {
                   <input
                     type={showPassword ? 'text' : 'password'}
                     placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
                     className="w-full bg-slate-800/60 border border-slate-700/60 rounded-xl pl-11 pr-11 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/70 focus:ring-1 focus:ring-cyan-400/50 transition-colors"
                   />
                   <button
@@ -176,12 +186,14 @@ const SignIn = () => {
                 </Link>
               </div>
 
+              {error ? <p className="text-sm text-red-400" role="alert">{error}</p> : null}
+
               <button
                 type="submit"
+                disabled={submitting}
                 className="w-full flex items-center justify-center gap-2 bg-cyan-400 hover:bg-cyan-300 text-slate-900 font-semibold py-3 rounded-xl transition-colors mt-2"
               >
-                Log In
-                <FaArrowRight className="text-sm" />
+              {submitting ? <><span className="sc-spinner sc-spinner-sm" /> Logging In</> : <><span>Log In</span><FaArrowRight className="text-sm" /></>}
               </button>
             </form>
 

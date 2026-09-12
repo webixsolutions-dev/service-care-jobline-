@@ -1,39 +1,407 @@
+/* =========================================================
+   PAGE
+========================================================= */
+
 .page {
-  background: var(--color-navy);
+  width: 100%;
   margin: 0;
+
+  background:
+    linear-gradient(
+      110deg,
+      #061a34 0%,
+      #071d39 48%,
+      #08213f 100%
+    );
+
+  box-sizing: border-box;
 }
+
+/* =========================================================
+   BELOW HERO
+========================================================= */
 
 .belowHero {
   position: relative;
-  z-index: 5;
-  background: transparent;
-  padding: 0 0 64px;
-  margin-top: -120px;
+
+  z-index: 4;
+
+  width: 100%;
+
+  margin: 0;
+
+  padding: 18px 0 32px;
+
+  background:
+    linear-gradient(
+      110deg,
+      #061a34 0%,
+      #071d39 48%,
+      #08213f 100%
+    );
+
+  box-sizing: border-box;
 }
+
+/* =========================================================
+   SUPPORT GRID
+========================================================= */
 
 .support {
+  width: 100%;
+
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  align-items: stretch;
+
+  gap: 14px;
+
+  box-sizing: border-box;
 }
 
-@media (max-width: 960px) {
+/* =========================================================
+   SUPPORT CARD
+========================================================= */
+
+.supportCard {
+  width: 100%;
+
+  min-width: 0;
+
+  min-height: 164px;
+
+  display: grid;
+
+  grid-template-columns:
+    82px
+    minmax(0, 1fr);
+
+  align-items: center;
+
+  gap: 18px;
+
+  padding: 20px 20px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(9, 35, 66, 0.96) 0%,
+      rgba(7, 29, 56, 0.98) 100%
+    );
+
+  border:
+    1px solid
+    rgba(75, 116, 153, 0.42);
+
+  border-radius: 9px;
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.015);
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   LARGE TEAL CIRCLE
+========================================================= */
+
+.supportIcon {
+  width: 72px;
+  height: 72px;
+
+  flex: 0 0 72px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      145deg,
+      #16c2b6,
+      #0eaaa5
+    );
+
+  color: #ffffff;
+
+  box-shadow:
+    inset 0 0 0 1px
+    rgba(255, 255, 255, 0.1);
+
+  box-sizing: border-box;
+}
+
+.supportIcon svg {
+  display: block;
+
+  width: 36px;
+  height: 36px;
+
+  stroke: currentColor;
+}
+
+/* =========================================================
+   CARD CONTENT
+========================================================= */
+
+.supportContent {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  justify-content: center;
+}
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.supportContent h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 1.05rem;
+
+  font-weight: var(--fw-bold);
+
+  letter-spacing: -0.02em;
+
+  line-height: 1.2;
+}
+
+/* =========================================================
+   SMALL TEAL LINE
+========================================================= */
+
+.supportLine {
+  width: 23px;
+  height: 2px;
+
+  display: block;
+
+  margin: 9px 0 10px;
+
+  background: var(--color-teal);
+
+  border-radius: 999px;
+}
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.supportContent p {
+  max-width: 230px;
+
+  margin: 0;
+
+  color: rgba(231, 237, 245, 0.83);
+
+  font-size: 0.78rem;
+
+  font-weight: 400;
+
+  line-height: 1.65;
+}
+
+/* =========================================================
+   LARGE DESKTOP
+========================================================= */
+
+@media (min-width: 1400px) {
   .belowHero {
-    margin-top: -72px;
+    padding-top: 20px;
+    padding-bottom: 34px;
   }
 
   .support {
-    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .supportCard {
+    min-height: 168px;
+
+    grid-template-columns:
+      86px
+      minmax(0, 1fr);
+
+    padding:
+      21px
+      22px;
+  }
+
+  .supportIcon {
+    width: 74px;
+    height: 74px;
+
+    flex-basis: 74px;
+  }
+
+  .supportIcon svg {
+    width: 37px;
+    height: 37px;
+  }
+
+  .supportContent h2 {
+    font-size: 1.08rem;
+  }
+
+  .supportContent p {
+    font-size: 0.79rem;
   }
 }
 
+/* =========================================================
+   LAPTOP
+========================================================= */
+
+@media (max-width: 1100px) {
+  .belowHero {
+    padding:
+      16px
+      0
+      28px;
+  }
+
+  .support {
+    gap: 12px;
+  }
+
+  .supportCard {
+    min-height: 155px;
+
+    grid-template-columns:
+      66px
+      minmax(0, 1fr);
+
+    gap: 14px;
+
+    padding:
+      17px
+      16px;
+  }
+
+  .supportIcon {
+    width: 60px;
+    height: 60px;
+
+    flex-basis: 60px;
+  }
+
+  .supportIcon svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .supportContent h2 {
+    font-size: 0.92rem;
+  }
+
+  .supportLine {
+    margin:
+      7px
+      0
+      8px;
+  }
+
+  .supportContent p {
+    font-size: 0.68rem;
+
+    line-height: 1.55;
+  }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .support {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+  }
+
+  .supportCard:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
 @media (max-width: 640px) {
   .belowHero {
-    margin-top: -40px;
+    padding:
+      14px
+      0
+      24px;
   }
 
   .support {
     grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+  .supportCard,
+  .supportCard:last-child {
+    grid-column: auto;
+
+    min-height: 138px;
+
+    grid-template-columns:
+      58px
+      minmax(0, 1fr);
+
+    gap: 13px;
+
+    padding:
+      15px
+      14px;
+  }
+
+  .supportIcon {
+    width: 54px;
+    height: 54px;
+
+    flex-basis: 54px;
+  }
+
+  .supportIcon svg {
+    width: 27px;
+    height: 27px;
+  }
+
+  .supportContent h2 {
+    font-size: 0.88rem;
+  }
+
+  .supportLine {
+    width: 21px;
+
+    margin:
+      7px
+      0
+      8px;
+  }
+
+  .supportContent p {
+    max-width: none;
+
+    font-size: 0.67rem;
   }
 }
-

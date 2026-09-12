@@ -40,7 +40,7 @@ export const browseJobsContent = {
     { id: "part-time", label: "Part-time", icon: "clock" },
     { id: "on-site", label: "On-site", icon: "mapPin" },
     { id: "contract", label: "Contract", icon: "fileText" },
-    { id: "healthcare", label: "Healthcare", icon: "heart" },
+    { id: "food-beverage", label: "Food & Beverage", icon: "heart" },
     { id: "hospitality", label: "Hospitality", icon: "bell" },
   ],
   trustedEmployers: {
@@ -49,13 +49,11 @@ export const browseJobsContent = {
     viewAllTo: paths.employers,
   },
   alerts: {
-    line1: "Get Hospitality &",
+    line1: "Save Hospitality &",
     line2: "Healthcare",
-    accent: "Job Alerts",
-    subtext: "Sign up and be the first to know about new opportunities that match your skills.",
-    placeholder: "Enter your email address",
-    submitLabel: "Subscribe",
-    privacy: "We respect your privacy. Unsubscribe anytime.",
+    accent: "Opportunities",
+    subtext: "Create your account to save jobs, apply securely, and track each application from your dashboard.",
+    submitLabel: "Create Account",
   },
   trustBadges: [
     {
