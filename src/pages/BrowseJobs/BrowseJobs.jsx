@@ -132,6 +132,7 @@ export default function BrowseJobs() {
             leaf: true,
           },
         ]}
+        accentLine="gold"
         subtext={hero.description}
         backgroundImage={hero.image}
         imageAlt={hero.imageAlt}

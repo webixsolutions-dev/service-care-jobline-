@@ -149,9 +149,32 @@
   width: 100%;
 
   display: flex;
-  align-items: stretch;
+
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 12px;
+
+  gap: 0;
+}
+
+/* =========================================
+   CONNECTOR BETWEEN CARDS ONLY
+========================================= */
+
+.connector {
+  flex: 0 0 34px;
+
+  align-self: flex-start;
+
+  margin-top: 146px;
+
+  border-top: 3px dotted rgba(18, 187, 181, 0.8);
+}
+
+/* =========================================
+   CARD
+========================================= */
+
+.card {
   position: relative;
 
   flex: 1 1 0;
