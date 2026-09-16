@@ -113,10 +113,11 @@ const Testimonials = () => {
   useEffect(() => {
     if (!autoplay) return;
     const timer = setInterval(() => {
-      nextTestimonial();
+      setDirection(1);
+      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, [currentIndex, autoplay]);
+  }, [autoplay, testimonials.length]);
 
   // Pause autoplay on hover
   const handleMouseEnter = () => setAutoplay(false);
@@ -283,7 +284,7 @@ const Testimonials = () => {
         {getQuoteIcon(3)}
       </motion.div>
 
-      <div className="container mx-auto px-4 relative">
+      <div className="mx-auto max-w-7xl px-6 sm:px-12 md:px-16 lg:px-24 relative">
         {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: -30 }}

@@ -43,7 +43,7 @@ export function normalizeJob(job, categories = []) {
 export async function getPublicDataset() { return api("/public/dataset"); }
 export async function getServiceCareCategories() { const data = await api("/public/categories"); return data?.items || []; }
 export async function getPublicJobs(query = {}) {
-  const params = new URLSearchParams({ limit: String(query.limit || 60) });
+  const params = new URLSearchParams({ limit: String(Math.min(Math.max(Number(query.limit) || 60, 1), 60)) });
   if (query.q) params.set("q", query.q);
   if (query.location) params.set("location", query.location);
   if (query.type) params.set("type", query.type);
@@ -52,8 +52,15 @@ export async function getPublicJobs(query = {}) {
 export async function getPublicJob(id) { const data = await api(`/public/jobs/${encodeURIComponent(id)}`); return data?.job || null; }
 export async function applyToJob(id, token, coverLetter = "") { return api(`/job-seeker/jobs/${encodeURIComponent(id)}/apply`, { method: "POST", body: JSON.stringify({ cover_letter: coverLetter || undefined }) }, token); }
 export async function getSeekerDashboard(token) { return api("/job-seeker/dashboard", {}, token); }
+export async function getRecommendedJobs(token, limit = 6) { return api(`/job-seeker/recommended-jobs?limit=${Math.min(Math.max(Number(limit) || 6, 1), 12)}`, {}, token); }
 export async function saveJob(id, token) { return api(`/job-seeker/jobs/${encodeURIComponent(id)}/save`, { method: "POST", body: JSON.stringify({}) }, token); }
 export async function unsaveJob(id, token) { return api(`/job-seeker/jobs/${encodeURIComponent(id)}/save`, { method: "DELETE" }, token); }
+export async function updateMyProfile(payload, token) { const data = await api("/auth/profile", { method: "PATCH", body: JSON.stringify(payload) }, token); return data?.profile || data; }
 export async function getRecruiterDashboard(token) { return api("/recruiter/dashboard", {}, token); }
 export async function getMyCompanies(token) { const data = await api("/recruiter/companies", {}, token); return data?.items || data?.companies || (Array.isArray(data) ? data : []); }
 export async function createEmployerJob(payload, token) { const data = await api("/recruiter/jobs", { method: "POST", body: JSON.stringify(payload) }, token); return data?.job || data; }
+export async function updateEmployerJob(id, payload, token) { const data = await api(`/recruiter/jobs/${encodeURIComponent(id)}`, { method: "PATCH", body: JSON.stringify(payload) }, token); return data?.job || data; }
+export async function getJobApplications(id, token) { const data = await api(`/recruiter/jobs/${encodeURIComponent(id)}/applications`, {}, token); return data?.items || []; }
+export async function getRecruiterApplications(token, { page = 1, pageSize = 100, status } = {}) { const params = new URLSearchParams({ page: String(page), pageSize: String(pageSize) }); if (status && status !== "all") params.set("status", status); return api(`/recruiter/applications?${params}`, {}, token); }
+export async function updateApplicationStatus(id, status, token) { const data = await api(`/recruiter/applications/${encodeURIComponent(id)}`, { method: "PATCH", body: JSON.stringify({ status }) }, token); return data?.application || data; }
+export async function getApplicationResumeUrl(id, token) { return api(`/recruiter/applications/${encodeURIComponent(id)}/resume-url`, {}, token); }

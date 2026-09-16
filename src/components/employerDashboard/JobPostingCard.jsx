@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { MapPin, Users, Edit3, Lock, Trash2, Calendar, Briefcase } from "lucide-react";
+import { MapPin, Users, Edit3, Lock, Calendar, Briefcase } from "lucide-react";
 import JobPostingStatusBadge from "./JobPostingStatusBadge";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import { useEmployerData } from "../../context/EmployerDataContext";
@@ -8,9 +8,11 @@ import styles from "./JobPostingCard.module.css";
 
 export default function JobPostingCard({ posting }) {
   const navigate = useNavigate();
-  const { closeJobPosting, deleteJobPosting, getApplicantsForPosting } = useEmployerData();
+  const { closeJobPosting, getApplicantsForPosting } = useEmployerData();
 
   const [confirmModal, setConfirmModal] = useState({ isOpen: false, type: null });
+  const [closing, setClosing] = useState(false);
+  const [actionError, setActionError] = useState("");
 
   const applicants = getApplicantsForPosting(posting.id);
   const applicantCount = applicants.length;
@@ -23,14 +25,17 @@ export default function JobPostingCard({ posting }) {
     navigate(`/employer-dashboard/job-postings/${posting.id}/applicants`);
   }
 
-  function handleConfirmClose() {
-    closeJobPosting(posting.id);
-    setConfirmModal({ isOpen: false, type: null });
-  }
-
-  function handleConfirmDelete() {
-    deleteJobPosting(posting.id);
-    setConfirmModal({ isOpen: false, type: null });
+  async function handleConfirmClose() {
+    setClosing(true);
+    setActionError("");
+    try {
+      await closeJobPosting(posting.id);
+      setConfirmModal({ isOpen: false, type: null });
+    } catch (error) {
+      setActionError(error?.message || "Unable to close this job posting.");
+    } finally {
+      setClosing(false);
+    }
   }
 
   return (
@@ -103,17 +108,10 @@ export default function JobPostingCard({ posting }) {
               </button>
             )}
 
-            <button
-              type="button"
-              className={styles.actionBtnDanger}
-              onClick={() => setConfirmModal({ isOpen: true, type: "delete" })}
-              title="Delete posting"
-            >
-              <Trash2 size={15} />
-            </button>
           </div>
         </div>
       </div>
+      {actionError ? <p role="alert" style={{ color: "#b91c1c", fontSize: "0.75rem", margin: "-8px 0 12px" }}>{actionError}</p> : null}
 
       {/* Confirmation Modals */}
       <DeleteConfirmModal
@@ -124,17 +122,9 @@ export default function JobPostingCard({ posting }) {
         confirmTone="warning"
         onConfirm={handleConfirmClose}
         onCancel={() => setConfirmModal({ isOpen: false, type: null })}
+        confirmLoading={closing}
       />
 
-      <DeleteConfirmModal
-        isOpen={confirmModal.isOpen && confirmModal.type === "delete"}
-        title="Delete Job Posting?"
-        message={`Are you sure you want to permanently delete "${posting.title}"? This action cannot be undone.`}
-        confirmLabel="Delete Posting"
-        confirmTone="danger"
-        onConfirm={handleConfirmDelete}
-        onCancel={() => setConfirmModal({ isOpen: false, type: null })}
-      />
     </>
   );
 }

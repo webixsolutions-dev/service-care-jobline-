@@ -12,7 +12,7 @@ export default function SavedJobsPage() {
   return (
     <div>
       <DashboardTopBanner
-        eyebrow="Newcomer Jobline Dashboard"
+        eyebrow="Service Care Jobline Dashboard"
         title="Saved Jobs"
         subtitle="Keep track of open positions you're interested in applying for later."
       />

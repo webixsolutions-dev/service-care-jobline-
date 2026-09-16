@@ -37,7 +37,7 @@ const socials = [
 export default function Footer() {
   return (
     <footer className="bg-brand-navy text-white/80">
-      <div className="mx-auto max-w-7xl px-5 py-14 lg:px-8">
+      <div className="mx-auto w-full max-w-full px-[10%] py-14">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5">
           {/* Brand column */}
           <div className="sm:col-span-2 lg:col-span-2">
@@ -96,7 +96,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-5 py-5 text-xs text-white/50 sm:flex-row lg:px-8">
+        <div className="mx-auto flex w-full max-w-full flex-col items-center justify-between gap-3 px-[10%] py-5 text-xs text-white/50 sm:flex-row">
           <p>© {new Date().getFullYear()} ServiceCare Jobline. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <NavLink to={paths.privacy} className="hover:text-white/80">

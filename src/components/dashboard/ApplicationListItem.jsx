@@ -1,21 +1,10 @@
-import React, { useState } from "react";
-import { MapPin, Calendar, Trash2, Building } from "lucide-react";
+import React from "react";
+import { MapPin, Calendar, Building } from "lucide-react";
 import ApplicationStatusBadge from "./ApplicationStatusBadge";
-import WithdrawConfirmModal from "./WithdrawConfirmModal";
-import { useDashboardData } from "../../context/DashboardDataContext";
 import styles from "./ApplicationListItem.module.css";
 
 export default function ApplicationListItem({ application }) {
-  const { withdrawApplication } = useDashboardData();
-  const [showConfirm, setShowConfirm] = useState(false);
-
-  function handleWithdrawConfirm() {
-    withdrawApplication(application.id);
-    setShowConfirm(false);
-  }
-
   return (
-    <>
       <div className={styles.card}>
         <div className={styles.left}>
           <div className={styles.companyIcon}>
@@ -40,25 +29,7 @@ export default function ApplicationListItem({ application }) {
 
         <div className={styles.right}>
           <ApplicationStatusBadge status={application.status} />
-          <button
-            type="button"
-            className={styles.withdrawBtn}
-            onClick={() => setShowConfirm(true)}
-            title="Withdraw application"
-          >
-            <Trash2 size={16} />
-            <span>Withdraw</span>
-          </button>
         </div>
       </div>
-
-      <WithdrawConfirmModal
-        isOpen={showConfirm}
-        jobTitle={application.title}
-        company={application.company}
-        onConfirm={handleWithdrawConfirm}
-        onCancel={() => setShowConfirm(false)}
-      />
-    </>
   );
 }

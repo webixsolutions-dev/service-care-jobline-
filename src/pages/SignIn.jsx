@@ -14,7 +14,7 @@ import {
   FaArrowRight
 } from 'react-icons/fa';
 import { paths } from '../data/navLinks';
-import { useAuth } from '../lib/auth/AuthContext';
+import { useAuth } from '../context/AuthContext';
 
 const SignIn = () => {
   const [role, setRole] = useState('seeker'); // 'seeker' | 'employer'
@@ -24,24 +24,18 @@ const SignIn = () => {
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
-  const { signIn, signOut } = useAuth();
+  const { signIn } = useAuth();
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setError('');
     setSubmitting(true);
+    setError('');
     try {
-      const session = await signIn({ email, password });
-      const expectedRole = role === 'employer' ? 'recruiter' : 'job_seeker';
-      if (session?.profile?.role !== expectedRole) {
-        signOut();
-        setError(`This account is registered as ${session?.profile?.role === 'recruiter' ? 'an Employer' : 'a Job Seeker'}. Select the correct account type.`);
-        return;
-      }
-      const returnTo = location.state?.returnTo;
-      if (expectedRole === 'job_seeker' && returnTo) navigate(returnTo, { replace: true });
-      else navigate(expectedRole === 'recruiter' ? '/recruiter' : '/dashboard', { replace: true });
+      const result = await signIn({ email, password });
+      const accountRole = result?.profile?.role;
+      if (role === 'employer' && accountRole !== 'recruiter') throw new Error('This is not a recruiter account.');
+      if (role === 'seeker' && accountRole !== 'job_seeker') throw new Error('Please select Employer to sign in.');
+      navigate(accountRole === 'recruiter' ? '/employer-dashboard/overview' : '/dashboard/overview', { replace: true });
     } catch (err) {
       setError(err?.message || 'Unable to sign in.');
     } finally {

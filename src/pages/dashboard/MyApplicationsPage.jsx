@@ -33,7 +33,7 @@ export default function MyApplicationsPage() {
   return (
     <div>
       <DashboardTopBanner
-        eyebrow="Newcomer Jobline Dashboard"
+        eyebrow="Service Care Jobline Dashboard"
         title="My Applications"
         subtitle="Track the real-time status of every job application you've submitted."
       />

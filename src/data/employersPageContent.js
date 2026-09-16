@@ -3,7 +3,7 @@ import { paths } from "./navLinks";
 /** Copy for Employers page sections that is not already in dedicated data files. */
 export const employersPageContent = {
   hero: {
-    badge: "Canada's Trusted Hiring Partner",
+    badge: null,
     lines: [
       { text: "Hire Hospitality &", color: "white" },
       { text: "Healthcare Talent", color: "white" },

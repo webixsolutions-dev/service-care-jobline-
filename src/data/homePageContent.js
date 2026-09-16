@@ -3,7 +3,7 @@ import { paths } from "./navLinks";
 /** Copy and config for Home page sections. */
 export const homePageContent = {
   hero: {
-    badge: "Canada's Trusted Job Platform",
+    badge: null,
     lines: [
       { text: "Find Hospitality &", color: "white" },
       { text: "Healthcare ", color: "white", inline: true },
@@ -77,7 +77,7 @@ export const homePageContent = {
     headingBefore: "Why Choose ServiceCare",
     brand: "Jobline",
     subtext:
-      "Canada's trusted job platform for healthcare, hospitality, caregiving, and other service industry professionals.",
+      "A dedicated job platform for healthcare, hospitality, caregiving, and other service industry professionals.",
   },
   testimonials: {
     headingParts: [

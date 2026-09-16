@@ -35,7 +35,7 @@ export default function JobPostingsPage() {
   return (
     <div>
       <DashboardTopBanner
-        eyebrow="Newcomer Jobline Dashboard"
+        eyebrow="Service Care Jobline Dashboard"
         title="Job Postings"
         subtitle="Manage all your active, draft, and closed position listings."
         action={
