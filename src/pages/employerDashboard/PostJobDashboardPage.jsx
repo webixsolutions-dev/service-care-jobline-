@@ -16,11 +16,11 @@ export default function PostJobDashboardPage() {
     return getPostingById(editId);
   }, [editId, getPostingById]);
 
-  function handleSubmit(formData, isDraft) {
+  async function handleSubmit(formData) {
     if (editingPosting) {
-      updateJobPosting(editingPosting.id, formData, isDraft);
+      await updateJobPosting(editingPosting.id, formData);
     } else {
-      createJobPosting(formData, isDraft);
+      await createJobPosting(formData);
     }
     navigate("/employer-dashboard/job-postings");
   }
@@ -28,7 +28,7 @@ export default function PostJobDashboardPage() {
   return (
     <div>
       <DashboardTopBanner
-        eyebrow="Newcomer Jobline Dashboard"
+        eyebrow="Service Care Jobline Dashboard"
         title={editingPosting ? "Edit Job Posting" : "Post a New Job"}
         subtitle={
           editingPosting
@@ -47,7 +47,7 @@ export default function PostJobDashboardPage() {
             : "Enter key details about your open role, requirements, location, and compensation."
         }
         customSubmitLabel={editingPosting ? "Update & Publish Job" : "Publish Job Opening"}
-        showSaveDraft={true}
+        showSaveDraft={false}
       />
     </div>
   );

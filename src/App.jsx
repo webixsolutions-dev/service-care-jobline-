@@ -1,7 +1,9 @@
 import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes/AppRoutes";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
-import { AuthProvider } from "./lib/auth/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
+import { DashboardDataProvider } from "./context/DashboardDataContext";
+import { EmployerDataProvider } from "./context/EmployerDataContext";
 import { SavedJobsProvider } from "./lib/SavedJobsContext";
 
 export default function App() {
@@ -9,8 +11,12 @@ export default function App() {
     <BrowserRouter>
       <AuthProvider>
         <SavedJobsProvider>
-          <ScrollToTop />
-          <AppRoutes />
+          <DashboardDataProvider>
+            <EmployerDataProvider>
+              <ScrollToTop />
+              <AppRoutes />
+            </EmployerDataProvider>
+          </DashboardDataProvider>
         </SavedJobsProvider>
       </AuthProvider>
     </BrowserRouter>

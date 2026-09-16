@@ -21,6 +21,8 @@ export default function MyProfilePage() {
 
   const [skillInput, setSkillInput] = useState("");
   const [savedSuccess, setSavedSuccess] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState("");
 
   // New experience entry form state
   const [showExpForm, setShowExpForm] = useState(false);
@@ -115,17 +117,25 @@ export default function MyProfilePage() {
     setSavedSuccess(false);
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    updateProfile(formData);
-    setSavedSuccess(true);
-    setTimeout(() => setSavedSuccess(false), 4000);
+    setSaving(true);
+    setSaveError("");
+    setSavedSuccess(false);
+    try {
+      await updateProfile(formData);
+      setSavedSuccess(true);
+    } catch (error) {
+      setSaveError(error?.message || "Your profile could not be saved. Please try again.");
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
     <div>
       <DashboardTopBanner
-        eyebrow="Newcomer Jobline Dashboard"
+        eyebrow="Service Care Jobline Dashboard"
         title="My Profile"
         subtitle="Tell us a bit about yourself so employers can get to know you."
       />
@@ -136,6 +146,12 @@ export default function MyProfilePage() {
         <div className={styles.successBanner} role="alert">
           <Check size={18} />
           <span>Your profile details have been saved successfully!</span>
+        </div>
+      )}
+
+      {saveError && (
+        <div className={styles.successBanner} role="alert">
+          <span>{saveError}</span>
         </div>
       )}
 
@@ -176,11 +192,11 @@ export default function MyProfilePage() {
               type="email"
               required
               value={formData.email}
-              onChange={handleChange}
+              readOnly
               placeholder="Enter your email address"
               className={styles.input}
             />
-            <span className={styles.helperText}>Used for employer communications and job alerts</span>
+            <span className={styles.helperText}>Managed by your secure sign-in account</span>
           </div>
 
           <div className={styles.formGroup}>
@@ -461,8 +477,10 @@ export default function MyProfilePage() {
 
         {/* Submit Action Button */}
         <div className={styles.formFooter}>
-          <button type="submit" className={styles.saveProfileBtn}>
-            Save Changes
+          <button type="submit" className={styles.saveProfileBtn} disabled={saving}>
+            {saving ? (
+              <><span className="sc-spinner sc-spinner-sm sc-spinner-light" aria-hidden="true" /> Saving…</>
+            ) : "Save Changes"}
           </button>
         </div>
       </form>

@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./DashboardTopBanner.module.css";
 
 export default function DashboardTopBanner({
-  eyebrow = "Newcomer Jobline Dashboard",
+  eyebrow = "Service Care Jobline Dashboard",
   title,
   subtitle,
   action,
