@@ -92,11 +92,11 @@ const StatsSection = () => {
       { threshold: 0.3 }
     );
 
-    const observedNode = sectionRef.current;
-    if (observedNode) observer.observe(observedNode);
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => {
-      if (observedNode) observer.unobserve(observedNode);
+      if (sectionRef.current) observer.unobserve(sectionRef.current);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasAnimated]);
 
   const animateNumbers = () => {

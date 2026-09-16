@@ -60,8 +60,8 @@
   --space-12: 100px;
 
   /* Layout */
-  --container-max: 100%;
-  --container-pad: 10%;
+  --container-max: 1280px;
+  --container-pad: 40px;
   --hero-pad-top: 48px;
   --navbar-h: 88px;
 
@@ -83,7 +83,7 @@
 
 @media (max-width: 768px) {
   :root {
-    --container-pad: 5%;
+    --container-pad: 20px;
     --navbar-h: 76px;
   }
 }

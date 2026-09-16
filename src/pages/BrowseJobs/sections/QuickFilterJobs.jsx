@@ -5,7 +5,6 @@ import Pagination from "../../../components/Pagination/Pagination";
 import { getIcon } from "../../../components/icons";
 import { browseJobsContent } from "../../../data/browseJobsContent";
 import useServiceCareJobs from "../../../hooks/useServiceCareJobs";
-import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 import styles from "./QuickFilterJobs.module.css";
 
 const PAGE_SIZE = 4;
@@ -59,7 +58,7 @@ export default function QuickFilterJobs() {
         </div>
 
         <div className={styles.grid}>
-          {loading ? <LoadingSpinner label="Loading jobs" /> : null}
+          {loading ? <p>Loading jobs...</p> : null}
           {!loading && error ? <p>{error}</p> : null}
           {!loading && !error && !pageJobs.length ? <p>No active jobs match this filter.</p> : null}
           {pageJobs.map((job) => (
