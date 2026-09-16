@@ -1,0 +1,372 @@
+.homeJobSearch {
+  width: 100% !important;
+  min-height: 78px !important;
+
+  display: grid !important;
+
+  grid-template-columns:
+    minmax(220px, 1.2fr)
+    1px
+    minmax(220px, 1.1fr)
+    1px
+    minmax(190px, 0.95fr)
+    1px
+    170px !important;
+
+  align-items: center !important;
+  gap: 0 !important;
+
+  /* OUTER SPACE */
+  margin: 16px 0 18px 0 !important;
+
+  /* INNER SPACE */
+  padding: 10px 22px !important;
+
+  background: #071d38 !important;
+
+  border: 1px solid rgba(160, 184, 207, 0.55) !important;
+  border-radius: 13px !important;
+
+  box-shadow: none !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+/* =========================================
+   FIELD / SEGMENT
+========================================= */
+
+.searchSegment {
+  min-width: 0 !important;
+  height: 100% !important;
+
+  display: flex !important;
+  align-items: center !important;
+
+  gap: 14px !important;
+
+  margin: 0 !important;
+  padding: 2px 24px !important;
+
+  background: transparent !important;
+  border: 0 !important;
+}
+
+.searchSegment:first-child {
+  padding-left: 8px !important;
+}
+
+.segmentIcon {
+  flex: 0 0 auto !important;
+  color: #11bbb5 !important;
+}
+
+/* =========================================
+   LABEL + INPUT AREA
+========================================= */
+
+.segmentContent {
+  position: relative !important;
+
+  width: 100% !important;
+  min-width: 0 !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+
+  gap: 4px !important;
+
+  margin: 0 !important;
+  padding: 2px 0 !important;
+}
+
+.segmentContent label {
+  display: block !important;
+
+  width: auto !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  color: #ffffff !important;
+
+  font-family: inherit !important;
+
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  line-height: 14px !important;
+
+  text-align: left !important;
+  white-space: nowrap !important;
+}
+
+/* =========================================
+   INPUT + SELECT
+========================================= */
+
+.segmentContent input,
+.segmentContent select {
+  display: block !important;
+
+  width: 100% !important;
+  min-width: 0 !important;
+
+  height: 20px !important;
+  min-height: 20px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  background: transparent !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+
+  outline: none !important;
+  box-shadow: none !important;
+
+  color: #c4cfdd !important;
+
+  font-family: inherit !important;
+
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  line-height: 20px !important;
+
+  text-align: left !important;
+}
+
+.segmentContent input::placeholder {
+  color: #aebaca !important;
+  opacity: 1 !important;
+}
+
+.segmentContent input:hover,
+.segmentContent input:focus,
+.segmentContent select:hover,
+.segmentContent select:focus {
+  background: transparent !important;
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove browser search decoration */
+
+.segmentContent input[type="search"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+}
+
+.segmentContent
+  input[type="search"]::-webkit-search-decoration,
+.segmentContent
+  input[type="search"]::-webkit-search-cancel-button {
+  display: none !important;
+}
+
+/* =========================================
+   CATEGORY SELECT
+========================================= */
+
+.categorySegment {
+  padding-right: 24px !important;
+}
+
+.segmentContent select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+
+  cursor: pointer !important;
+}
+
+.segmentContent select option {
+  background: #ffffff !important;
+  color: #071d38 !important;
+}
+
+.categoryArrow {
+  position: absolute !important;
+
+  right: 0 !important;
+  bottom: 4px !important;
+
+  color: #b8c5d3 !important;
+
+  pointer-events: none !important;
+}
+
+/* =========================================
+   DIVIDERS
+========================================= */
+
+.searchDivider {
+  display: block !important;
+
+  width: 1px !important;
+  height: 42px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  background: rgba(170, 193, 214, 0.34) !important;
+}
+
+/* =========================================
+   SEARCH BUTTON WRAPPER
+========================================= */
+
+.searchAction {
+  width: 100% !important;
+  height: 100% !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+
+  margin: 0 !important;
+
+  padding: 2px 0 2px 24px !important;
+
+  background: transparent !important;
+}
+
+/* =========================================
+   SEARCH BUTTON
+========================================= */
+
+.jobSearchButton {
+  width: 100% !important;
+  height: 42px !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  gap: 9px !important;
+
+  margin: 0 !important;
+
+  padding: 0 18px !important;
+
+  background: #13bcb5 !important;
+
+  border: 0 !important;
+  border-radius: 6px !important;
+
+  box-shadow: none !important;
+
+  color: #ffffff !important;
+
+  font-family: inherit !important;
+
+  font-size: 12px !important;
+  font-weight: 700 !important;
+
+  white-space: nowrap !important;
+
+  cursor: pointer !important;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.jobSearchButton:hover {
+  background: #0fa9a3 !important;
+}
+
+.jobSearchButton:active {
+  transform: translateY(1px);
+}
+
+.jobSearchButton:focus-visible {
+  outline: 2px solid #ffffff !important;
+  outline-offset: 3px !important;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 950px) {
+  .homeJobSearch {
+    height: auto !important;
+    min-height: 0 !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+
+    margin: 14px 0 16px 0 !important;
+
+    padding: 16px 18px !important;
+  }
+
+  .searchSegment,
+  .searchSegment:first-child {
+    width: 100% !important;
+
+    padding: 13px 4px !important;
+  }
+
+  .searchDivider {
+    width: 100% !important;
+    height: 1px !important;
+
+    background: rgba(170, 193, 214, 0.2) !important;
+  }
+
+  .searchAction {
+    width: 100% !important;
+
+    padding: 14px 0 2px !important;
+  }
+
+  .jobSearchButton {
+    width: 100% !important;
+    height: 46px !important;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+  .homeJobSearch {
+    margin: 12px 0 14px 0 !important;
+
+    padding: 14px !important;
+
+    border-radius: 12px !important;
+  }
+
+  .searchSegment,
+  .searchSegment:first-child {
+    gap: 12px !important;
+
+    padding: 12px 2px !important;
+  }
+
+  .segmentContent {
+    padding: 3px 0 !important;
+  }
+
+  .segmentContent label {
+    font-size: 11px !important;
+  }
+
+  .segmentContent input,
+  .segmentContent select {
+    font-size: 12px !important;
+  }
+
+  .jobSearchButton {
+    height: 46px !important;
+
+    font-size: 13px !important;
+  }
+}

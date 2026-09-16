@@ -1,0 +1,13 @@
+.page {
+  background: var(--color-navy);
+  margin: 0;
+}
+
+.belowHero {
+  background: #0a1b33;
+  padding: 0 0 64px;
+}
+
+.light {
+  background: var(--color-off-white);
+}

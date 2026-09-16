@@ -1,0 +1,160 @@
+.step {
+  text-align: center;
+  min-width: 0;
+}
+
+.iconWrap {
+  position: relative;
+  display: inline-flex;
+  margin-bottom: 16px;
+}
+
+.number {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-teal);
+  color: var(--color-white);
+  font-size: 0.75rem;
+  font-weight: var(--fw-bold);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconCircle {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(20, 184, 166, 0.45);
+  color: var(--color-teal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20, 184, 166, 0.06);
+}
+
+.label {
+  color: var(--color-teal);
+  font-size: 0.78rem;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.step h3 {
+  color: var(--color-navy);
+  font-size: 1.12rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.02em;
+}
+
+.desc {
+  margin-top: 8px;
+  color: var(--color-text-body);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  max-width: 240px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dark {
+  background: var(--color-navy-deep);
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-md);
+  padding: 28px 20px 24px;
+}
+
+.dark .iconCircle {
+  border-color: rgba(255, 255, 255, 0.45);
+  color: var(--color-white);
+  background: transparent;
+}
+
+.dark h3 {
+  color: var(--color-gold);
+}
+
+.dark .desc {
+  color: var(--color-text-on-dark-secondary);
+}
+
+.dark .label {
+  display: none;
+}
+
+.numberBottomRight {
+  top: auto;
+  left: auto;
+  bottom: -2px;
+  right: -4px;
+}
+
+.onDark .iconCircle {
+  background: var(--color-teal);
+  border-color: var(--color-teal);
+  color: var(--color-white);
+}
+
+.onDark h3 {
+  color: var(--color-white);
+}
+
+.onDark .desc {
+  color: var(--color-text-on-dark-secondary);
+}
+
+.onDark .label {
+  color: var(--color-teal);
+}
+
+.connector {
+  flex: 0 0 48px;
+  align-self: flex-start;
+  height: 2px;
+  margin-top: 38px;
+  background: var(--color-teal);
+  opacity: 0.75;
+}
+
+.connectorDotted {
+  background: none;
+  border-top: 2px dotted rgba(20, 184, 166, 0.55);
+  height: 0;
+}
+
+.connectorChevron {
+  color: var(--color-teal);
+  flex-shrink: 0;
+  margin-top: 36px;
+  opacity: 0.85;
+}
+
+@media (max-width: 800px) {
+  .connector,
+  .connectorDotted {
+    flex: none;
+    width: 2px;
+    height: 28px;
+    margin: 4px auto 8px;
+    align-self: center;
+  }
+
+  .connectorDotted {
+    width: 0;
+    height: 28px;
+    border-top: 0;
+    border-left: 2px dotted rgba(20, 184, 166, 0.55);
+  }
+
+  .connectorChevron {
+    transform: rotate(90deg);
+    margin: 4px 0 8px;
+  }
+}

@@ -1,0 +1,50 @@
+.node {
+  position: relative;
+  min-width: 0;
+}
+
+.icon {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 16px;
+  border-radius: 50%;
+}
+
+.icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.teal {
+  background: var(--color-teal);
+  color: var(--color-white);
+}
+
+.gold {
+  background: var(--color-gold);
+  color: var(--color-navy);
+}
+
+.year {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  margin-bottom: 6px;
+}
+
+.title {
+  color: var(--color-white);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  margin-bottom: 8px;
+}
+
+.desc {
+  color: var(--color-text-on-dark-secondary);
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+}

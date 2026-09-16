@@ -1,0 +1,75 @@
+.panel {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 36px 28px 28px;
+}
+
+.panel h2 {
+  color: var(--color-navy);
+  font-size: 1.35rem;
+  font-weight: var(--fw-extrabold);
+  letter-spacing: -0.03em;
+}
+
+.bar {
+  display: block;
+  width: 42px;
+  height: 4px;
+  background: var(--color-teal);
+  border-radius: 4px;
+  margin: 12px 0 22px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.list li {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 18px 0;
+}
+
+.list li + li {
+  border-top: 1px solid var(--color-border-light);
+}
+
+.list h3 {
+  color: var(--color-navy);
+  font-size: 0.98rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+}
+
+.list p {
+  margin-top: 6px;
+  color: var(--color-text-body);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 16px 16px;
+  border-radius: 12px;
+  background: var(--color-teal-soft);
+  color: var(--color-navy);
+  font-size: 0.9rem;
+  font-weight: var(--fw-semibold);
+  line-height: 1.5;
+}
+
+.callout svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--color-teal);
+  width: 18px;
+  height: 18px;
+}

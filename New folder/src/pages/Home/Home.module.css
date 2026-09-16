@@ -1,0 +1,17 @@
+.page {
+  margin: 0;
+}
+
+.belowHero {
+  position: relative;
+  z-index: 15;
+  background: var(--color-navy);
+  padding: 0 0 48px;
+  margin-top: -64px;
+}
+
+.belowHero :global(form) {
+  position: relative;
+  z-index: 6;
+  margin-bottom: 20px;
+}

@@ -1,0 +1,1 @@
+export { footerConfig } from "./footerConfigs";

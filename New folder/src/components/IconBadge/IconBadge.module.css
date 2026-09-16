@@ -1,0 +1,77 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.badge svg {
+  width: 1.15em;
+  height: 1.15em;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.square {
+  border-radius: 10px;
+}
+
+.sm {
+  width: 36px;
+  height: 36px;
+}
+
+.md {
+  width: 46px;
+  height: 46px;
+}
+
+.lg {
+  width: 58px;
+  height: 58px;
+}
+
+.xl {
+  width: 76px;
+  height: 76px;
+}
+
+.teal {
+  background: var(--color-teal);
+  color: var(--color-white);
+}
+
+.gold {
+  background: var(--color-gold);
+  color: var(--color-navy);
+}
+
+.tealSoft {
+  background: var(--color-teal-soft);
+  color: var(--color-teal);
+}
+
+.goldSoft {
+  background: var(--color-gold-soft);
+  color: var(--color-gold);
+}
+
+.tealOutline {
+  background: transparent;
+  color: var(--color-teal);
+  border: 1.5px solid var(--color-teal);
+}
+
+.goldOutline {
+  background: transparent;
+  color: var(--color-gold);
+  border: 1.5px solid var(--color-gold);
+}
+
+.tealSoftOutline {
+  background: var(--color-teal-soft);
+  color: var(--color-teal);
+  border: 1.5px solid rgba(20, 184, 166, 0.45);
+}

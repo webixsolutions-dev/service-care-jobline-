@@ -1,0 +1,30 @@
+.item {
+  min-width: 0;
+}
+
+.icon {
+  display: inline-flex;
+  margin-bottom: 12px;
+}
+
+.teal {
+  color: var(--color-teal);
+}
+
+.gold {
+  color: var(--color-gold);
+}
+
+.item h3 {
+  color: var(--color-teal);
+  font-size: 0.98rem;
+  font-weight: var(--fw-bold);
+  line-height: 1.4;
+}
+
+.item p {
+  margin-top: 8px;
+  color: var(--color-text-on-dark-secondary);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
