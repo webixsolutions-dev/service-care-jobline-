@@ -17,7 +17,7 @@ export default function EmployerOverviewPage() {
   return (
     <div>
       <DashboardTopBanner
-        eyebrow="Service Care Jobline Dashboard"
+        eyebrow="Newcomer Jobline Dashboard"
         title="Overview"
         subtitle="Your hiring activity, applicant pipeline, and active job postings at a glance."
       />

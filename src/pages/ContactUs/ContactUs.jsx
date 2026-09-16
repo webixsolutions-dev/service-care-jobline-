@@ -70,6 +70,8 @@ export default function ContactUs() {
             block: true,
           },
         ]}
+        accentLine="teal"
+        accentLinePosition="above"
         subtext={hero.description}
         primaryCta={{
           label: hero.primaryCta.label,

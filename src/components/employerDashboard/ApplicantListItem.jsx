@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FileText, ChevronRight, UserX, Check } from "lucide-react";
+import { User, FileText, ChevronRight, ArrowRight, UserX, Check } from "lucide-react";
 import ApplicantProfileDrawer from "./ApplicantProfileDrawer";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import { useEmployerData } from "../../context/EmployerDataContext";
@@ -11,7 +11,6 @@ const STAGE_BADGES = {
   Shortlisted: { bg: "rgba(59, 130, 246, 0.14)", color: "#1d4ed8" },
   Interview: { bg: "var(--color-gold-soft)", color: "var(--color-gold-dark)" },
   Offer: { bg: "rgba(34, 197, 94, 0.15)", color: "#15803d" },
-  Hired: { bg: "rgba(34, 197, 94, 0.2)", color: "#166534" },
   Rejected: { bg: "rgba(220, 38, 38, 0.1)", color: "#dc2626" },
 };
 
@@ -20,30 +19,16 @@ export default function ApplicantListItem({ applicant }) {
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [showRejectConfirm, setShowRejectConfirm] = useState(false);
-  const [updating, setUpdating] = useState(false);
-  const [actionError, setActionError] = useState("");
 
   const stageStyle = STAGE_BADGES[applicant.stage] || STAGE_BADGES.New;
 
-  async function handleAdvance() {
-    setUpdating(true);
-    setActionError("");
-    try { await advanceApplicantStage(applicant.id); }
-    catch (error) { setActionError(error?.message || "Unable to update this application."); }
-    finally { setUpdating(false); }
+  function handleAdvance() {
+    advanceApplicantStage(applicant.id);
   }
 
-  async function handleConfirmReject() {
-    setUpdating(true);
-    setActionError("");
-    try {
-      await rejectApplicant(applicant.id);
-      setShowRejectConfirm(false);
-    } catch (error) {
-      setActionError(error?.message || "Unable to reject this application.");
-    } finally {
-      setUpdating(false);
-    }
+  function handleConfirmReject() {
+    rejectApplicant(applicant.id);
+    setShowRejectConfirm(false);
   }
 
   return (
@@ -79,24 +64,22 @@ export default function ApplicantListItem({ applicant }) {
         </div>
 
         <div className={styles.rightActions}>
-          {!['Hired', 'Rejected', 'Withdrawn'].includes(applicant.stage) && (
+          {applicant.stage !== "Offer" && applicant.stage !== "Rejected" && (
             <button
               type="button"
               className={styles.advanceBtn}
               onClick={handleAdvance}
-              disabled={updating}
               title="Advance to next pipeline stage"
             >
-              {updating ? <span className="sc-spinner sc-spinner-sm" aria-hidden="true" /> : <Check size={14} />} <span>Advance</span>
+              <Check size={14} /> <span>Advance</span>
             </button>
           )}
 
-          {!['Hired', 'Rejected', 'Withdrawn'].includes(applicant.stage) && (
+          {applicant.stage !== "Rejected" && (
             <button
               type="button"
               className={styles.rejectBtn}
               onClick={() => setShowRejectConfirm(true)}
-              disabled={updating}
               title="Reject candidate"
             >
               <UserX size={14} />
@@ -113,7 +96,6 @@ export default function ApplicantListItem({ applicant }) {
           </button>
         </div>
       </div>
-      {actionError ? <p role="alert" style={{ color: "#b91c1c", fontSize: "0.8rem", margin: "-8px 0 12px" }}>{actionError}</p> : null}
 
       {/* Candidate Profile Drawer */}
       <ApplicantProfileDrawer
@@ -131,7 +113,6 @@ export default function ApplicantListItem({ applicant }) {
         confirmTone="danger"
         onConfirm={handleConfirmReject}
         onCancel={() => setShowRejectConfirm(false)}
-        confirmLoading={updating}
       />
     </>
   );

@@ -8,7 +8,7 @@ export default function OverviewPage() {
   return (
     <div>
       <DashboardTopBanner
-        eyebrow="Service Care Jobline Dashboard"
+        eyebrow="Newcomer Jobline Dashboard"
         title="Overview"
         subtitle="Your job search at a glance."
       />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { MapPin, BookmarkX, CheckCircle, ArrowRight, Building } from "lucide-react";
 import Button from "../Button/Button";
 import { useDashboardData } from "../../context/DashboardDataContext";
@@ -7,21 +7,13 @@ import styles from "./SavedJobListItem.module.css";
 export default function SavedJobListItem({ job }) {
   const { toggleSaveJob, applyToJob, isJobApplied } = useDashboardData();
   const applied = isJobApplied(job.id);
-  const [busyAction, setBusyAction] = useState("");
-  const [actionError, setActionError] = useState("");
 
-  async function handleApply() {
-    setBusyAction("apply"); setActionError("");
-    try { await applyToJob(job); }
-    catch (error) { setActionError(error?.message || "Unable to submit this application."); }
-    finally { setBusyAction(""); }
+  function handleApply() {
+    applyToJob(job);
   }
 
-  async function handleRemove() {
-    setBusyAction("remove"); setActionError("");
-    try { await toggleSaveJob(job); }
-    catch (error) { setActionError(error?.message || "Unable to remove this saved job."); }
-    finally { setBusyAction(""); }
+  function handleRemove() {
+    toggleSaveJob(job);
   }
 
   return (
@@ -52,10 +44,9 @@ export default function SavedJobListItem({ job }) {
           type="button"
           className={styles.removeBtn}
           onClick={handleRemove}
-          disabled={Boolean(busyAction)}
           title="Remove from saved jobs"
         >
-          {busyAction === "remove" ? <span className="sc-spinner sc-spinner-sm" aria-hidden="true" /> : <BookmarkX size={16} />}
+          <BookmarkX size={16} />
           <span>Remove</span>
         </button>
 
@@ -64,12 +55,11 @@ export default function SavedJobListItem({ job }) {
             <CheckCircle size={16} /> Applied ✓
           </span>
         ) : (
-          <Button variant="solid-teal" size="sm" onClick={handleApply} disabled={Boolean(busyAction)}>
-            {busyAction === "apply" ? <><span className="sc-spinner sc-spinner-sm" aria-hidden="true" /> Applying</> : <>Apply Now <ArrowRight size={14} /></>}
+          <Button variant="solid-teal" size="sm" onClick={handleApply}>
+            Apply Now <ArrowRight size={14} />
           </Button>
         )}
       </div>
-      {actionError ? <p role="alert" style={{ color: "#b91c1c", fontSize: "0.75rem", marginTop: "8px" }}>{actionError}</p> : null}
     </div>
   );
 }

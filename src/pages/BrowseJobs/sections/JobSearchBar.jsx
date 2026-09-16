@@ -4,7 +4,7 @@ import useServiceCareCategories from "../../../hooks/useServiceCareCategories";
 import Button from "../../../components/Button/Button";
 import styles from "./JobSearchBar.module.css";
 
-export default function JobSearchBar({ values, onChange, onSearch, isDashboard = false }) {
+export default function JobSearchBar({ values, onChange, onSearch }) {
   const { keywordLabel, keywordPlaceholder, locationLabel, locationPlaceholder, categoryLabel, submitLabel } =
     browseJobsContent.search;
   const { categories } = useServiceCareCategories();
@@ -15,9 +15,8 @@ export default function JobSearchBar({ values, onChange, onSearch, isDashboard =
   }
 
   return (
-    <section className={isDashboard ? styles.wrapDashboard : styles.wrap} aria-label="Job search">
-      <div className={isDashboard ? "w-full" : "container"}>
-        <form className={styles.card} onSubmit={handleSubmit}>
+    <section className={styles.wrap} aria-label="Job search">
+      <form className={`container ${styles.card}`} onSubmit={handleSubmit}>
         <div className={styles.field}>
           <label htmlFor="job-keyword">{keywordLabel}</label>
           <div className={styles.inputWrap}>
@@ -73,7 +72,6 @@ export default function JobSearchBar({ values, onChange, onSearch, isDashboard =
           </Button>
         </div>
       </form>
-      </div>
     </section>
   );
 }

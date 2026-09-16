@@ -17,7 +17,7 @@ export default function FindJobsPage() {
   return (
     <div>
       <DashboardTopBanner
-        eyebrow="Service Care Jobline Dashboard"
+        eyebrow="Newcomer Jobline Dashboard"
         title="Find Jobs"
         subtitle="Search and apply to verified healthcare, hospitality, and service roles across Canada."
       />

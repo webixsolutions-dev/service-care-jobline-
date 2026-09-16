@@ -1,10 +1,11 @@
 import React from "react";
 import JobCard from "../JobCard/JobCard";
+import { mockRecommendedJobs } from "../../data/mockRecommendedJobs";
 import { useDashboardData } from "../../context/DashboardDataContext";
 import styles from "./RecommendedJobsSection.module.css";
 
 export default function RecommendedJobsSection() {
-  const { recommendedJobs, isJobApplied, isJobSaved, applyToJob, toggleSaveJob } = useDashboardData();
+  const { isJobApplied, isJobSaved, applyToJob, toggleSaveJob } = useDashboardData();
 
   return (
     <section className={styles.section}>
@@ -16,7 +17,7 @@ export default function RecommendedJobsSection() {
       </div>
 
       <div className={styles.grid}>
-        {recommendedJobs.map((job) => {
+        {mockRecommendedJobs.map((job) => {
           const applied = isJobApplied(job.id);
           const saved = isJobSaved(job.id);
 
@@ -33,7 +34,6 @@ export default function RecommendedJobsSection() {
           );
         })}
       </div>
-      {recommendedJobs.length === 0 ? <p className={styles.subtitle}>Complete your profile to improve your job recommendations.</p> : null}
     </section>
   );
 }

@@ -6,9 +6,9 @@ export default function CompanyProfilePage() {
   return (
     <div>
       <DashboardTopBanner
-        eyebrow="Service Care Jobline Dashboard"
+        eyebrow="Newcomer Jobline Dashboard"
         title="Company Profile"
-        subtitle="Review the company securely linked to your recruiter account. Company identity is controlled by the shared backend."
+        subtitle="Manage your organization details, branding logo, and employer presentation."
       />
       <CompanyProfileForm />
     </div>

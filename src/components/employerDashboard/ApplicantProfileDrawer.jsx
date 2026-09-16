@@ -8,34 +8,42 @@ import {
   Briefcase,
   GraduationCap,
   Sparkles,
+  ChevronRight,
   UserX,
+  CheckCircle,
+  Save,
 } from "lucide-react";
 import { useEmployerData } from "../../context/EmployerDataContext";
 import styles from "./ApplicantProfileDrawer.module.css";
 
-const STAGE_OPTIONS = ["New", "Reviewed", "Shortlisted", "Interview", "Offer", "Hired", "Rejected", "Withdrawn"];
+const STAGE_OPTIONS = ["New", "Reviewed", "Shortlisted", "Interview", "Offer", "Rejected"];
 
 export default function ApplicantProfileDrawer({ applicant, isOpen, onClose }) {
-  const { advanceApplicantStage, viewApplicantResume } = useEmployerData();
+  const { advanceApplicantStage, rejectApplicant, updateApplicantNotes } = useEmployerData();
 
   const [currentStage, setCurrentStage] = useState(applicant?.stage || "New");
-  const [actionError, setActionError] = useState("");
+  const [notes, setNotes] = useState(applicant?.recruiterNotes || "");
+  const [notesSaved, setNotesSaved] = useState(false);
 
   useEffect(() => {
     if (applicant) {
       setCurrentStage(applicant.stage);
-      setActionError("");
+      setNotes(applicant.recruiterNotes || "");
+      setNotesSaved(false);
     }
   }, [applicant]);
 
   if (!isOpen || !applicant) return null;
 
-  async function handleStageChange(newStage) {
-    const previous = currentStage;
+  function handleStageChange(newStage) {
     setCurrentStage(newStage);
-    setActionError("");
-    try { await advanceApplicantStage(applicant.id, newStage); }
-    catch (err) { setCurrentStage(previous); setActionError(err?.message || "Unable to update this application stage."); }
+    advanceApplicantStage(applicant.id, newStage);
+  }
+
+  function handleSaveNotes() {
+    updateApplicantNotes(applicant.id, notes);
+    setNotesSaved(true);
+    setTimeout(() => setNotesSaved(false), 3000);
   }
 
   function handleReject() {
@@ -94,7 +102,6 @@ export default function ApplicantProfileDrawer({ applicant, isOpen, onClose }) {
 
         {/* Body Content */}
         <div className={styles.body}>
-          {actionError ? <p role="alert" className={styles.savedNotice}>{actionError}</p> : null}
           {/* Contact Details Grid */}
           <div className={styles.section}>
             <h3 className={styles.sectionTitle}>Contact Information</h3>
@@ -119,23 +126,23 @@ export default function ApplicantProfileDrawer({ applicant, isOpen, onClose }) {
           </div>
 
           {/* Resume Section */}
-          {applicant.resumeFilename ? <div className={styles.section}>
+          <div className={styles.section}>
             <h3 className={styles.sectionTitle}>Resume / CV</h3>
             <div className={styles.resumeCard}>
               <FileText size={24} className={styles.resumeIcon} />
               <div className={styles.resumeInfo}>
-                <span className={styles.filename}>{applicant.resumeFilename}</span>
+                <span className={styles.filename}>{applicant.resumeFilename || "Candidate_Resume.pdf"}</span>
                 <span className={styles.filesize}>PDF Document • Uploaded {applicant.appliedDate}</span>
               </div>
               <button
                 type="button"
                 className={styles.viewResumeBtn}
-                onClick={async () => { try { setActionError(""); await viewApplicantResume(applicant.id); } catch (err) { setActionError(err?.message || "Resume is not available."); } }}
+                onClick={() => alert(`Opening preview for ${applicant.resumeFilename || "resume"}`)}
               >
                 View Document
               </button>
             </div>
-          </div> : null}
+          </div>
 
           {/* Skills Section */}
           {applicant.skills && applicant.skills.length > 0 && (
@@ -194,6 +201,33 @@ export default function ApplicantProfileDrawer({ applicant, isOpen, onClose }) {
             </div>
           )}
 
+          {/* Recruiter Notes Section */}
+          <div className={styles.section}>
+            <div className={styles.notesHeader}>
+              <h3 className={styles.sectionTitle}>Recruiter Notes</h3>
+              {notesSaved && (
+                <span className={styles.savedNotice}>
+                  <CheckCircle size={14} /> Notes saved!
+                </span>
+              )}
+            </div>
+            <textarea
+              rows={4}
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder="Add confidential notes about this candidate's interview performance or screening feedback..."
+              className={styles.notesInput}
+            />
+            <div className={styles.notesFooter}>
+              <button
+                type="button"
+                className={styles.saveNotesBtn}
+                onClick={handleSaveNotes}
+              >
+                <Save size={14} /> Save Notes
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

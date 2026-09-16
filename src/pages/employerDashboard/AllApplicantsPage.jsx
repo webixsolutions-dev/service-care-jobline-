@@ -31,7 +31,7 @@ export default function AllApplicantsPage() {
   return (
     <div>
       <DashboardTopBanner
-        eyebrow="Service Care Jobline Dashboard"
+        eyebrow="Newcomer Jobline Dashboard"
         title="All Applicants"
         subtitle="Manage and track candidate applications across all your active and past job postings."
       />

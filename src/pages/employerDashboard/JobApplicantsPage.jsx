@@ -17,7 +17,7 @@ export default function JobApplicantsPage() {
   return (
     <div>
       <DashboardTopBanner
-        eyebrow="Service Care Jobline Dashboard"
+        eyebrow="Newcomer Jobline Dashboard"
         title={`Applicants — ${jobTitle}`}
         subtitle={`Reviewing candidate applications for ${jobTitle} at ${posting?.companyName || "your organization"}.`}
         action={

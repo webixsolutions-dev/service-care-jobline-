@@ -9,7 +9,7 @@ export default function EmployerStatCardRow() {
   const activePostings = jobPostings.filter((p) => p.status === "Active").length;
   const totalApplicants = applicants.length;
   const interviewsCount = applicants.filter((a) => a.stage === "Interview").length;
-  const hiresCount = applicants.filter((a) => a.stage === "Hired").length;
+  const offersCount = applicants.filter((a) => a.stage === "Offer").length;
 
   const stats = [
     {
@@ -35,8 +35,8 @@ export default function EmployerStatCardRow() {
     },
     {
       id: "positionsFilled",
-      label: "Positions Filled",
-      count: hiresCount,
+      label: "Positions Filled / Offers",
+      count: offersCount,
       icon: CheckCircle2,
       tone: "green",
     },
