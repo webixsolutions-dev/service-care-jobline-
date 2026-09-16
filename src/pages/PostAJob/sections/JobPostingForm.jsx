@@ -1,11 +1,10 @@
-import { forwardRef, useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { forwardRef, useState, useEffect, useMemo } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, Lock } from "lucide-react";
 import { postJobPageContent } from "../../../data/postJobPageContent";
 import { paths } from "../../../data/navLinks";
 import { useAuth } from "../../../lib/auth/AuthContext";
 import {
-  createEmployerJob,
   EMPLOYMENT_VALUES,
   getMyCompanies,
   getServiceCareCategories,
@@ -16,7 +15,7 @@ import SelectField from "../../../components/FormFields/SelectField";
 import TextareaField from "../../../components/FormFields/TextareaField";
 import styles from "./JobPostingForm.module.css";
 
-const initialValues = {
+const defaultInitialValues = {
   companyName: "",
   jobTitle: "",
   category: "",
@@ -43,36 +42,40 @@ function validate(values, fields) {
   return errors;
 }
 
-function parseLocation(value) {
-  const parts = String(value || "").split(",").map((part) => part.trim()).filter(Boolean);
-  if (parts.length > 1) {
-    return { city: parts.slice(0, -1).join(", "), province: parts.at(-1) };
-  }
-  return { city: parts[0] || undefined, province: undefined };
-}
+/**
+ * Controlled job-details form reused across public /post-a-job page and dashboard job posting page.
+ */
+const JobPostingForm = forwardRef(function JobPostingForm(
+  {
+    initialData,
+    onSubmitAction,
+    customHeading,
+    customSubtext,
+    customSubmitLabel,
+  },
+  ref
+) {
+  const {
+    heading: defaultHeading,
+    subtext: defaultSubtext,
+    submitLabel: defaultSubmitLabel,
+    privacy,
+    fields,
+    salaryRanges,
+  } = postJobPageContent.form;
 
-function parseSalary(value) {
-  const numbers = [...String(value || "").matchAll(/[\d,]+/g)]
-    .map((match) => Number(match[0].replace(/,/g, "")))
-    .filter(Number.isFinite);
-  if (!numbers.length) return {};
-  if (/\+$/.test(String(value).trim())) return { salary_min: numbers[0], salary_period: "yearly" };
-  return {
-    salary_min: numbers[0],
-    salary_max: numbers[1] ?? undefined,
-    salary_period: "yearly",
-  };
-}
-
-const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
-  const { heading, subtext, submitLabel, privacy, fields, salaryRanges } = postJobPageContent.form;
+  const heading = customHeading || defaultHeading;
+  const subtext = customSubtext || defaultSubtext;
+  const submitLabel = customSubmitLabel || defaultSubmitLabel;
+  const navigate = useNavigate();
   const { token, profile } = useAuth();
-  const [values, setValues] = useState(initialValues);
+
+  const [values, setValues] = useState(defaultInitialValues);
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [companies, setCompanies] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [categoryRows, setCategoryRows] = useState([]);
   const [loadingOptions, setLoadingOptions] = useState(false);
 
   useEffect(() => {
@@ -89,7 +92,7 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
     Promise.all(requests)
       .then(([categoryRows, companyRows]) => {
         if (cancelled) return;
-        setCategories(Array.isArray(categoryRows) ? categoryRows : []);
+        setCategoryRows(Array.isArray(categoryRows) ? categoryRows : []);
         setCompanies(Array.isArray(companyRows) ? companyRows : []);
         if (companyRows?.length === 1) {
           setValues((prev) => ({ ...prev, companyName: prev.companyName || companyRows[0].name }));
@@ -106,9 +109,24 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
   }, [token, profile?.role]);
 
   const categoryOptions = useMemo(
-    () => categories.map((category) => ({ value: String(category.id), label: category.name })),
-    [categories],
+    () => categoryRows.map((category) => ({ value: String(category.id), label: category.name })),
+    [categoryRows],
   );
+
+  useEffect(() => {
+    if (initialData) {
+      setValues({
+        companyName: initialData.companyName || "",
+        jobTitle: initialData.title || initialData.jobTitle || "",
+        category: initialData.category || "",
+        location: initialData.location || "",
+        employmentType: initialData.employmentType || "",
+        salaryRange: initialData.salaryRange || "",
+        contactEmail: initialData.contactEmail || "",
+        jobSummary: initialData.jobSummary || "",
+      });
+    }
+  }, [initialData]);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -117,52 +135,23 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
     setMessage("");
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  async function handleFormSubmit(e) {
+    if (e) e.preventDefault();
     setMessage("");
     if (!token || profile?.role !== "recruiter") {
-      setMessage("Sign in with an Employer account before posting a job.");
+      navigate(paths.signIn, { state: { returnTo: "/employer-dashboard/post-a-job" } });
       return;
     }
     const nextErrors = validate(values, fields);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) return;
 
-    const company = companies[0];
-    if (!company) {
-      setErrors((prev) => ({
-        ...prev,
-        companyName: "Select a company linked to your Employer account before posting.",
-      }));
-      return;
-    }
-
-    const { city, province } = parseLocation(values.location);
-    const salary = parseSalary(values.salaryRange);
-
     setSubmitting(true);
     try {
-      const job = await createEmployerJob({
-        category_id: Number(values.category),
-        title: values.jobTitle.trim(),
-        description: values.jobSummary.trim(),
-        city,
-        province,
-        workplace_type: "onsite",
-        experience_level: "entry_level",
-        employment_type: values.employmentType,
-        salary_currency: "CAD",
-        ...salary,
-      }, token);
-
-      setMessage(`Job submitted successfully. Status: ${String(job?.status || "active").replaceAll("_", " ")}.`);
-      setValues((prev) => ({
-        ...initialValues,
-        companyName: company.name,
-        contactEmail: profile?.email || prev.contactEmail,
-      }));
+      if (onSubmitAction) await onSubmitAction(values, false);
+      else navigate("/employer-dashboard/post-a-job");
     } catch (err) {
-      setMessage(err?.message || "Could not submit the job.");
+      setMessage(err?.message || "Unable to publish this job.");
     } finally {
       setSubmitting(false);
     }
@@ -176,7 +165,7 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
 
       {message ? <p className={styles.success} role="status">{message}</p> : null}
 
-      <form onSubmit={handleSubmit} noValidate>
+      <form onSubmit={handleFormSubmit} noValidate>
         <div className={styles.grid}>
           <InputField
             id="job-company"
@@ -269,17 +258,18 @@ const JobPostingForm = forwardRef(function JobPostingForm(_, ref) {
           />
         </div>
 
-        <Button
-          type="submit"
-          variant="solid-gold"
-          icon={ArrowRight}
-          iconPosition="right"
-          className={styles.submit}
-          disabled={submitting || loadingOptions}
-          aria-busy={submitting}
-        >
-          {submitting ? <><span className="sc-spinner sc-spinner-sm" /> Submitting</> : submitLabel}
-        </Button>
+        <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginTop: "20px" }}>
+          <Button
+            type="submit"
+            variant="solid-gold"
+            icon={ArrowRight}
+            iconPosition="right"
+            className={styles.submit}
+            disabled={submitting || loadingOptions}
+          >
+            {submitting ? <><span className="sc-spinner sc-spinner-sm" /> Publishing</> : submitLabel}
+          </Button>
+        </div>
       </form>
 
       <p className={styles.privacy}>

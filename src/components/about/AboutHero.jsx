@@ -8,7 +8,7 @@ const AboutHero = () => {
 
     return (
         <>
-            <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-16 md:py-24">
+            <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-10 md:py-14">
                 {/* Background Image */}
                 <div
                     className="absolute inset-0 opacity-20"
@@ -25,23 +25,14 @@ const AboutHero = () => {
                     <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-sky-400 blur-3xl"></div>
                 </div>
 
-                <div className="container mx-auto relative px-4">
-                    <div className="max-w-4xl mx-3 text-start">
-                        {/* Badge */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
-                        >
-
-                        </motion.div>
-
+                <div className="mx-auto w-full max-w-full relative px-[10%]">
+                    <div className="max-w-4xl text-start">
                         {/* Heading */}
                         <motion.h1
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 0.1 }}
-                            className="  mb-6 text-2xl font-bold  tracking-tight w-3/4 text-white sm:text-3xl md:text-5xl lg:text-5xl"
+                            className="mb-6 text-2xl font-bold tracking-tight text-white sm:text-3xl md:text-5xl lg:text-5xl"
                         >
                             About ServiceCare
                             <span className="block text-amber-400">JobLine</span>
@@ -52,11 +43,9 @@ const AboutHero = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 0.2 }}
-                            className=" mb-8 max-w-3xl text-base w-3/4 text-gray-300 sm:text-lg md:text-xl"
+                            className="mb-8 max-w-3xl text-base text-gray-300 sm:text-lg md:text-xl"
                         >
-                            Get in touch with Canada's trusted hospitality and healthcare job platform.
-                            Whether you are hiring qualified staff
-                            or searching for your next opportunity.
+                            Learn more about our platform. Connecting top talent with employers in hospitality, healthcare, and service industries.
                         </motion.p>
 
                         {/* CTA Buttons */}

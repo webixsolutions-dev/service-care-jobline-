@@ -28,6 +28,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 18px;
+  align-items: stretch;
   margin-bottom: 28px;
 }
 

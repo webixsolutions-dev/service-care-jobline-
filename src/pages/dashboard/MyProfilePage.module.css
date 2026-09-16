@@ -295,21 +295,11 @@
   cursor: pointer;
   box-shadow: 0 4px 14px rgba(20, 184, 166, 0.25);
   transition: all var(--ease);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
 }
 
 .saveProfileBtn:hover {
   background: var(--color-teal-dark);
   transform: translateY(-1px);
-}
-
-.saveProfileBtn:disabled {
-  cursor: wait;
-  opacity: 0.72;
-  transform: none;
 }
 
 @media (max-width: 768px) {
